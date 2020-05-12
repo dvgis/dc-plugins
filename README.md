@@ -34,7 +34,7 @@ Tips：This SDK is JS+GIS framework package. Developers need to have some front-
 ```js
 import 'dvgis/dc-sdk/dist/dc.base.min' //Basic Package
 import 'dvgis/dc-sdk/dist/dc.core.min' //Core Package
-import 'dvgis/dc-plugin/dist/dc.plugins.min' //Plugins Package
+import 'dvgis/dc-plugins/dist/dc.plugins.min' //Plugins Package
 import 'dvgis/dc-sdk/dist/dc.core.min.css' // Main Style Sheet
 ```
 
