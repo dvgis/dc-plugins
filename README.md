@@ -81,7 +81,8 @@ DC.ready(() => {
 
 ## Demo
 
-| ![picture](https://raw.githubusercontent.com/Digital-Visual/dc-sdk-examples/master/images/layer/cluster.png)  |    ![picture](https://raw.githubusercontent.com/Digital-Visual/dc-sdk-examples/master/images/layer/czml.png)     |   ![picture](https://raw.githubusercontent.com/Digital-Visual/dc-sdk-examples/master/images/datav/e_airline.gif)   |  ![picture](https://raw.githubusercontent.com/Digital-Visual/dc-sdk-examples/master/images/datav/e_plane.gif)  |
+| ![picture](https://raw.githubusercontent.com/Digital-Visual/dc-sdk-examples/master/images/layer/cluster.png) | !
+<img src="https://raw.githubusercontent.com/Digital-Visual/dc-sdk-examples/master/images/layer/czml.png"  width="200px" height="150px"> | ![picture](https://raw.githubusercontent.com/Digital-Visual/dc-sdk-examples/master/images/datav/e_airline.gif) | ![picture](https://raw.githubusercontent.com/Digital-Visual/dc-sdk-examples/master/images/datav/e_plane.gif) |
 | :-----------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------: |
 | ![picture](https://raw.githubusercontent.com/Digital-Visual/dc-sdk-examples/master/images/datav/m_grid_d.gif) | ![picture](https://raw.githubusercontent.com/Digital-Visual/dc-sdk-examples/master/images/datav/m_honeycomb.png) | ![picture](https://raw.githubusercontent.com/Digital-Visual/dc-sdk-examples/master/images/datav/m_honeycomb_d.gif) | ![picture](https://raw.githubusercontent.com/Digital-Visual/dc-sdk-examples/master/images/datav/m_point_d.gif) |
 
