@@ -2,7 +2,7 @@
  * @Author: Caven
  * @Date: 2020-03-02 23:14:20
  * @Last Modified by: Caven
- * @Last Modified time: 2020-05-12 09:56:16
+ * @Last Modified time: 2020-05-21 14:10:13
  */
 
 const { SceneEventType, Util } = DC
@@ -23,6 +23,7 @@ class AroundView {
       this._options.duration || 10,
       new Cesium.JulianDate()
     )
+    this._start()
   }
 
   _start() {

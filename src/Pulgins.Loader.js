@@ -2,16 +2,16 @@
  * @Author: Caven
  * @Date: 2020-01-14 18:24:57
  * @Last Modified by: Caven
- * @Last Modified time: 2020-05-12 12:53:14
+ * @Last Modified time: 2020-05-21 14:08:51
  */
 
-import { AroudView, AroundPoint, GlobeRotate } from './core/animation'
+import { AroundView, AroundPoint, GlobeRotate } from './core/animation'
 import {
   ClusterLayer,
   CzmlLayer,
   HeatLayer,
   KmlLayer,
-  MapvLayer,
+  MapvLayer
 } from './core/layer'
 import {
   PolylineTrailMaterialProperty,
@@ -20,7 +20,7 @@ import {
   WaterMaterialProperty,
   RimLightingMaterialProperty,
   CircleFadeMaterialProperty,
-  CircleWaveMaterialProperty,
+  CircleWaveMaterialProperty
 } from './core/material'
 
 import {
@@ -30,11 +30,11 @@ import {
   FogEffect,
   RadarScanEffect,
   RainEffect,
-  SnowEffect,
+  SnowEffect
 } from './core/effects'
 
 const plugis = {
-  AroudView,
+  AroundView,
   AroundPoint,
   GlobeRotate,
   ClusterLayer,
@@ -55,7 +55,7 @@ const plugis = {
   WaterMaterialProperty,
   RimLightingMaterialProperty,
   CircleFadeMaterialProperty,
-  CircleWaveMaterialProperty,
+  CircleWaveMaterialProperty
 }
 
 DC.mixin(plugis)

@@ -2,10 +2,10 @@
  * @Author: Caven
  * @Date: 2020-03-02 22:38:10
  * @Last Modified by: Caven
- * @Last Modified time: 2020-05-12 09:57:49
+ * @Last Modified time: 2020-05-21 14:10:12
  */
 
-const { Util, SceneEventType, Transfrom } = DC
+const { Util, SceneEventType, Transform } = DC
 
 const { Cesium } = DC.Namespace
 
@@ -27,6 +27,7 @@ class AroundPoint {
       this._options.duration || 10,
       new Cesium.JulianDate()
     )
+    this._start()
   }
 
   _start() {
@@ -42,7 +43,7 @@ class AroundPoint {
     let duration = this._options.duration || 10
     let heading = Cesium.Math.toRadians(diff * (360 / duration)) + this._heading
     this._viewer.scene.camera.setView({
-      destination: Transfrom.transformWGS84ToCartesian(this._position),
+      destination: Transform.transformWGS84ToCartesian(this._position),
       orientation: {
         heading: heading,
         pitch: Cesium.Math.toRadians(this._options.pitch || 0)
