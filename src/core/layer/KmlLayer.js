@@ -2,7 +2,7 @@
  * @Author: Caven
  * @Date: 2020-01-19 11:03:17
  * @Last Modified by: Caven
- * @Last Modified time: 2020-05-12 12:10:19
+ * @Last Modified time: 2020-05-21 16:04:05
  */
 
 const { Layer, State } = DC
@@ -16,7 +16,7 @@ class KmlLayer extends Layer {
     }
     super(id)
     this._delegate = Cesium.KmlDataSource.load(url, options)
-    this.type = Layer.getOverlayType('kml')
+    this.type = Layer.getLayerType('kml')
     this._state = State.INITIALIZED
   }
 

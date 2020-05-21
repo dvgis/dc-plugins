@@ -2,7 +2,7 @@
  * @Author: Caven
  * @Date: 2020-02-13 20:19:54
  * @Last Modified by: Caven
- * @Last Modified time: 2020-05-12 12:12:20
+ * @Last Modified time: 2020-05-21 16:05:33
  */
 
 const { Layer, State, MapvDataSet } = DC
@@ -18,7 +18,7 @@ class MapvLayer extends Layer {
     this._option = option
     this._dataSet = undefined
     this._delegate = undefined
-    this.type = Layer.getOverlayType('mapv')
+    this.type = Layer.getLayerType('mapv')
   }
 
   set show(show) {
