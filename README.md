@@ -3,6 +3,7 @@
 [**🇨🇳 中文**](./README_zh.md) | [**🇬🇧English**](./)
 
 > DC-SDK plug-in library, the plug-in library includes animation, effects, textures, heatmap, clusterLayer, and Mapv.
+
 > [home](http://dc.dvgis.cn)
 
 ```warning
@@ -75,9 +76,9 @@ DC.ready(() => {
 
 ## Documentation
 
-[Cesium-Api](https://cesium.com/docs/cesiumjs-ref-doc/)
+[Cesium Api](https://cesium.com/docs/cesiumjs-ref-doc/)
 
-[DC-SDK-Api](http://dc.dvgis.cn/#/docs)
+[DC-SDK Api](http://resource.dvgis.cn/dc-api/api/)
 
 ## Demo
 
@@ -85,7 +86,7 @@ DC.ready(() => {
 | :-----------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------: |
 | ![picture](https://raw.githubusercontent.com/Digital-Visual/dc-sdk-examples/master/images/datav/m_grid_d.gif) | ![picture](https://raw.githubusercontent.com/Digital-Visual/dc-sdk-examples/master/images/datav/m_honeycomb.png)  | ![picture](https://raw.githubusercontent.com/Digital-Visual/dc-sdk-examples/master/images/datav/m_honeycomb_d.gif) | ![picture](https://raw.githubusercontent.com/Digital-Visual/dc-sdk-examples/master/images/datav/m_point_d.gif) |
 
-[More>>](http://dc.cavencj.cn/home/#/examples)
+[More>>](http://dc.dvgis.cn/#/examples)
 
 ## Copyright statement
 

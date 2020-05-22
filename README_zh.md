@@ -3,6 +3,7 @@
 [**🇨🇳 中文**](./) | [**🇬🇧English**](./README.md)
 
 > DC-SDK 插件库，插件库包括动画，特效，纹理，热图，clusterLayer，和 Mapv。
+
 > [主页](http://dc.dvgis.cn)
 
 ```warning
@@ -67,9 +68,9 @@ module.exports = {
 
 ## 文档
 
-[Cesium-Api](https://cesium.com/docs/cesiumjs-ref-doc/)
+[Cesium Api](https://cesium.com/docs/cesiumjs-ref-doc/)
 
-[DC-SDK-Api](http://dc.dvgis.cn/#/docs)
+[DC-SDK Api](http://resource.dvgis.cn/dc-api/api/)
 
 ## 示例
 
@@ -77,7 +78,7 @@ module.exports = {
 | :-----------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------: |
 | ![picture](https://raw.githubusercontent.com/Digital-Visual/dc-sdk-examples/master/images/datav/m_grid_d.gif) | ![picture](https://raw.githubusercontent.com/Digital-Visual/dc-sdk-examples/master/images/datav/m_honeycomb.png) | ![picture](https://raw.githubusercontent.com/Digital-Visual/dc-sdk-examples/master/images/datav/m_honeycomb_d.gif) | ![picture](https://raw.githubusercontent.com/Digital-Visual/dc-sdk-examples/master/images/datav/m_point_d.gif) |
 
-[更多>>](http://dc.cavencj.cn/home/#/examples)
+[更多>>](http://dc.dvgis.cn/#/examples)
 
 ## 版权声明
 
