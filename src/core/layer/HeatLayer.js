@@ -2,7 +2,7 @@
  * @Author: Caven
  * @Date: 2020-02-27 00:35:35
  * @Last Modified by: Caven
- * @Last Modified time: 2020-05-21 16:04:07
+ * @Last Modified time: 2020-06-04 14:49:46
  */
 
 const { State, Layer, SceneEventType, Transform, Position, DomUtil, Util } = DC
@@ -245,7 +245,7 @@ class HeatLayer extends Layer {
       return this
     }
     this._positions = positions
-    this._bounds = Cesium.bounds(this._positions)
+    this._bounds = Cesium.Math.bounds(this._positions)
     this._reDraw()
     return this
   }
@@ -256,7 +256,7 @@ class HeatLayer extends Layer {
    */
   addPosition(position) {
     this._positions.push(position)
-    this._bounds = Cesium.bounds(this._positions)
+    this._bounds = Cesium.Math.bounds(this._positions)
     this._reDraw()
     return this
   }

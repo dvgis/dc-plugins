@@ -2,7 +2,7 @@
  * @Author: Caven
  * @Date: 2020-02-10 10:05:41
  * @Last Modified by: Caven
- * @Last Modified time: 2020-05-11 21:37:57
+ * @Last Modified time: 2020-06-02 16:38:02
  */
 
 const { State, Layer } = DC
@@ -95,6 +95,7 @@ class ClusterLayer extends Layer {
           cluster.billboard.image = this._drawCircle(
             this._options.gradient[key]
           )
+          cluster.billboard.disableDepthTestDistance = Number.POSITIVE_INFINITY
           cluster.label.show = true
           let numLenth = String(clusteredEntities.length + ',').length
           cluster.label.pixelOffset = new Cesium.Cartesian2(
