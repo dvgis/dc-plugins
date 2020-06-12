@@ -1,5 +1,11 @@
 # DC-Plugins
 
+<p>
+<img src="https://img.shields.io/badge/license-Apache%202-blue"/>
+<img src="https://img.shields.io/github/package-json/v/Digital-Visual/dc-plugins?color=orange&logo=github" />
+<img src="https://img.shields.io/npm/dw/@dvgis/dc-plugins?logo=npm"/>
+</p>
+
 [**🇨🇳 中文**](./) | [**🇬🇧English**](./README.md)
 
 > DC-SDK 插件库，插件库包括动画，特效，纹理，热图，clusterLayer，和 Mapv。
