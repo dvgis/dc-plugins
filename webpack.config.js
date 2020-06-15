@@ -2,7 +2,7 @@
  * @Author: Caven
  * @Date: 2020-01-18 18:22:23
  * @Last Modified by: Caven
- * @Last Modified time: 2020-06-11 13:11:59
+ * @Last Modified time: 2020-06-15 09:37:14
  */
 
 const path = require('path')
@@ -39,7 +39,7 @@ module.exports = env => {
       sourcePrefix: ''
     },
     amd: {
-      toUrlUndefinded: true
+      toUrlUndefined: true
     },
     node: {
       fs: 'empty'
