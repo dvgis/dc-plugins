@@ -2,7 +2,7 @@
  * @Author: Caven
  * @Date: 2020-06-22 16:46:14
  * @Last Modified by: Caven
- * @Last Modified time: 2020-06-22 21:37:46
+ * @Last Modified time: 2020-06-22 21:57:46
  */
 class WallTrailMaterialProperty {
   constructor(options) {
@@ -10,8 +10,8 @@ class WallTrailMaterialProperty {
     this._definitionChanged = new Cesium.Event()
     this._color = undefined
     this._colorSubscription = undefined
-    this._duration = undefined
-    this._durationSubscription = undefined
+    this._speed = undefined
+    this._speedSubscription = undefined
     this.color = options.color || Cesium.Color.fromBytes(0, 255, 0, 255)
     this.speed = options.speed || 45
   }
