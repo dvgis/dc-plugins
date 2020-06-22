@@ -2,22 +2,22 @@
  * @Author: Caven
  * @Date: 2020-01-30 20:47:25
  * @Last Modified by: Caven
- * @Last Modified time: 2020-05-21 13:55:20
+ * @Last Modified time: 2020-06-15 14:06:00
  */
 
 const { Cesium } = DC.Namespace
 
 class GlobeRotate {
-  constructor(viewer, time = 5, callback, context) {
+  constructor(viewer, duration = 5, callback, context) {
     this._viewer = viewer
-    this._time = time
+    this._duration = duration
     this._callback = callback
     this._startRotate()
     let flag = setTimeout(() => {
       this._endRotate()
       this._callback && this._callback.call(context || this)
       clearTimeout(flag)
-    }, Number(this._time) * 1e3)
+    }, Number(this._duration) * 1e3)
   }
 
   /**

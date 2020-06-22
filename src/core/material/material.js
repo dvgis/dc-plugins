@@ -2,13 +2,13 @@
  * @Author: Caven
  * @Date: 2020-02-26 23:38:41
  * @Last Modified by: Caven
- * @Last Modified time: 2020-05-11 23:16:53
+ * @Last Modified time: 2020-06-22 17:04:20
  */
 
 const { Cesium } = DC.Namespace
 
-const IMG =
-  'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAgAAAAAgCAYAAABkS8DlAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAADSSURBVHja7NYxEoUgDEDBYM39z2qHtZViwMFxt1FJnF/98ZXWWkRE7LWWOOt5Lsm9q/vsbu9Zdtazs/J19O5bs1XPZrwze/6V31zxbOZs1n905Wt2p3f25GzE7ohv6q3nLQCA3xEAACAAAAABAAAIAABAAAAAAgAAEAAAgAAAAAQAACAAAAABAAAIAABAAAAAAgAAEAAAgAAAAAQAACAAAEAAAAACAAAQAACAAAAABAAAIAAAAAEAAAgAAEAAAAACAAAQAACAAAAA8g4AAAD//wMA4WEFTJOT5UIAAAAASUVORK5CYII='
+const IMG_FENCE = require('../images/fence.png')
+const IMG_LINE = require('../images/line.png')
 
 let LineEmissionMaterial = require('../shader/PolylineEmissionMaterial.glsl')
 let LineFlowMaterial = require('../shader/PolylineFlowMaterial.glsl')
@@ -29,6 +29,7 @@ let TieDyeMaterial = require('../shader/TieDyeMaterial.glsl')
 let WoodMaterial = require('../shader/WoodMaterial.glsl')
 let CircleFadeShader = require('../shader/CircleFadeShader.glsl')
 let CircleWaveShader = require('../shader/CircleWaveShader.glsl')
+let WallTrailMaterial = require('../shader/WallTrailMaterial.glsl')
 
 Cesium.ShaderSource._czmBuiltinsAndUniforms.czm_cellular = czm_cellular
 Cesium.ShaderSource._czmBuiltinsAndUniforms.czm_snoise = czm_snoise
@@ -75,7 +76,7 @@ Cesium.Material._materialCache.addMaterial(Cesium.Material.PolylineTrailType, {
     type: Cesium.Material.PolylineTrailType,
     uniforms: {
       color: new Cesium.Color(1.0, 0.0, 0.0, 0.7),
-      image: IMG,
+      image: IMG_LINE,
       duration: 45
     },
     source: LineTrailMaterial
@@ -331,3 +332,23 @@ Cesium.Material._materialCache.addMaterial(Cesium.Material.CircleWaveType, {
     return true
   }
 })
+
+// WallTrail
+Cesium.Material.WallTrailMaterialType = 'WallTrailMaterial'
+Cesium.Material._materialCache.addMaterial(
+  Cesium.Material.WallTrailMaterialType,
+  {
+    fabric: {
+      type: Cesium.Material.WallTrailMaterialType,
+      uniforms: {
+        color: new Cesium.Color(1.0, 0.0, 0.0, 0.7),
+        image: IMG_FENCE,
+        duration: 10
+      },
+      source: WallTrailMaterial
+    },
+    translucent: function(material) {
+      return true
+    }
+  }
+)

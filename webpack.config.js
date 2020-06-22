@@ -2,7 +2,7 @@
  * @Author: Caven
  * @Date: 2020-01-18 18:22:23
  * @Last Modified by: Caven
- * @Last Modified time: 2020-06-15 09:37:14
+ * @Last Modified time: 2020-06-22 17:06:54
  */
 
 const path = require('path')
@@ -85,7 +85,7 @@ module.exports = env => {
           test: /\.(png|jpg|gif|svg|eot|ttf|woff|woff2)$/,
           loader: 'url-loader',
           options: {
-            limit: 20000
+            limit: 50000
           }
         },
         {
