@@ -2,7 +2,7 @@
  * @Author: Caven
  * @Date: 2020-02-25 22:49:56
  * @Last Modified by: Caven
- * @Last Modified time: 2020-05-11 23:15:54
+ * @Last Modified time: 2020-06-22 21:36:33
  */
 
 const { Cesium } = DC.Namespace
@@ -13,19 +13,13 @@ class RimLightingMaterialProperty {
     this._definitionChanged = new Cesium.Event()
     this._color = undefined
     this._colorSubscription = undefined
-    this.color = Cesium.defaultValue(
-      options.color,
-      new Cesium.Color(1.0, 0.0, 0.0, 0.7)
-    )
+    this.color = options.color || new Cesium.Color(1.0, 0.0, 0.0, 0.7)
     this._rimColor = undefined
     this._rimColorSubscription = undefined
-    this.rimColor = Cesium.defaultValue(
-      options.rimColor,
-      new Cesium.Color(1.0, 1.0, 1.0, 0.4)
-    )
+    this.rimColor = options.rimColor || new Cesium.Color(1.0, 1.0, 1.0, 0.4)
     this._width = undefined
     this._widthSubscription = undefined
-    this.width = Cesium.defaultValue(options.width, 0.3)
+    this.width = options.width || 0.3
   }
 
   get isConstant() {

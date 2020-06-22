@@ -2,7 +2,7 @@
  * @Author: Caven
  * @Date: 2020-02-26 10:15:55
  * @Last Modified by: Caven
- * @Last Modified time: 2020-05-11 23:05:57
+ * @Last Modified time: 2020-06-22 21:33:46
  */
 
 const { Cesium } = DC.Namespace
@@ -13,10 +13,7 @@ class PolylineEmissionMaterialProperty {
     this._definitionChanged = new Cesium.Event()
     this._color = undefined
     this._colorSubscription = undefined
-    this.color = Cesium.defaultValue(
-      options.color,
-      new Cesium.Color(1.0, 0.0, 0.0, 0.7)
-    )
+    this.color = options.color || new Cesium.Color(1.0, 0.0, 0.0, 0.7)
   }
 
   get isConstant() {

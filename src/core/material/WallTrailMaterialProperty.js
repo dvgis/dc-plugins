@@ -1,8 +1,8 @@
 /*
  * @Author: Caven
  * @Date: 2020-06-22 16:46:14
- * @Last Modified by:   Caven
- * @Last Modified time: 2020-06-22 16:46:14
+ * @Last Modified by: Caven
+ * @Last Modified time: 2020-06-22 21:37:46
  */
 class WallTrailMaterialProperty {
   constructor(options) {
@@ -12,11 +12,8 @@ class WallTrailMaterialProperty {
     this._colorSubscription = undefined
     this._duration = undefined
     this._durationSubscription = undefined
-    this.color = Cesium.defaultValue(
-      options.color,
-      Cesium.Color.fromBytes(0, 255, 255, 255)
-    )
-    this.duration = Cesium.defaultValue(options.duration, 45)
+    this.color = options.color || Cesium.Color.fromBytes(0, 255, 0, 255)
+    this.speed = options.speed || 45
   }
 
   get isConstant() {
@@ -41,7 +38,7 @@ class WallTrailMaterialProperty {
       Cesium.Color.WHITE,
       result.color
     )
-    result.duration = this._duration
+    result.speed = this._speed
     return result
   }
 
@@ -56,7 +53,7 @@ class WallTrailMaterialProperty {
 
 Object.defineProperties(WallTrailMaterialProperty.prototype, {
   color: Cesium.createPropertyDescriptor('color'),
-  duration: Cesium.createPropertyDescriptor('duration')
+  speed: Cesium.createPropertyDescriptor('speed')
 })
 
 export default WallTrailMaterialProperty

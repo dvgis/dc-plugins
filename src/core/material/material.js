@@ -2,7 +2,7 @@
  * @Author: Caven
  * @Date: 2020-02-26 23:38:41
  * @Last Modified by: Caven
- * @Last Modified time: 2020-06-22 17:04:20
+ * @Last Modified time: 2020-06-22 21:48:28
  */
 
 const { Cesium } = DC.Namespace
@@ -60,7 +60,7 @@ Cesium.Material._materialCache.addMaterial(Cesium.Material.PolylineFlowType, {
     type: Cesium.Material.PolylineFlowType,
     uniforms: {
       color: new Cesium.Color(1.0, 0.0, 0.0, 0.7),
-      duration: 45
+      speed: 45
     },
     source: LineFlowMaterial
   },
@@ -77,7 +77,7 @@ Cesium.Material._materialCache.addMaterial(Cesium.Material.PolylineTrailType, {
     uniforms: {
       color: new Cesium.Color(1.0, 0.0, 0.0, 0.7),
       image: IMG_LINE,
-      duration: 45
+      speed: 45
     },
     source: LineTrailMaterial
   },
@@ -305,7 +305,7 @@ Cesium.Material._materialCache.addMaterial(Cesium.Material.CircleFadeType, {
     type: Cesium.Material.CircleFadeType,
     uniforms: {
       color: new Cesium.Color(1.0, 0.0, 0.0, 0.7),
-      duration: 45
+      speed: 45
     },
     source: CircleFadeShader
   },
@@ -322,7 +322,7 @@ Cesium.Material._materialCache.addMaterial(Cesium.Material.CircleWaveType, {
     type: Cesium.Material.CircleWaveType,
     uniforms: {
       color: new Cesium.Color(1.0, 0.0, 0.0, 0.7),
-      duration: 45,
+      speed: 45,
       count: 1,
       gradient: 0.1
     },
@@ -343,7 +343,7 @@ Cesium.Material._materialCache.addMaterial(
       uniforms: {
         color: new Cesium.Color(1.0, 0.0, 0.0, 0.7),
         image: IMG_FENCE,
-        duration: 10
+        speed: 10
       },
       source: WallTrailMaterial
     },

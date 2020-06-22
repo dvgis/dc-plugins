@@ -2,7 +2,7 @@
  * @Author: Caven
  * @Date: 2020-02-25 21:16:00
  * @Last Modified by: Caven
- * @Last Modified time: 2020-05-11 23:16:17
+ * @Last Modified time: 2020-06-22 21:39:00
  */
 
 const { Cesium } = DC.Namespace
@@ -13,28 +13,18 @@ class WaterMaterialProperty {
     this._definitionChanged = new Cesium.Event()
     this._baseWaterColor = undefined
     this._baseWaterColorSubscription = undefined
-    this.baseWaterColor = Cesium.defaultValue(
-      options.baseWaterColor,
-      new Cesium.Color(0.2, 0.3, 0.6, 1.0)
-    )
+    this.baseWaterColor =
+      options.baseWaterColor || new Cesium.Color(0.2, 0.3, 0.6, 1.0)
     this._blendColor = undefined
     this._blendColorSubscription = undefined
-    this.blendColor = Cesium.defaultValue(
-      options.blendColor,
-      new Cesium.Color(0.0, 1.0, 0.699, 1.0)
-    )
+    this.blendColor =
+      options.blendColor || new Cesium.Color(0.0, 1.0, 0.699, 1.0)
     this._specularMap = undefined
     this._specularMapSubscription = undefined
-    this.specularMap = Cesium.defaultValue(
-      options.specularMap,
-      Cesium.Material.DefaultImageId
-    )
+    this.specularMap = options.specularMap || Cesium.Material.DefaultImageId
     this._normalMap = undefined
     this._normalMapSubscription = undefined
-    this.normalMap = Cesium.defaultValue(
-      options.normalMap,
-      Cesium.Material.DefaultImageId
-    )
+    this.normalMap = options.normalMap || Cesium.Material.DefaultImageId
     this.frequency = Cesium.defaultValue(options.frequency, 10)
     this.animationSpeed = Cesium.defaultValue(options.animationSpeed, 0.01)
     this.amplitude = Cesium.defaultValue(options.amplitude, 1.0)

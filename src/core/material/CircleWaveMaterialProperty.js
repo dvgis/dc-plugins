@@ -2,7 +2,7 @@
  * @Author: Caven
  * @Date: 2020-03-06 17:56:39
  * @Last Modified by: Caven
- * @Last Modified time: 2020-05-12 00:32:33
+ * @Last Modified time: 2020-06-22 21:33:25
  */
 
 const { Cesium } = DC.Namespace
@@ -13,20 +13,12 @@ class CircleWaveMaterialProperty {
     this._definitionChanged = new Cesium.Event()
     this._color = undefined
     this._colorSubscription = undefined
-    this._duration = undefined
-    this._durationSubscription = undefined
-    this.color = Cesium.defaultValue(
-      options.color,
-      Cesium.Color.fromBytes(0, 255, 255, 255)
-    )
-    this.duration = Cesium.defaultValue(options.duration, 45)
-    this.count = Math.max(Cesium.defaultValue(options.count, 2), 1)
-    this.gradient = Cesium.defaultValue(options.gradient, 0.1)
-    if (this.gradient < 0) {
-      this.gradient = 0
-    } else if (this.gradient > 1) {
-      this.gradient = 1
-    }
+    this._speed = undefined
+    this._speedSubscription = undefined
+    this.color = options.color || Cesium.Color.fromBytes(0, 255, 255, 255)
+    this.speed = options.speed || 45
+    this.count = Math.max(options.count || 2, 1)
+    this.gradient = Cesium.Math.clamp(options.gradient || 0.1, 0, 1)
   }
 
   get isConstant() {
@@ -46,7 +38,7 @@ class CircleWaveMaterialProperty {
       result = {}
     }
     result.color = Cesium.Property.getValueOrUndefined(this._color, time)
-    result.duration = this._duration
+    result.speed = this._speed
     result.count = this.count
     result.gradient = this.gradient
     return result
@@ -63,7 +55,7 @@ class CircleWaveMaterialProperty {
 
 Object.defineProperties(CircleWaveMaterialProperty.prototype, {
   color: Cesium.createPropertyDescriptor('color'),
-  duration: Cesium.createPropertyDescriptor('duration')
+  speed: Cesium.createPropertyDescriptor('speed')
 })
 
 export default CircleWaveMaterialProperty

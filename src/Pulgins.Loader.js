@@ -2,7 +2,7 @@
  * @Author: Caven
  * @Date: 2020-01-14 18:24:57
  * @Last Modified by: Caven
- * @Last Modified time: 2020-05-21 14:08:51
+ * @Last Modified time: 2020-06-22 21:39:26
  */
 
 import { AroundView, AroundPoint, GlobeRotate } from './core/animation'
@@ -20,7 +20,8 @@ import {
   WaterMaterialProperty,
   RimLightingMaterialProperty,
   CircleFadeMaterialProperty,
-  CircleWaveMaterialProperty
+  CircleWaveMaterialProperty,
+  WallTrailMaterialProperty
 } from './core/material'
 
 import {
@@ -55,7 +56,8 @@ const plugis = {
   WaterMaterialProperty,
   RimLightingMaterialProperty,
   CircleFadeMaterialProperty,
-  CircleWaveMaterialProperty
+  CircleWaveMaterialProperty,
+  WallTrailMaterialProperty
 }
 
 DC.mixin(plugis)

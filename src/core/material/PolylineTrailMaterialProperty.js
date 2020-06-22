@@ -2,7 +2,7 @@
  * @Author: Caven
  * @Date: 2020-02-24 13:09:09
  * @Last Modified by: Caven
- * @Last Modified time: 2020-05-12 00:33:41
+ * @Last Modified time: 2020-06-22 21:35:26
  */
 
 const { Cesium } = DC.Namespace
@@ -13,13 +13,10 @@ class PolylineTrailMaterialProperty {
     this._definitionChanged = new Cesium.Event()
     this._color = undefined
     this._colorSubscription = undefined
-    this._duration = undefined
-    this._durationSubscription = undefined
-    this.color = Cesium.defaultValue(
-      options.color,
-      Cesium.Color.fromBytes(0, 255, 255, 255)
-    )
-    this.duration = Cesium.defaultValue(options.duration, 45)
+    this._speed = undefined
+    this._speedSubscription = undefined
+    this.color = options.color || Cesium.Color.fromBytes(0, 255, 255, 255)
+    this.speed = options.speed || 45
   }
 
   get isConstant() {
@@ -44,7 +41,7 @@ class PolylineTrailMaterialProperty {
       Cesium.Color.WHITE,
       result.color
     )
-    result.duration = this._duration
+    result.speed = this._speed
     return result
   }
 
@@ -59,7 +56,7 @@ class PolylineTrailMaterialProperty {
 
 Object.defineProperties(PolylineTrailMaterialProperty.prototype, {
   color: Cesium.createPropertyDescriptor('color'),
-  duration: Cesium.createPropertyDescriptor('duration')
+  speed: Cesium.createPropertyDescriptor('speed')
 })
 
 export default PolylineTrailMaterialProperty
