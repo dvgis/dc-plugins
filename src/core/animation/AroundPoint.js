@@ -2,10 +2,10 @@
  * @Author: Caven
  * @Date: 2020-03-02 22:38:10
  * @Last Modified by: Caven
- * @Last Modified time: 2020-06-15 14:21:33
+ * @Last Modified time: 2020-06-23 10:44:35
  */
 
-const { Util, SceneEventType, Transform } = DC
+const { Util, SceneEventType, Transform, Parse } = DC
 
 const { Cesium } = DC.Namespace
 
@@ -14,13 +14,8 @@ class AroundPoint {
     if (!Util.checkViewer(viewer)) {
       throw new Error('AroundPoint：the viewer invalid')
     }
-
-    if (!Util.checkPosition(position)) {
-      throw new Error('AroundPoint：the position invalid')
-    }
-
     this._viewer = viewer
-    this._position = position
+    this._position = Parse.parsePosition(position)
     this._options = options
     this._heading = viewer.camera.heading
     this._startTime = Cesium.JulianDate.now()

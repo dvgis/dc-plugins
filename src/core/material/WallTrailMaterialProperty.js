@@ -2,8 +2,11 @@
  * @Author: Caven
  * @Date: 2020-06-22 16:46:14
  * @Last Modified by: Caven
- * @Last Modified time: 2020-06-22 21:57:46
+ * @Last Modified time: 2020-06-23 09:27:44
  */
+
+const { Cesium } = DC.Namespace
+
 class WallTrailMaterialProperty {
   constructor(options) {
     options = options || {}
