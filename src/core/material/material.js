@@ -2,13 +2,10 @@
  * @Author: Caven
  * @Date: 2020-02-26 23:38:41
  * @Last Modified by: Caven
- * @Last Modified time: 2020-06-22 21:48:28
+ * @Last Modified time: 2020-07-17 23:02:27
  */
 
 const { Cesium } = DC.Namespace
-
-const IMG_FENCE = require('../images/fence.png')
-const IMG_LINE = require('../images/line.png')
 
 let LineEmissionMaterial = require('../shader/PolylineEmissionMaterial.glsl')
 let LineFlowMaterial = require('../shader/PolylineFlowMaterial.glsl')
@@ -76,8 +73,9 @@ Cesium.Material._materialCache.addMaterial(Cesium.Material.PolylineTrailType, {
     type: Cesium.Material.PolylineTrailType,
     uniforms: {
       color: new Cesium.Color(1.0, 0.0, 0.0, 0.7),
-      image: IMG_LINE,
-      speed: 45
+      image: Cesium.Material.DefaultImageId,
+      speed: 45,
+      repeat: new Cesium.Cartesian2(1, 1)
     },
     source: LineTrailMaterial
   },
@@ -342,7 +340,7 @@ Cesium.Material._materialCache.addMaterial(
       type: Cesium.Material.WallTrailMaterialType,
       uniforms: {
         color: new Cesium.Color(1.0, 0.0, 0.0, 0.7),
-        image: IMG_FENCE,
+        image: Cesium.Material.DefaultImageId,
         speed: 10
       },
       source: WallTrailMaterial

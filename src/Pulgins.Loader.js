@@ -2,7 +2,7 @@
  * @Author: Caven
  * @Date: 2020-01-14 18:24:57
  * @Last Modified by: Caven
- * @Last Modified time: 2020-06-23 09:28:14
+ * @Last Modified time: 2020-07-17 23:10:24
  */
 
 import { AroundView, AroundPoint, GlobeRotate } from './core/animation'
@@ -17,6 +17,7 @@ import {
   PolylineTrailMaterialProperty,
   PolylineFlowMaterialProperty,
   PolylineEmissionMaterialProperty,
+  PolylineImageTrailMaterialProperty,
   WaterMaterialProperty,
   RimLightingMaterialProperty,
   CircleFadeMaterialProperty,
@@ -53,6 +54,7 @@ const plugis = {
   PolylineTrailMaterialProperty,
   PolylineFlowMaterialProperty,
   PolylineEmissionMaterialProperty,
+  PolylineImageTrailMaterialProperty,
   WaterMaterialProperty,
   RimLightingMaterialProperty,
   CircleFadeMaterialProperty,
