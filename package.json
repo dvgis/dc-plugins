@@ -1,6 +1,6 @@
 {
   "name": "@dvgis/dc-plugins",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "DC-SDK plug-in library, the plug-in library includes animation, effects, textures, heatmap, clusterLayer, and Mapv",
   "main": "index.js",
   "repository": "https://github.com/Digital-Visual/dc-plugins.git",
@@ -50,7 +50,8 @@
     "url-loader": "^1.1.2",
     "webpack": "^4.29.6",
     "webpack-cli": "^3.3.0",
-    "webpack-glsl-loader": "^1.0.1"
+    "webpack-glsl-loader": "^1.0.1",
+    "webpack-obfuscator": "^1.8.0"
   },
   "dependencies": {
     "heatmap.js": "^2.0.5"

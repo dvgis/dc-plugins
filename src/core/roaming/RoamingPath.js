@@ -2,7 +2,7 @@
  * @Author: Caven
  * @Date: 2020-01-19 11:21:48
  * @Last Modified by: Caven
- * @Last Modified time: 2020-05-11 23:30:00
+ * @Last Modified time: 2020-07-24 13:42:08
  */
 
 import RoamingEventType from './RoamingEventType'
@@ -85,9 +85,9 @@ class RoamingPath {
     )
     let nextTickPosition = this._sampledPosition.getValue(nextTick)
     if (tickPosition && nextTickPosition) {
-      if (viewMode === 0) {
+      if (+viewMode === 2) {
         viewer.trackedEntity = this._delegate
-      } else if (viewMode === 1) {
+      } else if (+viewMode === 1) {
         let heading = Cesium.Math.heading(tickPosition, nextTickPosition)
         let WGS84TickPosition = Transform.transformCartesianToWGS84(
           tickPosition
@@ -101,7 +101,7 @@ class RoamingPath {
             viewOption.range || 10
           )
         )
-      } else if (viewMode === 2) {
+      } else if (+viewMode === 3) {
         camera.lookAt(
           tickPosition,
           new Cesium.HeadingPitchRange(
@@ -118,6 +118,9 @@ class RoamingPath {
   }
 
   _tickHandler(currentTime, viewMode, viewOption) {
+    if (!this._isActive) {
+      return false
+    }
     let orientation = this._delegate.orientation.getValue(currentTime)
     let timePos = this._timeLine[this._positionIndex]
     if (timePos) {
@@ -132,7 +135,7 @@ class RoamingPath {
         this._positionIndex += 1
       }
     }
-    this._isActive && this._setView(currentTime, viewMode, viewOption)
+    !viewMode && this._setView(currentTime, viewMode, viewOption)
   }
 
   _activeHandler(id) {

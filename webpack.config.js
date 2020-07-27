@@ -2,13 +2,14 @@
  * @Author: Caven
  * @Date: 2020-01-18 18:22:23
  * @Last Modified by: Caven
- * @Last Modified time: 2020-06-22 17:30:55
+ * @Last Modified time: 2020-07-27 10:46:27
  */
 
 const path = require('path')
 const webpack = require('webpack')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
+const JavaScriptObfuscator = require('webpack-obfuscator')
 
 function resolve(dir) {
   return path.join(__dirname, '.', dir)
@@ -26,6 +27,14 @@ module.exports = env => {
   if (IS_PROD) {
     plugins.push(new OptimizeCssAssetsPlugin())
     plugins.push(new webpack.NoEmitOnErrorsPlugin())
+    plugins.push(
+      new JavaScriptObfuscator(
+        {
+          rotateStringArray: true
+        },
+        []
+      )
+    )
   }
   return {
     entry: {
