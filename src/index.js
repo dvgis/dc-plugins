@@ -2,22 +2,16 @@
  * @Author: Caven
  * @Date: 2020-01-14 18:22:10
  * @Last Modified by: Caven
- * @Last Modified time: 2020-05-12 12:52:17
+ * @Last Modified time: 2020-07-29 16:12:23
  */
 
-const install = function (DC) {
+const install = function(DC) {
   if (!DC || !DC.init) {
-    throw new Error('Plot: Missing DC Base')
+    throw new Error('Plugins: Missing DC Base')
   }
 
   if (!DC.ready) {
-    throw new Error('Plot: Missing DC Core')
-  }
-
-  if (window.mapv) {
-    DC.Namespace['mapv'] = window.mapv
-    DC.MapvDataSet = window.mapv ? window.mapv.DataSet : undefined
-    delete window.mapv
+    throw new Error('Plugins: Missing DC Core')
   }
 
   DC.init(() => {
@@ -31,5 +25,5 @@ if (typeof window !== 'undefined' && window.DC) {
 }
 
 module.exports = {
-  install,
+  install
 }

@@ -2,17 +2,11 @@
  * @Author: Caven
  * @Date: 2020-01-14 18:24:57
  * @Last Modified by: Caven
- * @Last Modified time: 2020-07-17 23:10:24
+ * @Last Modified time: 2020-07-29 16:17:47
  */
 
 import { AroundView, AroundPoint, GlobeRotate } from './core/animation'
-import {
-  ClusterLayer,
-  CzmlLayer,
-  HeatLayer,
-  KmlLayer,
-  MapvLayer
-} from './core/layer'
+import { ClusterLayer, CzmlLayer, HeatLayer, KmlLayer } from './core/layer'
 import {
   PolylineTrailMaterialProperty,
   PolylineFlowMaterialProperty,
@@ -43,7 +37,6 @@ const plugis = {
   CzmlLayer,
   HeatLayer,
   KmlLayer,
-  MapvLayer,
   Effect,
   BloomEffect,
   CircleScanEffect,
