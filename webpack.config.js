@@ -1,8 +1,6 @@
-/*
+/**
  * @Author: Caven
  * @Date: 2020-01-18 18:22:23
- * @Last Modified by: Caven
- * @Last Modified time: 2020-07-27 10:46:27
  */
 
 const path = require('path')
@@ -60,8 +58,9 @@ module.exports = env => {
           test: /\.js$/,
           exclude: /node_modules/,
           loader: 'babel-loader',
-          query: {
+          options: {
             presets: ['@babel/preset-env'],
+            plugins: ['@babel/transform-runtime'],
             compact: false,
             ignore: ['checkTree']
           }

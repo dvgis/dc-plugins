@@ -9,11 +9,11 @@
     "node": true,
     "browser": true
   },
-  "plugins": ["html", "prettier"],
+  "plugins": ["prettier"],
   "extends": ["eslint:recommended", "plugin:prettier/recommended"],
   "globals": {
-    "Cesium": false,
-    "GSpace": false
+    "DC":false,
+    "Cesium": false
   },
   "rules": {
     "global-require": 0,

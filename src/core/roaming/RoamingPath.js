@@ -1,8 +1,6 @@
-/*
+/**
  * @Author: Caven
  * @Date: 2020-01-19 11:21:48
- * @Last Modified by: Caven
- * @Last Modified time: 2020-07-24 13:42:08
  */
 
 import RoamingEventType from './RoamingEventType'

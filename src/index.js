@@ -1,8 +1,6 @@
-/*
+/**
  * @Author: Caven
  * @Date: 2020-01-14 18:22:10
- * @Last Modified by: Caven
- * @Last Modified time: 2020-07-29 16:12:23
  */
 
 const install = function(DC) {

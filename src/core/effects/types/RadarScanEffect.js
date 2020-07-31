@@ -1,8 +1,6 @@
-/*
+/**
  * @Author: Caven
  * @Date: 2020-02-24 14:11:22
- * @Last Modified by: Caven
- * @Last Modified time: 2020-05-12 00:26:05
  */
 
 import Effect from '../Effect'
@@ -77,19 +75,19 @@ class RadarScanEffect extends Effect {
       uniforms: {
         u_scanCenterEC: () => {
           return Cesium.Matrix4.multiplyByVector(
-            this._viewer.delegate.camera._viewMatrix,
+            this._viewer.camera._viewMatrix,
             cartesian4Center,
             _scratchCartesian4Center
           )
         },
         u_scanPlaneNormalEC: () => {
           let temp = Cesium.Matrix4.multiplyByVector(
-            this._viewer.delegate.camera._viewMatrix,
+            this._viewer.camera._viewMatrix,
             cartesian4Center,
             _scratchCartesian4Center
           )
           let temp1 = Cesium.Matrix4.multiplyByVector(
-            this._viewer.delegate.camera._viewMatrix,
+            this._viewer.camera._viewMatrix,
             cartesian4Center1,
             _scratchCartesian4Center1
           )
@@ -105,17 +103,17 @@ class RadarScanEffect extends Effect {
 
         u_scanLineNormalEC: () => {
           let temp = Cesium.Matrix4.multiplyByVector(
-            this._viewer.delegate.camera._viewMatrix,
+            this._viewer.camera._viewMatrix,
             cartesian4Center,
             _scratchCartesian4Center
           )
           let temp1 = Cesium.Matrix4.multiplyByVector(
-            this._viewer.delegate.camera._viewMatrix,
+            this._viewer.camera._viewMatrix,
             cartesian4Center1,
             _scratchCartesian4Center1
           )
           let temp2 = Cesium.Matrix4.multiplyByVector(
-            viewer.camera._viewMatrix,
+            this._viewer.camera._viewMatrix,
             cartesian4Center2,
             _scratchCartesian4Center2
           )

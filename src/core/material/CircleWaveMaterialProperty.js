@@ -1,8 +1,6 @@
-/*
+/**
  * @Author: Caven
  * @Date: 2020-03-06 17:56:39
- * @Last Modified by: Caven
- * @Last Modified time: 2020-06-22 21:33:25
  */
 
 const { Cesium } = DC.Namespace

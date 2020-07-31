@@ -1,8 +1,6 @@
-/*
+/**
  * @Author: Caven
  * @Date: 2020-01-19 11:04:45
- * @Last Modified by: Caven
- * @Last Modified time: 2020-07-29 16:12:52
  */
 
 export { default as ClusterLayer } from './ClusterLayer'

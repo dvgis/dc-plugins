@@ -1,8 +1,6 @@
-/*
+/**
  * @Author: Caven
  * @Date: 2020-03-02 22:38:10
- * @Last Modified by: Caven
- * @Last Modified time: 2020-06-23 10:44:35
  */
 
 const { Util, SceneEventType, Transform, Parse } = DC

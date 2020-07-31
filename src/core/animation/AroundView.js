@@ -1,8 +1,6 @@
-/*
+/**
  * @Author: Caven
  * @Date: 2020-03-02 23:14:20
- * @Last Modified by: Caven
- * @Last Modified time: 2020-06-15 14:06:24
  */
 
 const { SceneEventType, Util } = DC

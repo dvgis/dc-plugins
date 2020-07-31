@@ -1,8 +1,6 @@
-/*
+/**
  * @Author: Caven
  * @Date: 2020-01-15 20:23:42
- * @Last Modified by: Caven
- * @Last Modified time: 2020-05-12 00:26:13
  */
 
 import Effect from '../Effect'

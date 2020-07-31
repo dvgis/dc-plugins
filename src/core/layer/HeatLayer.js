@@ -1,8 +1,6 @@
-/*
+/**
  * @Author: Caven
  * @Date: 2020-02-27 00:35:35
- * @Last Modified by: Caven
- * @Last Modified time: 2020-06-04 14:49:46
  */
 
 const { State, Layer, SceneEventType, Transform, Position, DomUtil, Util } = DC

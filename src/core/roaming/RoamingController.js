@@ -52,7 +52,7 @@ class RoamingController {
       throw new Error('RoamingController: the time range invalid ')
     }
     this._startTime = Cesium.JulianDate.fromDate(startTime)
-    let endTime = Cesium.JulianDate.fromDate(endTime)
+    endTime = Cesium.JulianDate.fromDate(endTime)
     this._duration = Cesium.JulianDate.secondsDifference(
       endTime,
       this._startTime

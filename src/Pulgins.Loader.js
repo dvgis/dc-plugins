@@ -1,8 +1,6 @@
-/*
+/**
  * @Author: Caven
  * @Date: 2020-01-14 18:24:57
- * @Last Modified by: Caven
- * @Last Modified time: 2020-07-29 16:17:47
  */
 
 import { AroundView, AroundPoint, GlobeRotate } from './core/animation'
@@ -29,7 +27,7 @@ import {
   SnowEffect
 } from './core/effects'
 
-const plugis = {
+const plugins = {
   AroundView,
   AroundPoint,
   GlobeRotate,
@@ -55,4 +53,4 @@ const plugis = {
   WallTrailMaterialProperty
 }
 
-DC.mixin(plugis)
+DC.mixin(plugins)

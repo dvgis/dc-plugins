@@ -1,8 +1,6 @@
-/*
+/**
  * @Author: Caven
  * @Date: 2020-02-24 13:28:37
- * @Last Modified by: Caven
- * @Last Modified time: 2020-07-17 23:10:41
  */
 
 export * from './material'

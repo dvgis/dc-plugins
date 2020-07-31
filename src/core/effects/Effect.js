@@ -1,8 +1,6 @@
-/*
+/**
  * @Author: Caven
  * @Date: 2020-01-14 18:33:33
- * @Last Modified by: Caven
- * @Last Modified time: 2020-05-11 22:52:06
  */
 
 import EffectEventType from './EffectEventType'
@@ -111,7 +109,7 @@ class Effect {
   /**
    *
    * @param {*} type
-   * @param {*} param
+   * @param {*} params
    */
   fire(type, params) {
     this._effectEvent.fire(type, params)
