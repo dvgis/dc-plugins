@@ -41,6 +41,7 @@ class ClusterLayer extends Layer {
 
   set enableCluster(enableCluster) {
     this._delegate.clustering.enabled = enableCluster
+    return this
   }
 
   /**
@@ -95,9 +96,9 @@ class ClusterLayer extends Layer {
           )
           cluster.billboard.disableDepthTestDistance = Number.POSITIVE_INFINITY
           cluster.label.show = true
-          let numLenth = String(clusteredEntities.length + ',').length
+          let numLength = String(clusteredEntities.length + ',').length
           cluster.label.pixelOffset = new Cesium.Cartesian2(
-            -(this._options.size / this._options.fontSize) * (numLenth - 1),
+            -(this._options.size / this._options.fontSize) * (numLength - 1),
             6
           )
         } else if (clusteredEntities.length <= 1) {

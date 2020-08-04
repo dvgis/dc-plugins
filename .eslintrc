@@ -12,7 +12,7 @@
   "plugins": ["prettier"],
   "extends": ["eslint:recommended", "plugin:prettier/recommended"],
   "globals": {
-    "DC":false,
+    "DC": false,
     "Cesium": false
   },
   "rules": {

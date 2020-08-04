@@ -5,6 +5,6 @@
  * @Last Modified time: 2020-05-11 23:29:18
  */
 
-class KeyboadRoaming {}
+class KeyboardRoaming {}
 
-export default KeyboadRoaming
+export default KeyboardRoaming
