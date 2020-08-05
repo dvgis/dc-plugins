@@ -108,8 +108,9 @@ class Effect {
 
   /**
    *
-   * @param {*} type
-   * @param {*} params
+   * @param type
+   * @param params
+   * @returns {Effect}
    */
   fire(type, params) {
     this._effectEvent.fire(type, params)

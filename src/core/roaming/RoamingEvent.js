@@ -14,6 +14,10 @@ class RoamingEvent extends Event {
     super()
   }
 
+  /**
+   *
+   * @private
+   */
   _registerEvent() {
     Object.keys(RoamingEventType).forEach(key => {
       let type = RoamingEventType[key]

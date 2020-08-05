@@ -6,7 +6,7 @@
 const RoamingEventType = {
   ADD: 'add',
   REMOVE: 'remove',
-  TICK: 'tick',
+  POST_UPDATE: 'postUpdate',
   ACTIVE: 'active'
 }
 

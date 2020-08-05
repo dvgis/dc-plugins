@@ -27,6 +27,8 @@ import {
   SnowEffect
 } from './core/effects'
 
+import { RoamingViewMode, RoamingController, RoamingPath } from './core/roaming'
+
 const plugins = {
   AroundView,
   AroundPoint,
@@ -42,6 +44,9 @@ const plugins = {
   RadarScanEffect,
   RainEffect,
   SnowEffect,
+  RoamingViewMode,
+  RoamingController,
+  RoamingPath,
   PolylineTrailMaterialProperty,
   PolylineFlowMaterialProperty,
   PolylineEmissionMaterialProperty,

@@ -1,8 +1,6 @@
-/*
+/**
  * @Author: Caven
  * @Date: 2020-04-01 10:36:36
- * @Last Modified by: Caven
- * @Last Modified time: 2020-05-11 23:29:53
  */
 
 import RoamingEventType from './RoamingEventType'
@@ -14,7 +12,7 @@ const { Cesium } = DC.Namespace
 class RoamingController {
   constructor(viewer) {
     this._viewer = viewer
-    this._clockTickRemoveCallback = undefined
+    this._postUpateRemoveCallback = undefined
     this._startTime = undefined
     this._duration = 0
     this._cache = {}
@@ -22,24 +20,34 @@ class RoamingController {
     this._viewOption = {}
   }
 
-  _clockTickHandler() {
+  get startTime() {
+    return this._startTime
+  }
+
+  get duration() {
+    return this._duration
+  }
+
+  /**
+   * @private
+   */
+  _onPostUpdateHandler(scene, time) {
     Object.keys(this._cache).forEach(key => {
-      let path = this._cache(key)
+      let path = this._cache[key]
       path.roamingEvent &&
-        path.roamingEvent.fire(
-          RoamingEventType.TICK,
-          this._viewer.clock.currentTime,
-          this._viewMode,
-          this._viewOption
-        )
+        path.roamingEvent.fire(RoamingEventType.POST_UPDATE, {
+          currentTime: time,
+          viewMode: this._viewMode,
+          viewOption: this._viewOption
+        })
     })
   }
 
   /**
-   *
-   * @param {*} startTime
-   * @param {*} endTime
-   *
+   * Sets time range
+   * @param startTime
+   * @param endTime
+   * @returns {RoamingController}
    */
   setTimeRange(startTime, endTime) {
     if (
@@ -61,10 +69,10 @@ class RoamingController {
   }
 
   /**
-   *
-   * @param {*} startTime
-   * @param {*} duration
-   *
+   * Sets time duration
+   * @param startTime
+   * @param duration
+   * @returns {RoamingController}
    */
   setTimeDuration(startTime, duration) {
     if (!startTime || !(startTime instanceof Date)) {
@@ -76,18 +84,19 @@ class RoamingController {
   }
 
   /**
-   *
+   * Starts play all path
+   * @returns {RoamingController}
    */
   play() {
     if (!this._startTime && !(this._startTime instanceof Cesium.JulianDate)) {
       throw new Error('RoamingController: time not set ')
     }
-    this._viewer.clock.shouldAnimate = false
+    this._viewer.clock.shouldAnimate = true
     this._viewer.clock.currentTime = this._startTime
-    this._clockTickRemoveCallback && this._clockTickRemoveCallback()
-    this._clockTickRemoveCallback = this._viewer.on(
-      SceneEventType.CLOCK_TICK,
-      this._clockTickHandler,
+    this._postUpateRemoveCallback && this._postUpateRemoveCallback()
+    this._postUpateRemoveCallback = this._viewer.on(
+      SceneEventType.POST_UPDATE,
+      this._onPostUpdateHandler,
       this
     )
     return this
@@ -111,7 +120,8 @@ class RoamingController {
 
   /**
    *
-   * @param {*} speed
+   * @param speed
+   * @returns {RoamingController}
    */
   changeSpeed(speed) {
     this._viewer.clock.multiplier = speed
@@ -119,8 +129,9 @@ class RoamingController {
   }
 
   /**
-   *
-   * @param {*} path
+   * Adds a path
+   * @param path
+   * @returns {RoamingController}
    */
   addPath(path) {
     if (path && path.roamingEvent && path.state !== State.ADDED) {
@@ -131,12 +142,22 @@ class RoamingController {
   }
 
   /**
-   *
-   * @param {*} path
+   * Returns a path
+   * @param id
+   * @returns {*|undefined}
+   */
+  getPath(id) {
+    return this._cache[id] || undefined
+  }
+
+  /**
+   * removes a path
+   * @param path
+   * @returns {RoamingController}
    */
   removePath(path) {
     if (path && path.roamingEvent && path.state !== State.REMOVED) {
-      path.roamingEvent.fire(RoamingEventType.REMOVE)
+      path.roamingEvent.fire(RoamingEventType.REMOVE, this)
       delete this._cache[path.id]
     }
     return this
@@ -144,6 +165,7 @@ class RoamingController {
 
   /**
    *
+   * @returns {RoamingController}
    */
   clearPath() {
     Object.keys(this._cache).forEach(key => {
@@ -155,9 +177,10 @@ class RoamingController {
 
   /**
    *
-   * @param {*} path
-   * @param {*} viewMode
-   * @param {*} viewOption
+   * @param path
+   * @param viewMode
+   * @param viewOption
+   * @returns {RoamingController}
    */
   trackedPath(path, viewMode, viewOption = {}) {
     if (!this._cache[path.id]) {

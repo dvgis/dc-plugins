@@ -19,11 +19,10 @@ class GlobeRotate {
   }
 
   /**
-   *
-   * The main method of rotation
-   * @param {*} scene
-   * @param {*} time
-   *
+   * @param scene
+   * @param time
+   * @returns {boolean}
+   * @private
    */
   _icrf(scene, time) {
     if (scene.mode !== Cesium.SceneMode.SCENE3D) {

@@ -3,10 +3,12 @@
  * @Date: 2020-01-19 11:21:48
  */
 
+import RoamingViewMode from './RoamingViewMode'
 import RoamingEventType from './RoamingEventType'
 import RoamingEvent from './RoamingEvent'
 
 const { Util, State, Transform, Parse } = DC
+
 const { Cesium } = DC.Namespace
 
 const DEF_OPTS = {
@@ -25,6 +27,7 @@ class RoamingPath {
     this._mode = 'speed'
     this._delegate = new Cesium.Entity()
     this._positions = []
+    this._sampledPosition = undefined
     this._isActive = false
     this._tickCallback = tickCallback
     this._options = {
@@ -33,21 +36,20 @@ class RoamingPath {
     }
     this._positionIndex = 0
     this._timeLine = []
-    this._sampledPositions = undefined
     this._roamingEvent = new RoamingEvent()
-    this._roamingEvent.on(RoamingEventType.TICK, this._tickHandler, this)
+    this._roamingEvent.on(
+      RoamingEventType.POST_UPDATE,
+      this._postUpdateHandler,
+      this
+    )
     this._roamingEvent.on(RoamingEventType.ADD, this._addHandler, this)
     this._roamingEvent.on(RoamingEventType.REMOVE, this._removeHandler, this)
     this._roamingEvent.on(RoamingEventType.ACTIVE, this._activeHandler, this)
     this._state = State.INITIALIZED
   }
 
-  set startTime(startTime) {
-    this._startTime = startTime
-  }
-
-  set duration(duration) {
-    this._duration = duration
+  get id() {
+    return this._id
   }
 
   get roamingEvent() {
@@ -58,67 +60,41 @@ class RoamingPath {
     return this._state
   }
 
+  /**
+   * add to entities
+   * @param controller
+   * @private
+   */
   _addHandler(controller) {
     this._controller = controller
+    this._startTime = controller.startTime
+    this._duration = controller.duration
+    this._mountPath()
+    if (!this._delegate.position) {
+      this._mountPosition()
+    }
     this._mountedHook && this._mountedHook()
-    this._controller._viewer.delegate.entities.add(this._delegate)
     this._state = State.ADDED
   }
 
+  /**
+   * remove from entities
+   * @private
+   */
   _removeHandler() {
     if (this._controller) {
       this._controller._viewer.delegate.entities.remove(this._delegate)
-      this.state = State.REMOVED
+      this._state = State.REMOVED
     }
   }
 
-  _setView(currentTime, viewMode, viewOption) {
-    let viewer = this._controller._viewer.delegate
-    let camera = this._controller._viewer.camera
-    let tickPosition = this._sampledPosition.getValue(currentTime)
-    let nextTick = Cesium.JulianDate.addSeconds(
-      currentTime,
-      1 / 60,
-      new Cesium.JulianDate()
-    )
-    let nextTickPosition = this._sampledPosition.getValue(nextTick)
-    if (tickPosition && nextTickPosition) {
-      if (+viewMode === 2) {
-        viewer.trackedEntity = this._delegate
-      } else if (+viewMode === 1) {
-        let heading = Cesium.Math.heading(tickPosition, nextTickPosition)
-        let WGS84TickPosition = Transform.transformCartesianToWGS84(
-          tickPosition
-        )
-        WGS84TickPosition.alt = viewOption.alt || 5
-        camera.lookAt(
-          Transform.transformWGS84ToCartesian(WGS84TickPosition),
-          new Cesium.HeadingPitchRange(
-            heading,
-            Cesium.Math.toRadians(viewOption.pitch || 0),
-            viewOption.range || 10
-          )
-        )
-      } else if (+viewMode === 3) {
-        camera.lookAt(
-          tickPosition,
-          new Cesium.HeadingPitchRange(
-            0,
-            Cesium.Math.toRadians(viewOption.pitch || -30),
-            viewOption.range || 10
-          )
-        )
-      }
-    } else {
-      camera.lookAtTransform(Cesium.Matrix4.IDENTITY)
-      viewer.trackedEntity = undefined
-    }
-  }
-
-  _tickHandler(currentTime, viewMode, viewOption) {
-    if (!this._isActive) {
-      return false
-    }
+  /**
+   * @param params
+   * @returns {boolean}
+   * @private
+   */
+  _postUpdateHandler(params) {
+    let currentTime = params.currentTime
     let orientation = this._delegate.orientation.getValue(currentTime)
     let timePos = this._timeLine[this._positionIndex]
     if (timePos) {
@@ -133,14 +109,94 @@ class RoamingPath {
         this._positionIndex += 1
       }
     }
-    !viewMode && this._setView(currentTime, viewMode, viewOption)
+    this._isActive &&
+      this._setView(currentTime, params.viewMode, params.viewOption)
   }
 
+  /**
+   * @param id
+   * @private
+   */
   _activeHandler(id) {
     this._isActive = this._id === id
   }
 
-  _mountedPosition() {
+  /**
+   * Sets camera position
+   * @param currentTime
+   * @param viewMode
+   * @param viewOption
+   * @private
+   */
+  _setView(currentTime, viewMode, viewOption) {
+    let viewer = this._controller._viewer.delegate
+    let camera = this._controller._viewer.camera
+    let tickPosition = this._sampledPosition.getValue(currentTime)
+    let nextTickPosition = this._sampledPosition.getValue(
+      Cesium.JulianDate.addSeconds(currentTime, 1 / 60, new Cesium.JulianDate())
+    )
+    if (tickPosition && nextTickPosition && viewMode) {
+      if (viewMode === RoamingViewMode.TRACKED) {
+        viewer.trackedEntity = this._delegate
+      } else if (viewMode === RoamingViewMode.FP) {
+        let heading = Cesium.Math.heading(tickPosition, nextTickPosition)
+        let WGS84TickPosition = Transform.transformCartesianToWGS84(
+          tickPosition
+        )
+        WGS84TickPosition.alt = viewOption.alt || 5
+        camera.lookAt(
+          Transform.transformWGS84ToCartesian(WGS84TickPosition),
+          new Cesium.HeadingPitchRange(
+            heading,
+            Cesium.Math.toRadians(viewOption.pitch || 0),
+            viewOption.range || 10
+          )
+        )
+      } else if (viewMode === RoamingViewMode.TP) {
+        camera.lookAt(
+          tickPosition,
+          new Cesium.HeadingPitchRange(0, -90, viewOption.range || 1000)
+        )
+      }
+    } else {
+      camera.lookAtTransform(Cesium.Matrix4.IDENTITY)
+      viewer.trackedEntity = undefined
+    }
+  }
+
+  /**
+   * Mounts path
+   * @private
+   */
+  _mountPath() {
+    if (this._options.showPath) {
+      this._delegate.availability = new Cesium.TimeIntervalCollection([
+        new Cesium.TimeInterval({
+          start: this._startTime,
+          stop: Cesium.JulianDate.addSeconds(
+            this._startTime,
+            this._duration,
+            new Cesium.JulianDate()
+          )
+        })
+      ])
+      this._delegate.path = {
+        material: this._options.pathMaterial,
+        width: this._options.pathWidth,
+        leadTime: this._options.pathLeadTime
+      }
+    }
+  }
+
+  /**
+   * Mounts Position
+   * @private
+   */
+  _mountPosition() {
+    if (!this._startTime || !this._duration) {
+      return false
+    }
+
     let interval = 0
     if (this._mode === 'speed') {
       let v = Cesium.Math.distance(this._positions) / this._duration
@@ -170,22 +226,52 @@ class RoamingPath {
       this._timeLine,
       Transform.transformWGS84ArrayToCartesianArray(this._positions)
     )
+    this._delegate.position = this._sampledPosition
+    this._delegate.position.setInterpolationOptions({
+      interpolationDegree: 1,
+      interpolationAlgorithm: Cesium.LinearApproximation
+    })
+    this._delegate.orientation = new Cesium.VelocityOrientationProperty(
+      this._sampledPosition
+    )
   }
 
-  _mountedHook() {}
+  /**
+   * Mounted Hook
+   * @private
+   */
+  _mountedHook() {
+    this._controller._viewer.delegate.entities.add(this._delegate)
+  }
 
+  /**
+   * Sets mode
+   * @param mode
+   * @returns {RoamingPath}
+   */
   setMode(mode) {
     this._mode = mode
-    this._mountedPosition()
+    this._mountPosition()
     return this
   }
 
+  /**
+   * Sets positions
+   * @param positions
+   * @returns {RoamingPath}
+   */
   setPositions(positions) {
     this._positions = Parse.parsePositions(positions)
-    this._mountedPosition()
+    this._mountPosition()
     return this
   }
 
+  /**
+   * Sets model
+   * @param modelPath
+   * @param style
+   * @returns {RoamingPath}
+   */
   setModel(modelPath, style) {
     this._delegate.model = {
       ...style,
@@ -194,6 +280,12 @@ class RoamingPath {
     return this
   }
 
+  /**
+   * Sets billboard
+   * @param icon
+   * @param style
+   * @returns {RoamingPath}
+   */
   setBillboard(icon, style) {
     this._delegate.billboard = {
       ...style,
@@ -202,8 +294,14 @@ class RoamingPath {
     return this
   }
 
-  setText(text, style) {
-    this._delegate.text = {
+  /**
+   * Sets label
+   * @param text
+   * @param style
+   * @returns {RoamingPath}
+   */
+  setLabel(text, style) {
+    this._delegate.label = {
       ...style,
       text: text
     }

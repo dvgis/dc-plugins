@@ -28,13 +28,17 @@ class AroundPoint {
 
   _start() {
     this._viewer.clock.currentTime = this._startTime.clone()
-    this._viewer.on(SceneEventType.CLOCK_TICK, this._onTickHandler, this)
+    this._viewer.on(SceneEventType.POST_UPDATE, this._onPostUpdateHandler, this)
   }
 
-  _onTickHandler() {
-    let scene = this._viewer.scene
-    let currentTime = this._viewer.clock.currentTime
-    let diff = Cesium.JulianDate.secondsDifference(currentTime, this._startTime)
+  /**
+   *
+   * @param scene
+   * @param time
+   * @private
+   */
+  _onPostUpdateHandler(scene, time) {
+    let diff = Cesium.JulianDate.secondsDifference(time, this._startTime)
     let heading =
       Cesium.Math.toRadians(diff * (360 / this._duration)) + this._heading
     scene.camera.setView({
@@ -45,8 +49,12 @@ class AroundPoint {
       }
     })
     this._options.distance && scene.camera.moveBackward(this._options.distance)
-    if (Cesium.JulianDate.compare(currentTime, this._stopTime) >= 0) {
-      this._viewer.off(SceneEventType.CLOCK_TICK, this._onTickHandler, this)
+    if (Cesium.JulianDate.compare(time, this._stopTime) >= 0) {
+      this._viewer.off(
+        SceneEventType.POST_UPDATE,
+        this._onPostUpdateHandler,
+        this
+      )
       this._options.callback &&
         this._options.callback.call(this._options.context || this)
     }
