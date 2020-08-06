@@ -3,7 +3,7 @@
  * @Date: 2020-03-02 23:14:20
  */
 
-const { SceneEventType, Util } = DC
+const { Util } = DC
 
 const { Cesium } = DC.Namespace
 
@@ -31,7 +31,10 @@ class AroundView {
    */
   _start() {
     this._viewer.clock.currentTime = this._startTime.clone()
-    this._viewer.on(SceneEventType.POST_UPDATE, this._onPostUpdateHandler, this)
+    this._viewer.scene.postUpdate.addEventListener(
+      this._onPostUpdateHandler,
+      this
+    )
   }
 
   /**
@@ -50,8 +53,7 @@ class AroundView {
       }
     })
     if (Cesium.JulianDate.compare(time, this._stopTime) >= 0) {
-      this._viewer.off(
-        SceneEventType.POST_UPDATE,
+      this._viewer.scene.postUpdate.removeEventListener(
         this._onPostUpdateHandler,
         this
       )

@@ -5,7 +5,7 @@
 
 import RoamingEventType from './RoamingEventType'
 
-const { SceneEventType, State } = DC
+const { State } = DC
 
 const { Cesium } = DC.Namespace
 
@@ -94,8 +94,7 @@ class RoamingController {
     this._viewer.clock.shouldAnimate = true
     this._viewer.clock.currentTime = this._startTime
     this._postUpateRemoveCallback && this._postUpateRemoveCallback()
-    this._postUpateRemoveCallback = this._viewer.on(
-      SceneEventType.POST_UPDATE,
+    this._postUpateRemoveCallback = this._viewer.scene.postUpdate.addEventListener(
       this._onPostUpdateHandler,
       this
     )

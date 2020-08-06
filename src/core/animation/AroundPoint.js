@@ -3,7 +3,7 @@
  * @Date: 2020-03-02 22:38:10
  */
 
-const { Util, SceneEventType, Transform, Parse } = DC
+const { Util, Transform, Parse } = DC
 
 const { Cesium } = DC.Namespace
 
@@ -28,7 +28,10 @@ class AroundPoint {
 
   _start() {
     this._viewer.clock.currentTime = this._startTime.clone()
-    this._viewer.on(SceneEventType.POST_UPDATE, this._onPostUpdateHandler, this)
+    this._viewer.scene.postUpdate.addEventListener(
+      this._onPostUpdateHandler,
+      this
+    )
   }
 
   /**
@@ -50,8 +53,7 @@ class AroundPoint {
     })
     this._options.distance && scene.camera.moveBackward(this._options.distance)
     if (Cesium.JulianDate.compare(time, this._stopTime) >= 0) {
-      this._viewer.off(
-        SceneEventType.POST_UPDATE,
+      this._viewer.scene.postUpdate.removeEventListener(
         this._onPostUpdateHandler,
         this
       )
