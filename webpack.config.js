@@ -5,8 +5,6 @@
 
 const path = require('path')
 const webpack = require('webpack')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const JavaScriptObfuscator = require('webpack-obfuscator')
 
 function resolve(dir) {
@@ -16,14 +14,8 @@ function resolve(dir) {
 module.exports = env => {
   const IS_PROD = (env && env.production) || false
   const publicPath = IS_PROD ? '/' : '/'
-  let plugins = [
-    new MiniCssExtractPlugin({
-      filename: IS_PROD ? '[name].min.css' : '[name].css',
-      allChunks: true
-    })
-  ]
+  let plugins = []
   if (IS_PROD) {
-    plugins.push(new OptimizeCssAssetsPlugin())
     plugins.push(new webpack.NoEmitOnErrorsPlugin())
     plugins.push(
       new JavaScriptObfuscator(
@@ -64,30 +56,6 @@ module.exports = env => {
             compact: false,
             ignore: ['checkTree']
           }
-        },
-        {
-          test: /\.css$/,
-          use: [
-            MiniCssExtractPlugin.loader,
-            {
-              loader: 'css-loader'
-            },
-            {
-              loader: 'sass-loader'
-            }
-          ]
-        },
-        {
-          test: /\.scss$/,
-          use: [
-            MiniCssExtractPlugin.loader,
-            {
-              loader: 'css-loader'
-            },
-            {
-              loader: 'sass-loader'
-            }
-          ]
         },
         {
           test: /\.(png|jpg|gif|svg|eot|ttf|woff|woff2)$/,
