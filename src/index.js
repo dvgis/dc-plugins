@@ -13,7 +13,7 @@ const install = function(DC) {
   }
 
   DC.init(() => {
-    require('./Pulgins.Loader')
+    require('./Plugins.Loader')
   })
 }
 
