@@ -26,6 +26,10 @@ class CircleScanEffect extends Effect {
     this._state = State.INITIALIZED
   }
 
+  /**
+   *
+   * @private
+   */
   _mountedHook() {
     let cartesian3Center = Transform.transformWGS84ToCartesian(this._position)
     let cartesian4Center = new Cesium.Cartesian4(

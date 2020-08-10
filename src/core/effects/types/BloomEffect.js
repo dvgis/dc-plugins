@@ -2,6 +2,7 @@
  * @Author: Caven
  * @Date: 2020-02-20 13:26:49
  */
+
 import Effect from '../Effect'
 
 const { State } = DC
@@ -62,7 +63,8 @@ class BloomEffect extends Effect {
   }
 
   /**
-   * 准备代理
+   *
+   * @private
    */
   _mountedHook() {
     this._delegate = this._viewer.delegate.scene.postProcessStages.bloom
@@ -76,7 +78,8 @@ class BloomEffect extends Effect {
   }
 
   /**
-   * 效果添加的回调函数
+   *
+   * @private
    */
   _removedHook() {
     if (this._delegate) {

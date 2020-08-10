@@ -55,8 +55,8 @@ class Effect {
     this._mountedHook && this._mountedHook()
     if (this._delegate && this._addable) {
       this._viewer.delegate.scene.postProcessStages.add(this._delegate)
+      this._addedHook && this._addedHook()
     }
-    this._addedHook && this._addedHook()
     this._state = State.ADDED
   }
 

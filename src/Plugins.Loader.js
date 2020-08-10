@@ -24,7 +24,8 @@ import {
   FogEffect,
   RadarScanEffect,
   RainEffect,
-  SnowEffect
+  SnowEffect,
+  BrightnessEffect
 } from './core/effects'
 
 import { RoamingViewMode, RoamingController, RoamingPath } from './core/roaming'
@@ -44,6 +45,7 @@ const plugins = {
   RadarScanEffect,
   RainEffect,
   SnowEffect,
+  BrightnessEffect,
   RoamingViewMode,
   RoamingController,
   RoamingPath,

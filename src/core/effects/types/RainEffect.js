@@ -19,6 +19,10 @@ class RainEffect extends Effect {
     this._state = State.INITIALIZED
   }
 
+  /**
+   *
+   * @private
+   */
   _mountedHook() {
     this._delegate = new Cesium.PostProcessStage({
       name: this._id,

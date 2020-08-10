@@ -21,6 +21,10 @@ class FogEffect extends Effect {
     this._state = State.INITIALIZED
   }
 
+  /**
+   *
+   * @private
+   */
   _mountedHook() {
     let _this = this
     this._delegate = new Cesium.PostProcessStage({
