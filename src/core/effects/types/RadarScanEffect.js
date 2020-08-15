@@ -1,11 +1,11 @@
 /**
  * @Author: Caven
- * @Date: 2020-02-24 14:11:22
+ * @Date: 2020-08-14 23:13:45
  */
 
 import Effect from '../Effect'
 
-const { Util, State, Transform, Position } = DC
+const { State, Transform, Position, Parse } = DC
 
 const { Cesium } = DC.Namespace
 
@@ -13,11 +13,8 @@ const RadarScanShader = require('../../shader/RadarScanShader.glsl')
 
 class RadarScanEffect extends Effect {
   constructor(id, position, radius, color, duration) {
-    if (!Util.checkPosition(position)) {
-      throw new Error('the position invalid')
-    }
     super(id)
-    this._position = position
+    this._position = Parse.parsePosition(position)
     this._radius = radius || 0
     this._color = Cesium.defaultValue(color, Cesium.Color.RED)
     this._duration = Cesium.defaultValue(duration, 1) * 1e3

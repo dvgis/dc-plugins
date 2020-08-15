@@ -5,7 +5,7 @@
 
 import Effect from '../Effect'
 
-const { State, Util, Transform, Position } = DC
+const { State, Transform, Position, Parse } = DC
 
 const { Cesium } = DC.Namespace
 
@@ -13,11 +13,8 @@ const CircleScanShader = require('../../shader/CircleScanShader.glsl')
 
 class CircleScanEffect extends Effect {
   constructor(id, position, radius, color, duration) {
-    if (!Util.checkPosition(position)) {
-      throw new Error('CircleScanEffect: the position invalid')
-    }
     super(id)
-    this._position = position
+    this._position = Parse.parsePosition(position)
     this._radius = radius || 0
     this._color = Cesium.defaultValue(color, Cesium.Color.RED)
     this._duration = Cesium.defaultValue(duration, 1) * 1e3

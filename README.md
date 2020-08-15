@@ -82,15 +82,19 @@ DC.ready(() => {
 
 ## Documentation
 
+[DC Api](https://resource.dvgis.cn/dc-api)
+
 [Cesium Api](https://cesium.com/docs/cesiumjs-ref-doc/)
 
-[DC-SDK Api](http://resource.dvgis.cn/dc-api)
+
 
 ## Demo
 
-| ![picture](https://raw.githubusercontent.com/Digital-Visual/dc-sdk-examples/master/images/layer/cluster.png)  | ![picture](https://raw.githubusercontent.com/Digital-Visual/dc-sdk-examples/master/images/datav/m_polyline_d.gif) |    ![picture](https://raw.githubusercontent.com/Digital-Visual/dc-sdk-examples/master/images/datav/e_pm2.5.png)    | ![picture](https://raw.githubusercontent.com/Digital-Visual/dc-sdk-examples/master/images/datav/e_pm2.5_2.png) |
-| :-----------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------: |
-| ![picture](https://raw.githubusercontent.com/Digital-Visual/dc-sdk-examples/master/images/datav/m_grid_d.gif) | ![picture](https://raw.githubusercontent.com/Digital-Visual/dc-sdk-examples/master/images/datav/m_honeycomb.png)  | ![picture](https://raw.githubusercontent.com/Digital-Visual/dc-sdk-examples/master/images/datav/m_honeycomb_d.gif) | ![picture](https://raw.githubusercontent.com/Digital-Visual/dc-sdk-examples/master/images/datav/m_point_d.gif) |
+| ![picture](http://dc.dvgis.cn/examples/images/layer/cluster.png)  | ![picture](http://dc.dvgis.cn/examples/images/overlay/polyline_image_trail.gif) | ![picture](http://dc.dvgis.cn/examples/images/overlay/polyline_flow.gif) | ![picture](http://dc.dvgis.cn/examples/images/overlay/wall_trail.gif) |
+| :---------------------------------------------------------------: | :-----------------------------------------------------------------------------: | :---------------------------------------------------------------------: | :-------------------------------------------------------------------: |
+| ![picture](http://dc.dvgis.cn/examples/images/scene/intro.gif) | ![picture](http://dc.dvgis.cn/examples/images/scene/globe_rotate.gif)  | ![picture](http://dc.dvgis.cn/examples/images/scene/circle_scan.gif) | ![picture](http://dc.dvgis.cn/examples/images/scene/radar_scan.gif) |
+| ![picture](http://dc.dvgis.cn/examples/images/scene/snow.gif) | ![picture](http://dc.dvgis.cn/examples/images/scene/fog.png)  | ![picture](http://dc.dvgis.cn/examples/images/scene/brightness.png) | ![picture](http://dc.dvgis.cn/examples/images/scene/roaming_tracked.gif) |
+
 
 [More>>](http://dc.dvgis.cn/#/examples)
 

@@ -1,6 +1,6 @@
 /**
  * @Author: Caven
- * @Date: 2020-02-20 13:26:49
+ * @Date: 2020-08-14 23:50:27
  */
 
 import Effect from '../Effect'
@@ -67,14 +67,21 @@ class BloomEffect extends Effect {
    * @private
    */
   _mountedHook() {
-    this._delegate = this._viewer.delegate.scene.postProcessStages.bloom
-    this._delegate.enabled = true
+    this._delegate = this._viewer.scene.postProcessStages.bloom
     this.contrast = this._contrast
     this.brightness = this._brightness
     this.glowOnly = this._glowOnly
     this.delta = this._delta
     this.sigma = this._sigma
     this.stepSize = this._stepSize
+  }
+
+  /**
+   *
+   * @private
+   */
+  _addedHook() {
+    this._delegate.enabled = true
   }
 
   /**

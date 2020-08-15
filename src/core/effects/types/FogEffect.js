@@ -12,13 +12,28 @@ const { Cesium } = DC.Namespace
 const FogShader = require('../../shader/FogShader.glsl')
 
 class FogEffect extends Effect {
-  constructor(id, color, strength = 1) {
+  constructor(id, fogColor, fogByDistance) {
     super(id)
-    this._strength = strength || 1
-    this._color = color || new Cesium.Color(0.8, 0.8, 0.8, 0.5)
+    this._fogByDistance = fogByDistance
+    this._fogColor = fogColor || new Cesium.Color(0.8, 0.8, 0.8, 0.5)
     this._addable = true
     this.type = Effect.getEffectType('fog')
     this._state = State.INITIALIZED
+  }
+
+  set fogByDistance(fogByDistance) {
+    this._fogByDistance = fogByDistance
+    this._delegate.uniforms.fogByDistance = new Cesium.Cartesian4(
+      this._fogByDistance?.near || 10,
+      this._fogByDistance?.nearValue || 0.0,
+      this._fogByDistance?.far || 200,
+      this._fogByDistance?.farValue || 1.0
+    )
+  }
+
+  set fogColor(fogColor) {
+    this._fogColor = fogColor
+    this._delegate.uniforms.fogColor = this._fogColor
   }
 
   /**
@@ -26,17 +41,17 @@ class FogEffect extends Effect {
    * @private
    */
   _mountedHook() {
-    let _this = this
     this._delegate = new Cesium.PostProcessStage({
       name: this._id,
       fragmentShader: FogShader,
       uniforms: {
-        strength: () => {
-          return _this._strength
-        },
-        fogcolor: () => {
-          return _this._color
-        }
+        fogByDistance: new Cesium.Cartesian4(
+          this._fogByDistance?.near || 10,
+          this._fogByDistance?.nearValue || 0.0,
+          this._fogByDistance?.far || 200,
+          this._fogByDistance?.farValue || 1.0
+        ),
+        fogColor: this._fogColor
       }
     })
   }

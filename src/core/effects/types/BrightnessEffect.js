@@ -1,6 +1,6 @@
 /**
  * @Author: Caven
- * @Date: 2020-08-10 19:16:09
+ * @Date: 2020-08-14 23:51:47
  */
 
 import Effect from '../Effect'
@@ -8,8 +8,6 @@ import Effect from '../Effect'
 const { State } = DC
 
 const { Cesium } = DC.Namespace
-
-const BrightnessShader = require('../../shader/BrightnessShader.glsl')
 
 class BrightnessEffect extends Effect {
   constructor(id, brightness) {
@@ -32,15 +30,16 @@ class BrightnessEffect extends Effect {
    * @private
    */
   _mountedHook() {
-    this._delegate = new Cesium.PostProcessStage({
-      name: this._id,
-      fragmentShader: BrightnessShader,
-      uniforms: {
-        brightness: () => {
-          return this._brightness
-        }
-      }
-    })
+    this._delegate = Cesium.PostProcessStageLibrary.createBrightnessStage()
+    this._delegate.uniforms.brightness = this._brightness
+  }
+
+  /**
+   *
+   * @private
+   */
+  _addedHook() {
+    this._delegate.enabled = true
   }
 }
 

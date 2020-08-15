@@ -1,6 +1,6 @@
 /**
  * @Author: Caven
- * @Date: 2020-01-14 18:33:33
+ * @Date: 2020-08-14 23:49:14
  */
 
 import EffectEventType from './EffectEventType'
@@ -31,7 +31,7 @@ class Effect {
   }
 
   /**
-   * The hook for mounted
+   * The hook for mount the viewer
    */
   _mountedHook() {}
 
@@ -47,8 +47,8 @@ class Effect {
 
   /**
    *
-   * @param {*} viewer
-   * 效果添加的回调函数,
+   * @param viewer
+   * @private
    */
   _addHandler(viewer) {
     this._viewer = viewer
@@ -61,11 +61,11 @@ class Effect {
   }
 
   /**
-   * 效果添加的回调函数
+   * removes
    */
   _removeHandler() {
     if (this._viewer && this._delegate && this._addable) {
-      this._viewer.delegate.scene.postProcessStages.remove(this._delegate)
+      this._viewer.scene.postProcessStages.remove(this._delegate)
       this._delegate = undefined
     }
     this._removedHook && this._removedHook()
@@ -73,9 +73,9 @@ class Effect {
   }
 
   /**
-   *
-   * @param {*} viewer
-   * 添加到Viewer
+   * Adds to Viewer
+   * @param viewer
+   * @returns {Effect}
    */
   addTo(viewer) {
     if (viewer && viewer.addEffect) {
@@ -86,9 +86,10 @@ class Effect {
 
   /**
    *
-   * @param {*} type
-   * @param {*} callback
-   * @param {*} context
+   * @param type
+   * @param callback
+   * @param context
+   * @returns {Effect}
    */
   on(type, callback, context) {
     this._effectEvent.on(type, callback, context || this)
@@ -119,7 +120,7 @@ class Effect {
 
   /**
    *
-   * @param {*} type
+   * @param type
    */
   static registerType(type) {
     if (type) {
@@ -129,7 +130,8 @@ class Effect {
 
   /**
    *
-   * @param {*} type
+   * @param type
+   * @returns {*|undefined}
    */
   static getEffectType(type) {
     return EffectType[type.toLocaleUpperCase()] || undefined

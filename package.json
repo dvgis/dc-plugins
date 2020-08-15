@@ -1,12 +1,12 @@
 {
   "name": "@dvgis/dc-plugins",
-  "version": "1.6.0",
+  "version": "1.6.1",
   "description": "DC-SDK plug-in library, the plug-in library includes animation, effects, textures, heatmap, clusterLayer, and Mapv",
   "main": "index.js",
   "repository": "https://github.com/dvgis/dc-plugins.git",
   "author": "Caven Chen <cavencj@gmail.com>",
   "license": "Apache 2.0",
-  "homepage": "http://dc.dvgis.cn",
+  "homepage": "https://www.dvgis.cn",
   "keywords": [
     "3D",
     "webgl",
