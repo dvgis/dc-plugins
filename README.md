@@ -2,11 +2,11 @@
 
 <p>
 <img src="https://img.shields.io/badge/license-Apache%202-blue"/>
-<img src="https://img.shields.io/github/package-json/v/Digital-Visual/dc-plugins?color=orange&logo=github" />
+<img src="https://img.shields.io/github/package-json/v/dvgis/dc-plugins?color=orange&logo=github" />
 <img src="https://img.shields.io/npm/dw/@dvgis/dc-plugins?logo=npm"/>
 </p>
 
-[**🇨🇳 中文**](./README_zh.md) | [**🇬🇧English**](./)
+[**🇨🇳 中文**](./README_zh.md) | [**🇬🇧English**](./README.md)
 
 > DC-SDK plug-in library, the plug-in library includes animation, effects, textures, heatmap, clusterLayer, and Mapv.
 
