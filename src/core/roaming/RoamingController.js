@@ -12,7 +12,7 @@ const { Cesium } = DC.Namespace
 class RoamingController {
   constructor(viewer) {
     this._viewer = viewer
-    this._postUpateRemoveCallback = undefined
+    this._postUpdateRemoveCallback = undefined
     this._startTime = undefined
     this._duration = 0
     this._cache = {}
@@ -93,8 +93,8 @@ class RoamingController {
     }
     this._viewer.clock.shouldAnimate = true
     this._viewer.clock.currentTime = this._startTime
-    this._postUpateRemoveCallback && this._postUpateRemoveCallback()
-    this._postUpateRemoveCallback = this._viewer.scene.postUpdate.addEventListener(
+    this._postUpdateRemoveCallback && this._postUpdateRemoveCallback()
+    this._postUpdateRemoveCallback = this._viewer.scene.postUpdate.addEventListener(
       this._onPostUpdateHandler,
       this
     )

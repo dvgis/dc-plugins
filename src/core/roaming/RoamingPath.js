@@ -241,18 +241,7 @@ class RoamingPath {
    * @private
    */
   _mountedHook() {
-    this._controller._viewer.delegate.entities.add(this._delegate)
-  }
-
-  /**
-   * Sets mode
-   * @param mode
-   * @returns {RoamingPath}
-   */
-  setMode(mode) {
-    this._mode = mode
-    this._mountPosition()
-    return this
+    this._controller._viewer.entities.add(this._delegate)
   }
 
   /**
@@ -262,6 +251,30 @@ class RoamingPath {
    */
   setPositions(positions) {
     this._positions = Parse.parsePositions(positions)
+    this._mountPosition()
+    return this
+  }
+
+  /**
+   * Adds Position
+   * @param position
+   * @param duration
+   * @returns {RoamingPath}
+   */
+  addPosition(position, duration) {
+    this._positions.push(Parse.parsePosition(position))
+    this._duration += duration
+    this._mountPosition()
+    return this
+  }
+
+  /**
+   * Sets mode
+   * @param mode
+   * @returns {RoamingPath}
+   */
+  setMode(mode) {
+    this._mode = mode
     this._mountPosition()
     return this
   }
