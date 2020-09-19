@@ -8,10 +8,7 @@ const { State, Layer } = DC
 const { Cesium } = DC.Namespace
 
 class CzmlLayer extends Layer {
-  constructor(id, url, options = {}) {
-    if (!url) {
-      throw new Error('CzmlLayer: the url is empty')
-    }
+  constructor(id, url = '', options = {}) {
     super(id)
     this._delegate = Cesium.CzmlDataSource.load(url, options)
     this.type = Layer.getLayerType('czml')
@@ -30,6 +27,12 @@ class CzmlLayer extends Layer {
     return this._show
   }
 
+  /**
+   *
+   * @param method
+   * @param context
+   * @returns {CzmlLayer}
+   */
   eachOverlay(method, context) {
     if (this._delegate) {
       this._delegate.then(dataSource => {

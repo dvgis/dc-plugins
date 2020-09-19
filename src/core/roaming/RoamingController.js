@@ -16,6 +16,7 @@ class RoamingController {
     this._startTime = undefined
     this._duration = 0
     this._cache = {}
+    this._activePath = undefined
     this._viewMode = undefined
     this._viewOption = {}
   }
@@ -31,7 +32,7 @@ class RoamingController {
   /**
    * @private
    */
-  _onPostUpdateHandler(scene, time) {
+  _onPostUpdate(scene, time) {
     Object.keys(this._cache).forEach(key => {
       let path = this._cache[key]
       path.roamingEvent &&
@@ -95,7 +96,7 @@ class RoamingController {
     this._viewer.clock.currentTime = this._startTime
     this._postUpdateRemoveCallback && this._postUpdateRemoveCallback()
     this._postUpdateRemoveCallback = this._viewer.scene.postUpdate.addEventListener(
-      this._onPostUpdateHandler,
+      this._onPostUpdate,
       this
     )
     return this
@@ -106,6 +107,8 @@ class RoamingController {
    */
   pause() {
     this._viewer.clock.shouldAnimate = false
+    this._viewer.camera.lookAtTransform(Cesium.Matrix4.IDENTITY)
+    this._viewer.delegate.trackedEntity = undefined
     return this
   }
 
@@ -155,7 +158,11 @@ class RoamingController {
    * @returns {RoamingController}
    */
   removePath(path) {
-    if (path && path.roamingEvent && path.state !== State.REMOVED) {
+    if (
+      path &&
+      Object(this._cache).hasOwnProperty(path.id) &&
+      path.roamingEvent
+    ) {
       path.roamingEvent.fire(RoamingEventType.REMOVE, this)
       delete this._cache[path.id]
     }
@@ -183,12 +190,20 @@ class RoamingController {
    */
   trackedPath(path, viewMode, viewOption = {}) {
     if (!this._cache[path.id]) {
-      throw new Error('RoamingController: path does not add ')
+      throw new Error('RoamingController: path does not added ')
     }
     this._viewMode = viewMode
     this._viewOption = viewOption
-    path.roamingEvent &&
-      path.roamingEvent.fire(RoamingEventType.ACTIVE, path.id)
+    if (this._activePath && this._activePath.id === path.id) {
+      return this
+    }
+    if (this._activePath && this._activePath.roamingEvent) {
+      this._activePath.roamingEvent.fire(RoamingEventType.RELEASE, path.id)
+    }
+    this._activePath = path
+    if (this._activePath && this._activePath.roamingEvent) {
+      this._activePath.roamingEvent.fire(RoamingEventType.ACTIVE, path.id)
+    }
     return this
   }
 }

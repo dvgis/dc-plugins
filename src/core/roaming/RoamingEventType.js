@@ -7,7 +7,8 @@ const RoamingEventType = {
   ADD: 'add',
   REMOVE: 'remove',
   POST_UPDATE: 'postUpdate',
-  ACTIVE: 'active'
+  ACTIVE: 'active',
+  RELEASE: 'release'
 }
 
 export default RoamingEventType

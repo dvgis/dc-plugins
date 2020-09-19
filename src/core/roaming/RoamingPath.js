@@ -39,12 +39,13 @@ class RoamingPath {
     this._roamingEvent = new RoamingEvent()
     this._roamingEvent.on(
       RoamingEventType.POST_UPDATE,
-      this._postUpdateHandler,
+      this._onPostUpdate,
       this
     )
-    this._roamingEvent.on(RoamingEventType.ADD, this._addHandler, this)
-    this._roamingEvent.on(RoamingEventType.REMOVE, this._removeHandler, this)
-    this._roamingEvent.on(RoamingEventType.ACTIVE, this._activeHandler, this)
+    this._roamingEvent.on(RoamingEventType.ADD, this._onAdd, this)
+    this._roamingEvent.on(RoamingEventType.REMOVE, this._onRemove, this)
+    this._roamingEvent.on(RoamingEventType.ACTIVE, this._onActive, this)
+    this._roamingEvent.on(RoamingEventType.RELEASE, this._onRelease, this)
     this._state = State.INITIALIZED
   }
 
@@ -60,12 +61,16 @@ class RoamingPath {
     return this._state
   }
 
+  get isActive() {
+    return this._isActive
+  }
+
   /**
    * add to entities
    * @param controller
    * @private
    */
-  _addHandler(controller) {
+  _onAdd(controller) {
     this._controller = controller
     this._startTime = controller.startTime
     this._duration = controller.duration
@@ -81,10 +86,14 @@ class RoamingPath {
    * remove from entities
    * @private
    */
-  _removeHandler() {
+  _onRemove() {
     if (this._controller) {
       this._controller._viewer.delegate.entities.remove(this._delegate)
       this._state = State.REMOVED
+      if (this._isActive) {
+        this._controller._viewer.camera.lookAtTransform(Cesium.Matrix4.IDENTITY)
+        this._controller._viewer.delegate.trackedEntity = undefined
+      }
     }
   }
 
@@ -93,7 +102,7 @@ class RoamingPath {
    * @returns {boolean}
    * @private
    */
-  _postUpdateHandler(params) {
+  _onPostUpdate(params) {
     let currentTime = params.currentTime
     let orientation = this._delegate.orientation.getValue(currentTime)
     let timePos = this._timeLine[this._positionIndex]
@@ -114,11 +123,18 @@ class RoamingPath {
   }
 
   /**
-   * @param id
    * @private
    */
-  _activeHandler(id) {
-    this._isActive = this._id === id
+  _onActive() {
+    this._isActive = true
+  }
+
+  /**
+   *
+   * @private
+   */
+  _onRelease() {
+    this._isActive = false
   }
 
   /**

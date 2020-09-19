@@ -3,15 +3,12 @@
  * @Date: 2020-03-02 22:38:10
  */
 
-const { Util, Transform, Parse } = DC
+const { Transform, Parse } = DC
 
 const { Cesium } = DC.Namespace
 
 class AroundPoint {
   constructor(viewer, position, options = {}) {
-    if (!Util.checkViewer(viewer)) {
-      throw new Error('AroundPoint：the viewer invalid')
-    }
     this._viewer = viewer
     this._position = Parse.parsePosition(position)
     this._options = options

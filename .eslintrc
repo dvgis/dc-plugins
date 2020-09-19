@@ -12,6 +12,8 @@
   "plugins": ["prettier"],
   "extends": ["eslint:recommended", "plugin:prettier/recommended"],
   "globals": {
+    "__VERSION__": false,
+    "__TIME__": false,
     "DC": false,
     "Cesium": false
   },

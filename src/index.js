@@ -23,5 +23,7 @@ if (typeof window !== 'undefined' && window.DC) {
 }
 
 export default {
+  version: __VERSION__,
+  compile_time: __TIME__,
   install
 }

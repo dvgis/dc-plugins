@@ -3,15 +3,10 @@
  * @Date: 2020-03-02 23:14:20
  */
 
-const { Util } = DC
-
 const { Cesium } = DC.Namespace
 
 class AroundView {
   constructor(viewer, options = {}) {
-    if (!Util.checkViewer(viewer)) {
-      throw new Error('AroundView: the viewer invalid')
-    }
     this._viewer = viewer
     this._options = options
     this._heading = viewer.camera.heading

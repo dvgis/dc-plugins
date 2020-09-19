@@ -39,9 +39,9 @@ Tips：This SDK is JS+GIS framework package. Developers need to have some front-
 ```
 
 ```js
-import 'dvgis/dc-sdk/dist/dc.base.min' //Basic Package
-import 'dvgis/dc-sdk/dist/dc.core.min' //Core Package
-import 'dvgis/dc-plugins/dist/dc.plugins.min' //Plugins Package
+import DC from  'dvgis/dc-sdk/dist/dc.base.min' //Basic Package
+import DcCore from 'dvgis/dc-sdk/dist/dc.core.min' //Core Package
+import DcPlugins from  'dvgis/dc-plugins/dist/dc.plugins.min' //Plugins Package
 import 'dvgis/dc-sdk/dist/dc.core.min.css' // Main Style Sheet
 ```
 
@@ -75,6 +75,8 @@ module.exports = {
 ## Start
 
 ```js
+DC.use(DcCore)
+DC.use(DcPlugins)
 DC.ready(() => {
   let viewer = new DC.Viewer(divId) // divId is the Id attribute value of a div node. If it is not passed in, the 3D scene cannot be initialized
 })

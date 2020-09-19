@@ -18,8 +18,8 @@ class Effect {
     this._addable = false
     this._effectEvent = new EffectEvent()
     this.type = undefined
-    this.on(EffectEventType.ADD, this._addHandler, this)
-    this.on(EffectEventType.REMOVE, this._removeHandler, this)
+    this.on(EffectEventType.ADD, this._onAdd, this)
+    this.on(EffectEventType.REMOVE, this._onRemove, this)
   }
 
   get id() {
@@ -50,7 +50,7 @@ class Effect {
    * @param viewer
    * @private
    */
-  _addHandler(viewer) {
+  _onAdd(viewer) {
     this._viewer = viewer
     this._mountedHook && this._mountedHook()
     if (this._delegate && this._addable) {
@@ -63,7 +63,7 @@ class Effect {
   /**
    * removes
    */
-  _removeHandler() {
+  _onRemove() {
     if (this._viewer && this._delegate && this._addable) {
       this._viewer.scene.postProcessStages.remove(this._delegate)
       this._delegate = undefined
