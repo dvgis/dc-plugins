@@ -23,11 +23,10 @@ class WaterMaterialProperty {
     this._normalMap = undefined
     this._normalMapSubscription = undefined
     this.normalMap = options.normalMap || Cesium.Material.DefaultImageId
-    this.frequency = Cesium.defaultValue(options.frequency, 10)
+    this.frequency = Cesium.defaultValue(options.frequency, 1000)
     this.animationSpeed = Cesium.defaultValue(options.animationSpeed, 0.01)
-    this.amplitude = Cesium.defaultValue(options.amplitude, 1.0)
+    this.amplitude = Cesium.defaultValue(options.amplitude, 10.0)
     this.specularIntensity = Cesium.defaultValue(options.specularIntensity, 0.5)
-    this.fadeFactor = Cesium.defaultValue(options.fadeFactor, 1.0)
   }
 
   get isConstant() {
@@ -66,7 +65,6 @@ class WaterMaterialProperty {
     result.animationSpeed = this.animationSpeed
     result.amplitude = this.amplitude
     result.specularIntensity = this.specularIntensity
-    result.fadeFactor = this.fadeFactor
     return result
   }
 

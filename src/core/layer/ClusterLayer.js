@@ -8,16 +8,17 @@ const { State, Layer } = DC
 const { Cesium } = DC.Namespace
 
 const DEF_OPT = {
-  size: 48,
+  size: 18,
   pixelRange: 40,
   gradient: {
-    0.0001: Cesium.Color.BLUE.withAlpha(0.5),
-    0.001: Cesium.Color.GREEN.withAlpha(0.5),
-    0.01: Cesium.Color.ORANGE.withAlpha(0.5),
-    0.1: Cesium.Color.RED.withAlpha(0.5)
+    0.0001: Cesium.Color.DEEPSKYBLUE,
+    0.001: Cesium.Color.GREEN,
+    0.01: Cesium.Color.ORANGE,
+    0.1: Cesium.Color.RED
   },
-  fontSize: 14,
-  fontColor: Cesium.Color.BLACK
+  fontSize: 12,
+  fontColor: Cesium.Color.BLACK,
+  style: 'circle'
 }
 
 class ClusterLayer extends Layer {
@@ -33,7 +34,6 @@ class ClusterLayer extends Layer {
       this._clusterEventHandler,
       this
     )
-    this._circleCache = {}
     this._delegate.clustering.pixelRange = this._options.pixelRange
     this.type = Layer.getLayerType('cluster')
     this._state = State.INITIALIZED
@@ -46,12 +46,15 @@ class ClusterLayer extends Layer {
 
   /**
    *
-   * @param {*} color
+   * @param color
+   * @param numLength
+   * @returns {*}
+   * @private
    */
-  _drawCircle(color) {
-    let key = color.toCssColorString()
-    let size = this._options.size
-    if (!this._circleCache[key]) {
+  _drawCircle(color, numLength) {
+    let size = this._options.size * (numLength + 1)
+    let key = color.toCssColorString() + '-' + size
+    if (!this._cache[key]) {
       let canvas = document.createElement('canvas')
       canvas.width = size
       canvas.height = size
@@ -60,18 +63,61 @@ class ClusterLayer extends Layer {
       context2D.scale(size / 24, size / 24) //Added to auto-generated code to scale up to desired size.
       context2D.fillStyle = color.withAlpha(0.2).toCssColorString() //Modified from auto-generated code.
       context2D.beginPath()
-      context2D.arc(12, 12, 12, 0, 2 * Math.PI)
+      context2D.arc(12, 12, 9, 0, 2 * Math.PI)
       context2D.closePath()
       context2D.fill()
       context2D.beginPath()
-      context2D.arc(12, 12, 9, 0, 2 * Math.PI)
+      context2D.arc(12, 12, 6, 0, 2 * Math.PI)
       context2D.fillStyle = color.toCssColorString()
       context2D.fill()
       context2D.closePath()
       context2D.restore()
-      this._circleCache[key] = canvas.toDataURL()
+      this._cache[key] = canvas.toDataURL()
     }
-    return this._circleCache[key]
+    return this._cache[key]
+  }
+
+  /**
+   *
+   * @param color
+   * @param numLength
+   * @returns {*}
+   * @private
+   */
+  _drawClustering(color, numLength) {
+    let size = this._options.size * (numLength + 1)
+    let key = color.toCssColorString() + '-' + size
+    let startAngle = -Math.PI / 12
+    let angle = Math.PI / 2
+    let intervalAngle = Math.PI / 6
+    if (!this._cache[key]) {
+      let canvas = document.createElement('canvas')
+      canvas.width = size
+      canvas.height = size
+      let context2D = canvas.getContext('2d')
+      context2D.save()
+      context2D.scale(size / 24, size / 24) //Added to auto-generated code to scale up to desired size.
+      context2D.beginPath()
+      context2D.arc(12, 12, 6, 0, 2 * Math.PI)
+      context2D.fillStyle = color.toCssColorString()
+      context2D.fill()
+      context2D.closePath()
+      context2D.lineWidth = 2
+      for (let i = 0; i < 3; i++) {
+        context2D.beginPath()
+        context2D.arc(12, 12, 8, startAngle, startAngle + angle, false)
+        context2D.strokeStyle = color.withAlpha(0.4).toCssColorString()
+        context2D.stroke()
+        context2D.arc(12, 12, 11, startAngle, startAngle + angle, false)
+        context2D.strokeStyle = color.withAlpha(0.2).toCssColorString()
+        context2D.stroke()
+        context2D.closePath()
+        startAngle = startAngle + angle + intervalAngle
+      }
+      context2D.restore()
+      this._cache[key] = canvas.toDataURL()
+    }
+    return this._cache[key]
   }
 
   /**
@@ -81,7 +127,7 @@ class ClusterLayer extends Layer {
    */
   _clusterEventHandler(clusteredEntities, cluster) {
     if (!this._delegate.clustering.enabled) {
-      return false
+      return
     }
     cluster.billboard.show = true
     cluster.label.font = `bold ${this._options.fontSize}px sans-serif`
@@ -91,16 +137,27 @@ class ClusterLayer extends Layer {
       let allCount = this._delegate.entities.values.length || 0
       for (let key in this._options.gradient) {
         if (clusteredEntities.length >= allCount * key) {
-          cluster.billboard.image = this._drawCircle(
-            this._options.gradient[key]
-          )
-          cluster.billboard.disableDepthTestDistance = Number.POSITIVE_INFINITY
+          let numLength = String(clusteredEntities.length).length
+          if (this._options.style === 'circle') {
+            cluster.billboard.image = this._drawCircle(
+              this._options.gradient[key],
+              numLength
+            )
+          } else {
+            cluster.billboard.image = this._drawClustering(
+              this._options.gradient[key],
+              numLength
+            )
+          }
           cluster.label.show = true
-          let numLength = String(clusteredEntities.length + ',').length
-          cluster.label.pixelOffset = new Cesium.Cartesian2(
-            -(this._options.size / this._options.fontSize) * (numLength - 1),
-            6
-          )
+          if (numLength === 1) {
+            cluster.label.pixelOffset = new Cesium.Cartesian2(-2, 3)
+          } else {
+            cluster.label.pixelOffset = new Cesium.Cartesian2(
+              -5 * (numLength - 1),
+              5
+            )
+          }
         } else if (clusteredEntities.length <= 1) {
           cluster.label.show = false
         }
