@@ -8,9 +8,9 @@ czm_material czm_getMaterial(czm_materialInput materialInput){
   float dis = distance(st, vec2(0.5, 0.5));
   float per = fract(czm_frameNumber * speed / 1000.0);
   if(dis > per * 0.5){
-   discard;
+    material.alpha = color.a;
   }else {
-    material.alpha = color.a  * dis / per / 2.0;
+    discard;
   }
   return material;
 }

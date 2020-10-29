@@ -14,7 +14,7 @@ czm_material czm_getMaterial(czm_materialInput materialInput)
   if(abs(str.z)>0.001){
     discard;
   }
-  if(dis >0.5){
+  if(dis > 0.5){
     discard;
   }else {
     float perDis = 0.5 / count;
