@@ -12,23 +12,34 @@ class AroundPoint {
     this._viewer = viewer
     this._position = Parse.parsePosition(position)
     this._options = options
+    this._duration = options.duration || 10
     this._heading = viewer.camera.heading
     this._startTime = Cesium.JulianDate.now()
-    this._duration = this._options.duration || 10
-    this._stopTime = Cesium.JulianDate.addSeconds(
-      this._startTime,
-      this._duration,
-      new Cesium.JulianDate()
-    )
-    this._start()
+    this._startAround()
+    let flag = setTimeout(() => {
+      this._endAround()
+      options.callback && options.callback.call(options.context || this)
+      clearTimeout(flag)
+    }, Number(options.duration) * 1e3)
   }
 
-  _start() {
+  /**
+   *
+   * @private
+   */
+  _startAround() {
     this._viewer.clock.currentTime = this._startTime.clone()
-    this._viewer.scene.postUpdate.addEventListener(
-      this._onPostUpdateHandler,
-      this
-    )
+    this._viewer.scene.postUpdate.addEventListener(this._onAround, this)
+  }
+
+  /**
+   *
+   * @private
+   */
+  _endAround() {
+    this._viewer.camera.lookAtTransform(Cesium.Matrix4.IDENTITY)
+    this._viewer.clock.currentTime = Cesium.JulianDate.now().clone()
+    this._viewer.scene.postUpdate.removeEventListener(this._onAround, this)
   }
 
   /**
@@ -37,26 +48,27 @@ class AroundPoint {
    * @param time
    * @private
    */
-  _onPostUpdateHandler(scene, time) {
+  _onAround(scene, time) {
     let diff = Cesium.JulianDate.secondsDifference(time, this._startTime)
     let heading =
       Cesium.Math.toRadians(diff * (360 / this._duration)) + this._heading
-    scene.camera.setView({
-      destination: Transform.transformWGS84ToCartesian(this._position),
-      orientation: {
-        heading: heading,
-        pitch: Cesium.Math.toRadians(this._options.pitch || 0)
-      }
-    })
-    this._options.distance && scene.camera.moveBackward(this._options.distance)
-    if (Cesium.JulianDate.compare(time, this._stopTime) >= 0) {
-      this._viewer.scene.postUpdate.removeEventListener(
-        this._onPostUpdateHandler,
-        this
+    scene.camera.lookAt(
+      Transform.transformWGS84ToCartesian(this._position),
+      new Cesium.HeadingPitchRange(
+        heading,
+        Cesium.Math.toRadians(this._options.pitch || 0),
+        this._options.range || 1000
       )
-      this._options.callback &&
-        this._options.callback.call(this._options.context || this)
-    }
+    )
+  }
+
+  /**
+   *
+   * @returns {AroundPoint}
+   */
+  stop() {
+    this._endAround()
+    return this
   }
 }
 

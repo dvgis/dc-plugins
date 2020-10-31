@@ -6,16 +6,15 @@
 const { Cesium } = DC.Namespace
 
 class GlobeRotate {
-  constructor(viewer, duration = 5, callback, context) {
+  constructor(viewer, options = {}) {
     this._viewer = viewer
-    this._duration = duration
-    this._callback = callback
+    this._speed = options.speed || 12 * 1000
     this._startRotate()
     let flag = setTimeout(() => {
       this._endRotate()
-      this._callback && this._callback.call(context || this)
+      options.callback && options.callback.call(options.context || this)
       clearTimeout(flag)
-    }, Number(this._duration) * 1e3)
+    }, Number(options.duration || 5) * 1e3)
   }
 
   /**
@@ -42,7 +41,7 @@ class GlobeRotate {
    */
   _startRotate() {
     this._viewer.camera.lookAtTransform(Cesium.Matrix4.IDENTITY)
-    this._viewer.clock.multiplier = 12 * 1000
+    this._viewer.clock.multiplier = this._speed
     this._viewer.scene.postUpdate.addEventListener(this._icrf, this)
   }
 
@@ -54,6 +53,15 @@ class GlobeRotate {
     this._viewer.clock.multiplier = 1
     this._viewer.clock.currentTime = Cesium.JulianDate.now().clone()
     this._viewer.scene.postUpdate.removeEventListener(this._icrf, this)
+  }
+
+  /**
+   *
+   * @returns {GlobeRotate}
+   */
+  stop() {
+    this._endRotate()
+    return this
   }
 }
 
