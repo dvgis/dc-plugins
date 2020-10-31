@@ -90,7 +90,7 @@ DC.ready(() => {
 
 ## 示例
 
-| ![图片](http://dc.dvgis.cn/examples/images/layer/cluster.png)  | ![图片](http://dc.dvgis.cn/examples/images/overlay/polyline_image_trail.gif) | ![图片](http://dc.dvgis.cn/examples/images/overlay/polyline_flow.gif) | ![图片](http://dc.dvgis.cn/examples/images/overlay/wall_trail.gif) |
+| ![图片](http://dc.dvgis.cn/examples/images/layer/cluster_clustering.gif)  | ![图片](http://dc.dvgis.cn/examples/images/overlay/polyline_image_trail.gif) | ![图片](http://dc.dvgis.cn/examples/images/overlay/polyline_flow.gif) | ![图片](http://dc.dvgis.cn/examples/images/overlay/wall_trail.gif) |
 | :---------------------------------------------------------------: | :-----------------------------------------------------------------------------: | :---------------------------------------------------------------------: | :-------------------------------------------------------------------: |
 | ![图片](http://dc.dvgis.cn/examples/images/scene/intro.gif) | ![图片](http://dc.dvgis.cn/examples/images/scene/globe_rotate.gif)  | ![图片](http://dc.dvgis.cn/examples/images/scene/circle_scan.gif) | ![图片](http://dc.dvgis.cn/examples/images/scene/radar_scan.gif) |
 | ![图片](http://dc.dvgis.cn/examples/images/scene/snow.gif) | ![图片](http://dc.dvgis.cn/examples/images/scene/fog.png)  | ![图片](http://dc.dvgis.cn/examples/images/scene/brightness.png) | ![图片](http://dc.dvgis.cn/examples/images/scene/roaming_tracked.gif) |
