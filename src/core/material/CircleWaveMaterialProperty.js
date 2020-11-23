@@ -15,7 +15,7 @@ class CircleWaveMaterialProperty {
     this._speedSubscription = undefined
     this.color = options.color || Cesium.Color.fromBytes(0, 255, 255, 255)
     this.speed = options.speed || 45
-    this.count = Math.max(options.count || 2, 1)
+    this.count = Math.max(options.count || 3, 1)
     this.gradient = Cesium.Math.clamp(options.gradient || 0.1, 0, 1)
   }
 
