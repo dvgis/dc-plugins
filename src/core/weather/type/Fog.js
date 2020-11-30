@@ -3,22 +3,31 @@
  * @Date: 2020-02-26 23:05:44
  */
 
-import Effect from '../Effect'
-
-const { State } = DC
+const { State, Util } = DC
 
 const { Cesium } = DC.Namespace
 
 const FogShader = require('../../shader/FogShader.glsl')
 
-class FogEffect extends Effect {
-  constructor(id, fogColor, fogByDistance) {
-    super(id)
-    this._fogByDistance = fogByDistance
-    this._fogColor = fogColor || new Cesium.Color(0.8, 0.8, 0.8, 0.5)
-    this._addable = true
-    this.type = Effect.getEffectType('fog')
+class Fog {
+  constructor() {
+    this._id = Util.uuid()
+    this._delegate = undefined
+    this._enable = false
+    this._fogByDistance = { near: 10, nearValue: 0, far: 2000, farValue: 1.0 }
+    this._fogColor = new Cesium.Color(0, 0, 0, 1)
+    this.type = 'fog'
     this._state = State.INITIALIZED
+  }
+
+  set enable(enable) {
+    this._enable = enable
+    this._delegate.enabled = this._enable
+    return this
+  }
+
+  get enable() {
+    return this._enable
   }
 
   set fogByDistance(fogByDistance) {
@@ -26,21 +35,31 @@ class FogEffect extends Effect {
     this._delegate.uniforms.fogByDistance = new Cesium.Cartesian4(
       this._fogByDistance?.near || 10,
       this._fogByDistance?.nearValue || 0.0,
-      this._fogByDistance?.far || 200,
+      this._fogByDistance?.far || 2000,
       this._fogByDistance?.farValue || 1.0
     )
+    return this
+  }
+
+  get fogByDistance() {
+    return this._fogByDistance
   }
 
   set fogColor(fogColor) {
     this._fogColor = fogColor
     this._delegate.uniforms.fogColor = this._fogColor
+    return this
+  }
+
+  get fogColor() {
+    return this._fogColor
   }
 
   /**
    *
    * @private
    */
-  _mountedHook() {
+  _init() {
     this._delegate = new Cesium.PostProcessStage({
       name: this._id,
       fragmentShader: FogShader,
@@ -54,9 +73,23 @@ class FogEffect extends Effect {
         fogColor: this._fogColor
       }
     })
+    this._delegate.enabled = this._enable
+  }
+
+  /**
+   *
+   * @param viewer
+   * @returns {Fog}
+   */
+  addTo(viewer) {
+    if (!viewer) {
+      return this
+    }
+    this._init()
+    viewer.scene.postProcessStages.add(this._delegate)
+    this._state = State.ADDED
+    return this
   }
 }
 
-Effect.registerType('fog')
-
-export default FogEffect
+export default Fog

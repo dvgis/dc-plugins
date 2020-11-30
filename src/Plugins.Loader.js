@@ -21,15 +21,14 @@ import {
   Effect,
   BloomEffect,
   CircleScanEffect,
-  FogEffect,
   RadarScanEffect,
-  RainEffect,
-  SnowEffect,
   BrightnessEffect,
   NightVisionEffect
 } from './core/effects'
 
 import { RoamingViewMode, RoamingController, RoamingPath } from './core/roaming'
+
+import Weather from './core/weather/Weather'
 
 const plugins = {
   AroundView,
@@ -42,15 +41,13 @@ const plugins = {
   Effect,
   BloomEffect,
   CircleScanEffect,
-  FogEffect,
   RadarScanEffect,
-  RainEffect,
-  SnowEffect,
   BrightnessEffect,
   NightVisionEffect,
   RoamingViewMode,
   RoamingController,
   RoamingPath,
+  Weather,
   PolylineTrailMaterialProperty,
   PolylineFlowMaterialProperty,
   PolylineEmissionMaterialProperty,

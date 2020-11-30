@@ -1,6 +1,6 @@
 {
   "name": "@dvgis/dc-plugins",
-  "version": "1.7.3",
+  "version": "1.8.0",
   "description": "DC-SDK plug-in library, the plug-in library includes animation, effects, textures, heatmap, clusterLayer, and Mapv",
   "main": "index.js",
   "repository": "https://github.com/dvgis/dc-plugins.git",
