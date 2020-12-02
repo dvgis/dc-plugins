@@ -25,8 +25,7 @@ class Cloud {
     if (!this._viewer.scene.mode === Cesium.SceneMode.SCENE3D) {
       return this
     }
-    this._enable = enable
-    this._delegate.show = this._enable
+    this._enable = this._delegate.show = enable
     if (this._enable) {
       this._viewer.scene.postUpdate.addEventListener(this._onRotate, this)
     } else {

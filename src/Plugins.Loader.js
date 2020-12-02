@@ -3,7 +3,15 @@
  * @Date: 2020-01-14 18:24:57
  */
 
-import { AroundView, AroundPoint, GlobeRotate } from './core/animation'
+import {
+  AroundView,
+  AroundPoint,
+  GlobeRotate,
+  CircleScan,
+  RadarScan
+} from './core/animation'
+import Effect from './core/effect/Effect'
+import Weather from './core/weather/Weather'
 import { ClusterLayer, CzmlLayer, HeatLayer, KmlLayer } from './core/layer'
 import {
   PolylineTrailMaterialProperty,
@@ -17,37 +25,23 @@ import {
   WallTrailMaterialProperty
 } from './core/material'
 
-import {
-  Effect,
-  BloomEffect,
-  CircleScanEffect,
-  RadarScanEffect,
-  BrightnessEffect,
-  NightVisionEffect
-} from './core/effects'
-
 import { RoamingViewMode, RoamingController, RoamingPath } from './core/roaming'
-
-import Weather from './core/weather/Weather'
 
 const plugins = {
   AroundView,
   AroundPoint,
   GlobeRotate,
+  CircleScan,
+  RadarScan,
   ClusterLayer,
   CzmlLayer,
   HeatLayer,
   KmlLayer,
+  Weather,
   Effect,
-  BloomEffect,
-  CircleScanEffect,
-  RadarScanEffect,
-  BrightnessEffect,
-  NightVisionEffect,
   RoamingViewMode,
   RoamingController,
   RoamingPath,
-  Weather,
   PolylineTrailMaterialProperty,
   PolylineFlowMaterialProperty,
   PolylineEmissionMaterialProperty,

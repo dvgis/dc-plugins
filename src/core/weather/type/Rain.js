@@ -20,8 +20,7 @@ class Rain {
   }
 
   set enable(enable) {
-    this._enable = enable
-    this._delegate.enabled = this._enable
+    this._enable = this._delegate.enabled = enable
     return this
   }
 
@@ -30,8 +29,7 @@ class Rain {
   }
 
   set speed(speed) {
-    this._speed = speed
-    this._delegate.uniforms.speed = this._speed
+    this._speed = this._delegate.uniforms.speed = speed
     return this
   }
 

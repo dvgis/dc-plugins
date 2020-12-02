@@ -1,21 +1,17 @@
 /**
  * @Author: Caven
- * @Date: 2020-01-15 20:23:46
+ * @Date: 2020-08-14 23:10:14
  */
 
-const { State, Util } = DC
+const { State } = DC
 
 const { Cesium } = DC.Namespace
 
-const SnowShader = require('../../shader/SnowShader.glsl')
-
-class Snow {
+class NightVision {
   constructor() {
-    this._id = Util.uuid()
-    this._delegate = undefined
     this._enable = false
-    this._speed = 10.0
-    this.type = 'snow'
+    this._selected = []
+    this.type = 'night_vision'
     this._state = State.INITIALIZED
   }
 
@@ -28,13 +24,13 @@ class Snow {
     return this._enable
   }
 
-  set speed(speed) {
-    this._speed = this._delegate.uniforms.speed = speed
+  set selected(selected) {
+    this._selected = this._delegate.selected = selected
     return this
   }
 
-  get speed() {
-    return this._speed
+  get selected() {
+    return this._selected
   }
 
   /**
@@ -42,20 +38,14 @@ class Snow {
    * @private
    */
   _init() {
-    this._delegate = new Cesium.PostProcessStage({
-      name: this._id,
-      fragmentShader: SnowShader,
-      uniforms: {
-        speed: this._speed
-      }
-    })
+    this._delegate = Cesium.PostProcessStageLibrary.createNightVisionStage()
     this._delegate.enabled = this._enable
   }
 
   /**
    *
    * @param viewer
-   * @returns {Snow}
+   * @returns {NightVision}
    */
   addTo(viewer) {
     if (!viewer) {
@@ -68,4 +58,4 @@ class Snow {
   }
 }
 
-export default Snow
+export default NightVision

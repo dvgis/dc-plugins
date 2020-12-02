@@ -21,8 +21,7 @@ class Fog {
   }
 
   set enable(enable) {
-    this._enable = enable
-    this._delegate.enabled = this._enable
+    this._enable = this._delegate.enabled = enable
     return this
   }
 
@@ -46,8 +45,7 @@ class Fog {
   }
 
   set fogColor(fogColor) {
-    this._fogColor = fogColor
-    this._delegate.uniforms.fogColor = this._fogColor
+    this._fogColor = this._delegate.uniforms.fogColor = fogColor
     return this
   }
 

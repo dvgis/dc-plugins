@@ -55,7 +55,8 @@ class PolylineFlowMaterialProperty {
     return (
       this === other ||
       (other instanceof PolylineFlowMaterialProperty &&
-        Cesium.Property.equals(this._color, other._color))
+        Cesium.Property.equals(this._color, other._color) &&
+        Cesium.Property.equals(this._speed, other._speed))
     )
   }
 }

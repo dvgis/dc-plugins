@@ -6,8 +6,7 @@
 const { Cesium } = DC.Namespace
 
 class RimLightingMaterialProperty {
-  constructor(options) {
-    options = options || {}
+  constructor(options = {}) {
     this._definitionChanged = new Cesium.Event()
     this._color = undefined
     this._colorSubscription = undefined

@@ -42,7 +42,8 @@ class CircleFadeMaterialProperty {
     return (
       this === other ||
       (other instanceof CircleFadeMaterialProperty &&
-        Cesium.Property.equals(this._color, other._color))
+        Cesium.Property.equals(this._color, other._color) &&
+        Cesium.Property.equals(this._speed, other._speed))
     )
   }
 }
