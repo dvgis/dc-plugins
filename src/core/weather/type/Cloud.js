@@ -90,8 +90,9 @@ class Cloud {
       })
     })
     this._delegate.geometryInstances = new Cesium.GeometryInstance({
-      geometry: new Cesium.SphereGeometry({
-        radius: this._viewer.scene.globe.ellipsoid.radii.x
+      geometry: new Cesium.EllipsoidGeometry({
+        vertexFormat: Cesium.VertexFormat.POSITION_AND_ST,
+        radii: this._viewer.scene.globe.ellipsoid.radii
       }),
       id: this._id
     })
