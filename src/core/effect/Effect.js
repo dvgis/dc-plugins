@@ -36,8 +36,10 @@ class Effect {
     Object.keys(this._comps).forEach(key => {
       this._comps[key].addTo(viewer)
     })
-    viewer.effect = this
-    return this
+    Object.defineProperty(viewer, 'effect', {
+      value: this,
+      writable: false
+    })
   }
 }
 

@@ -41,8 +41,10 @@ class Weather {
     Object.keys(this._comps).forEach(key => {
       this._comps[key].addTo(viewer)
     })
-    viewer.weather = this
-    return this
+    Object.defineProperty(viewer, 'weather', {
+      value: this,
+      writable: false
+    })
   }
 }
 
