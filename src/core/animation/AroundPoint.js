@@ -12,34 +12,33 @@ class AroundPoint {
     this._viewer = viewer
     this._position = Parse.parsePosition(position)
     this._options = options
-    this._duration = options.duration || 10
     this._heading = viewer.camera.heading
     this._startTime = Cesium.JulianDate.now()
-    this._startAround()
-    let flag = setTimeout(() => {
-      this._endAround()
-      options.callback && options.callback.call(options.context || this)
-      clearTimeout(flag)
-    }, Number(options.duration) * 1e3)
+    this._aroundAmount = 0.2
+  }
+
+  set aroundAmount(aroundAmount) {
+    this._aroundAmount = aroundAmount
+    return this
   }
 
   /**
    *
    * @private
    */
-  _startAround() {
+  _bindEvent() {
     this._viewer.clock.currentTime = this._startTime.clone()
-    this._viewer.scene.postUpdate.addEventListener(this._onAround, this)
+    this._viewer.clock.onTick.addEventListener(this._onAround, this)
   }
 
   /**
    *
    * @private
    */
-  _endAround() {
+  _unbindEvent() {
     this._viewer.camera.lookAtTransform(Cesium.Matrix4.IDENTITY)
     this._viewer.clock.currentTime = Cesium.JulianDate.now().clone()
-    this._viewer.scene.postUpdate.removeEventListener(this._onAround, this)
+    this._viewer.clock.onTick.removeEventListener(this._onAround, this)
   }
 
   /**
@@ -49,13 +48,14 @@ class AroundPoint {
    * @private
    */
   _onAround(scene, time) {
-    let diff = Cesium.JulianDate.secondsDifference(time, this._startTime)
-    let heading =
-      Cesium.Math.toRadians(diff * (360 / this._duration)) + this._heading
-    scene.camera.lookAt(
+    this._heading += Cesium.Math.toRadians(this._aroundAmount)
+    if (this._heading >= Math.PI * 2 || this._heading <= -Math.PI * 2) {
+      this._heading = 0
+    }
+    this._viewer.camera.lookAt(
       Transform.transformWGS84ToCartesian(this._position),
       new Cesium.HeadingPitchRange(
-        heading,
+        this._heading,
         Cesium.Math.toRadians(this._options.pitch || 0),
         this._options.range || 1000
       )
@@ -66,8 +66,25 @@ class AroundPoint {
    *
    * @returns {AroundPoint}
    */
+  start() {
+    if (this._options.duration) {
+      let timer = setTimeout(() => {
+        this._unbindEvent()
+        this._options.callback &&
+          this._options.callback.call(this._options.context || this)
+        clearTimeout(timer)
+      }, Number(this._options.duration) * 1e3)
+    }
+    this._bindEvent()
+    return this
+  }
+
+  /**
+   *
+   * @returns {AroundPoint}
+   */
   stop() {
-    this._endAround()
+    this._unbindEvent()
     return this
   }
 }
