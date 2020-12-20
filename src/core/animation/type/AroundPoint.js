@@ -3,18 +3,25 @@
  * @Date: 2020-03-02 22:38:10
  */
 
+import Animation from '../Animation'
+
 const { Transform, Parse } = DC
 
 const { Cesium } = DC.Namespace
 
-class AroundPoint {
+class AroundPoint extends Animation {
   constructor(viewer, position, options = {}) {
-    this._viewer = viewer
+    super(viewer)
     this._position = Parse.parsePosition(position)
     this._options = options
     this._heading = viewer.camera.heading
-    this._startTime = Cesium.JulianDate.now()
     this._aroundAmount = 0.2
+    this.type = 'around_point'
+  }
+
+  set position(position) {
+    this._position = Parse.parsePosition(position)
+    return this
   }
 
   set aroundAmount(aroundAmount) {
@@ -27,7 +34,6 @@ class AroundPoint {
    * @private
    */
   _bindEvent() {
-    this._viewer.clock.currentTime = this._startTime.clone()
     this._viewer.clock.onTick.addEventListener(this._onAround, this)
   }
 
@@ -37,7 +43,6 @@ class AroundPoint {
    */
   _unbindEvent() {
     this._viewer.camera.lookAtTransform(Cesium.Matrix4.IDENTITY)
-    this._viewer.clock.currentTime = Cesium.JulianDate.now().clone()
     this._viewer.clock.onTick.removeEventListener(this._onAround, this)
   }
 
@@ -60,32 +65,6 @@ class AroundPoint {
         this._options.range || 1000
       )
     )
-  }
-
-  /**
-   *
-   * @returns {AroundPoint}
-   */
-  start() {
-    if (this._options.duration) {
-      let timer = setTimeout(() => {
-        this._unbindEvent()
-        this._options.callback &&
-          this._options.callback.call(this._options.context || this)
-        clearTimeout(timer)
-      }, Number(this._options.duration) * 1e3)
-    }
-    this._bindEvent()
-    return this
-  }
-
-  /**
-   *
-   * @returns {AroundPoint}
-   */
-  stop() {
-    this._unbindEvent()
-    return this
   }
 }
 
