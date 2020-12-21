@@ -19,11 +19,11 @@ const DEF_OPTS = {
 }
 
 class RoamingPath {
-  constructor(id, tickCallback, options) {
+  constructor(id, duration, tickCallback, options) {
     this._id = id || Util.uuid()
     this._startTime = undefined
     this._controller = undefined
-    this._duration = 0
+    this._duration = duration || 0
     this._mode = 'speed'
     this._delegate = new Cesium.Entity()
     this._positions = []
@@ -72,8 +72,7 @@ class RoamingPath {
    */
   _onAdd(controller) {
     this._controller = controller
-    this._startTime = controller.startTime
-    this._duration = controller.duration
+    this._startTime = controller.startTime || Cesium.JulianDate.now()
     this._mountPath()
     if (!this._delegate.position) {
       this._mountPosition()
@@ -88,12 +87,10 @@ class RoamingPath {
    */
   _onRemove() {
     if (this._controller) {
-      this._controller._viewer.delegate.entities.remove(this._delegate)
+      this._controller.roamingLayer.remove(this._delegate)
+      this._isActive && this._controller.releaseCamera()
+      this._isActive = false
       this._state = State.REMOVED
-      if (this._isActive) {
-        this._controller._viewer.camera.lookAtTransform(Cesium.Matrix4.IDENTITY)
-        this._controller._viewer.delegate.trackedEntity = undefined
-      }
     }
   }
 
@@ -109,17 +106,28 @@ class RoamingPath {
     if (timePos) {
       let timeDiff = Cesium.JulianDate.secondsDifference(currentTime, timePos)
       if (timeDiff >= 0 && timeDiff <= 1) {
+        let position = this._positions[this._positionIndex]
+        if (position && orientation) {
+          let mat = Cesium.Matrix3.fromQuaternion(orientation)
+          let mat4 = Cesium.Matrix4.fromRotationTranslation(
+            mat,
+            this._delegate.position.getValue(currentTime)
+          )
+          let hpr = Cesium.Transforms.fixedFrameToHeadingPitchRoll(mat4)
+          position.heading = Cesium.Math.toDegrees(hpr.heading)
+          position.pitch = Cesium.Math.toDegrees(hpr.pitch)
+          position.roll = Cesium.Math.toDegrees(hpr.roll)
+        }
         this._tickCallback &&
           this._tickCallback(
-            this._positions[this._positionIndex],
-            orientation,
+            position,
             this._positionIndex + 1 === this._positions.length
           )
         this._positionIndex += 1
       }
     }
     this._isActive &&
-      this._setView(currentTime, params.viewMode, params.viewOption)
+      this._setCameraView(currentTime, params.viewMode, params.viewOption)
   }
 
   /**
@@ -144,7 +152,7 @@ class RoamingPath {
    * @param viewOption
    * @private
    */
-  _setView(currentTime, viewMode, viewOption) {
+  _setCameraView(currentTime, viewMode, viewOption) {
     let viewer = this._controller._viewer.delegate
     let camera = this._controller._viewer.camera
     let tickPosition = this._sampledPosition.getValue(currentTime)
@@ -257,7 +265,7 @@ class RoamingPath {
    * @private
    */
   _mountedHook() {
-    this._controller._viewer.entities.add(this._delegate)
+    this._controller.roamingLayer.add(this._delegate)
   }
 
   /**

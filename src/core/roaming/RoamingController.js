@@ -5,16 +5,15 @@
 
 import RoamingEventType from './RoamingEventType'
 
-const { State } = DC
-
 const { Cesium } = DC.Namespace
 
 class RoamingController {
   constructor(viewer) {
     this._viewer = viewer
+    this._roamingLayer = new Cesium.CustomDataSource('roaming-layer')
+    viewer.dataSources.add(this._roamingLayer)
     this._postUpdateRemoveCallback = undefined
     this._startTime = undefined
-    this._duration = 0
     this._cache = {}
     this._activePath = undefined
     this._viewMode = undefined
@@ -25,8 +24,8 @@ class RoamingController {
     return this._startTime
   }
 
-  get duration() {
-    return this._duration
+  get roamingLayer() {
+    return this._roamingLayer.entities
   }
 
   /**
@@ -47,40 +46,13 @@ class RoamingController {
   /**
    * Sets time range
    * @param startTime
-   * @param endTime
    * @returns {RoamingController}
    */
-  setTimeRange(startTime, endTime) {
-    if (
-      !startTime ||
-      !endTime ||
-      !(startTime instanceof Date) ||
-      !(endTime instanceof Date) ||
-      startTime > endTime
-    ) {
-      throw new Error('RoamingController: the time range invalid ')
-    }
-    this._startTime = Cesium.JulianDate.fromDate(startTime)
-    endTime = Cesium.JulianDate.fromDate(endTime)
-    this._duration = Cesium.JulianDate.secondsDifference(
-      endTime,
-      this._startTime
-    )
-    return this
-  }
-
-  /**
-   * Sets time duration
-   * @param startTime
-   * @param duration
-   * @returns {RoamingController}
-   */
-  setTimeDuration(startTime, duration) {
+  setStartTime(startTime) {
     if (!startTime || !(startTime instanceof Date)) {
-      throw new Error('RoamingController: the time invalid ')
+      throw new Error('RoamingController: the start time invalid ')
     }
     this._startTime = Cesium.JulianDate.fromDate(startTime)
-    this._duration = duration
     return this
   }
 
@@ -89,11 +61,8 @@ class RoamingController {
    * @returns {RoamingController}
    */
   play() {
-    if (!this._startTime && !(this._startTime instanceof Cesium.JulianDate)) {
-      throw new Error('RoamingController: time not set ')
-    }
     this._viewer.clock.shouldAnimate = true
-    this._viewer.clock.currentTime = this._startTime
+    this._viewer.clock.currentTime = this._startTime || Cesium.JulianDate.now()
     this._postUpdateRemoveCallback && this._postUpdateRemoveCallback()
     this._postUpdateRemoveCallback = this._viewer.scene.postUpdate.addEventListener(
       this._onPostUpdate,
@@ -136,7 +105,11 @@ class RoamingController {
    * @returns {RoamingController}
    */
   addPath(path) {
-    if (path && path.roamingEvent && path.state !== State.ADDED) {
+    if (
+      path &&
+      path.roamingEvent &&
+      !Object(this._cache).hasOwnProperty(path.id)
+    ) {
       path.roamingEvent.fire(RoamingEventType.ADD, this)
       this._cache[path.id] = path
     }
@@ -204,6 +177,32 @@ class RoamingController {
     if (this._activePath && this._activePath.roamingEvent) {
       this._activePath.roamingEvent.fire(RoamingEventType.ACTIVE, path.id)
     }
+    return this
+  }
+
+  /**
+   *
+   * @param path
+   * @returns {RoamingController}
+   */
+  releasePath(path) {
+    if (!this._cache[path.id]) {
+      throw new Error('RoamingController: path does not added ')
+    }
+    if (path && path.isActive && path.roamingEvent) {
+      path.roamingEvent.fire(RoamingEventType.RELEASE, path.id)
+    }
+    this._activePath = undefined
+    return this
+  }
+
+  /**
+   *
+   * @returns {RoamingController}
+   */
+  releaseCamera() {
+    this._viewer.camera.lookAtTransform(Cesium.Matrix4.IDENTITY)
+    this._viewer.delegate.trackedEntity = undefined
     return this
   }
 }
