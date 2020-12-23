@@ -148,7 +148,7 @@ class RoamingController {
    */
   clearPath() {
     Object.keys(this._cache).forEach(key => {
-      let path = this._cache(key)
+      let path = this._cache[key]
       path && this.removePath(path)
     })
     return this
