@@ -65,6 +65,29 @@ class RoamingPath {
     return this._isActive
   }
 
+  set positions(positions) {
+    this._positions = Parse.parsePositions(positions)
+    this._mountPosition()
+    return this
+  }
+
+  get positions() {
+    return this._positions
+  }
+
+  set startTime(startTime) {
+    if (!startTime || !(startTime instanceof Date)) {
+      throw new Error('Path: the start time invalid ')
+    }
+    this._startTime = Cesium.JulianDate.fromDate(startTime)
+    this._mountPosition()
+    return this
+  }
+
+  get startTime() {
+    return this._startTime
+  }
+
   /**
    * add to entities
    * @param controller
@@ -72,11 +95,10 @@ class RoamingPath {
    */
   _onAdd(controller) {
     this._controller = controller
-    this._startTime = controller.startTime || Cesium.JulianDate.now()
+    !this._startTime &&
+      (this._startTime = controller.startTime || Cesium.JulianDate.now())
     this._mountPath()
-    if (!this._delegate.position) {
-      this._mountPosition()
-    }
+    !this._delegate.position && this._mountPosition()
     this._mountedHook && this._mountedHook()
     this._state = State.ADDED
   }
@@ -217,7 +239,12 @@ class RoamingPath {
    * @private
    */
   _mountPosition() {
-    if (!this._startTime || !this._duration) {
+    if (
+      !this._startTime ||
+      !this._duration ||
+      !this._positions ||
+      !this._positions.length
+    ) {
       return false
     }
 
