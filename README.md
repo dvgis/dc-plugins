@@ -10,15 +10,16 @@
 
 > DC-SDK plug-in library, the plug-in library includes animation, effects, textures, heatmap, clusterLayer, and Mapv.
 
-> [home](http://dc.dvgis.cn)
-
 ```warning
 Tips：This SDK is JS+GIS framework package. Developers need to have some front-end technology and GIS related technology
-```
+``` 
+
+## [Home Site](http://dc.dvgis.cn)
+
 
 ## Installation
 
-> CDN
+`CDN`
 
 ```html
 <!--Basic Package-->
@@ -31,7 +32,7 @@ Tips：This SDK is JS+GIS framework package. Developers need to have some front-
 <link href="libs/dc-sdk/dc.core.min.css" rel="stylesheet" type="text/css" />
 ```
 
-> NPM / YARN
+`NPM / YARN`
 
 ```shell
    yarn add @dvgis/dc-sdk @dvgis/dc-plugins
@@ -47,7 +48,34 @@ import 'dvgis/dc-sdk/dist/dc.core.min.css' // Main Style Sheet
 
 ## Setting
 
-> Vue
+`Webpack`
+
+```js
+ // webpack.config.js
+
+const path = require('path')
+const CopywebpackPlugin = require('copy-webpack-plugin')
+const dvgisDist = './node_modules/@dvgis'
+
+module.exports = {
+  // other settings
+  resolve: {
+    alias: {
+      dvgis: path.resolve(__dirname, dvgisDist)
+    }
+  },
+  plugins:[
+    new CopyWebpackPlugin([
+      {  
+        from: path.join(dvgisDist, 'dc-sdk/dist/resources'),
+        to: 'libs/dc-sdk/resources' 
+      }
+    ])
+  ]
+}
+```
+
+`Vue2.x`
 
 ```js
 // vue.config.js
@@ -72,6 +100,33 @@ module.exports = {
 }
 ```
 
+`Vue3.x`
+
+```js
+// vue.config.js
+
+const path = require('path')
+const CopywebpackPlugin = require('copy-webpack-plugin')
+const dvgisDist = './node_modules/@dvgis'
+
+module.exports = {
+  // other settings
+  chainWebpack: config => {
+    config.resolve.alias.set('dvgis', path.resolve(__dirname, dvgisDist))
+    config.plugin('copy').use(CopywebpackPlugin, [
+      {
+        patterns: [
+          {
+            from: path.join(dvgisDist, 'dc-sdk/dist/resources'),
+            to: path.join(__dirname, 'dist', 'libs/dc-sdk/resources'),
+          },
+        ],
+      }
+    ])
+  }
+}
+```
+
 ## Start
 
 ```js
@@ -89,12 +144,11 @@ DC.ready(() => {
 [Cesium Api](https://cesium.com/docs/cesiumjs-ref-doc/)
 
 
-
 ## Demo
 
 | ![picture](http://dc.dvgis.cn/examples/images/layer/cluster_clustering.gif)  | ![picture](http://dc.dvgis.cn/examples/images/overlay/polyline_image_trail.gif) | ![picture](http://dc.dvgis.cn/examples/images/overlay/polyline_flow.gif) | ![picture](http://dc.dvgis.cn/examples/images/overlay/wall_trail.gif) |
 | :---------------------------------------------------------------: | :-----------------------------------------------------------------------------: | :---------------------------------------------------------------------: | :-------------------------------------------------------------------: |
-| ![picture](http://dc.dvgis.cn/examples/images/scene/intro.gif) | ![picture](http://dc.dvgis.cn/examples/images/scene/globe_rotate.gif)  | ![picture](http://dc.dvgis.cn/examples/images/scene/circle_scan.gif) | ![picture](http://dc.dvgis.cn/examples/images/scene/radar_scan.gif) |
+| ![picture](http://dc.dvgis.cn/examples/images/scene/start_animation.gif) | ![picture](http://dc.dvgis.cn/examples/images/scene/around_point.gif)  | ![picture](http://dc.dvgis.cn/examples/images/scene/circle_scan.gif) | ![picture](http://dc.dvgis.cn/examples/images/scene/radar_scan.gif) |
 | ![picture](http://dc.dvgis.cn/examples/images/scene/snow.gif) | ![picture](http://dc.dvgis.cn/examples/images/scene/fog.png)  | ![picture](http://dc.dvgis.cn/examples/images/scene/brightness.png) | ![picture](http://dc.dvgis.cn/examples/images/scene/roaming_tracked.gif) |
 
 
@@ -104,8 +158,9 @@ DC.ready(() => {
 
 ```warning
 1. The framework is a basic platform, completely open source, which can be modified and reconstructed by any individual or institution without our authorization.
-2. A series of targeted plug-ins and tools will be added later, and an appropriate amount of open source.
-3. Free and permanent use by any person or institution subject to the following conditions:
+2. We are not responsible for any problems arising from the modification of the framework by individuals and organizations.
+3. Some industrial plug-ins and tools will be added in the later stage, and the code will be open source appropriately.
+4. The package released by us may be used permanently and free of charge by any person or organization subject to:
   1) complete package reference;
   2) reserve this copyright information in the console output
 We reserve the right of final interpretation of this copyright information.
