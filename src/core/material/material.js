@@ -22,9 +22,10 @@ let ReflectionMaterial = require('../shader/ReflectionMaterial.glsl')
 let RefractionMaterial = require('../shader/RefractionMaterial.glsl')
 let TieDyeMaterial = require('../shader/TieDyeMaterial.glsl')
 let WoodMaterial = require('../shader/WoodMaterial.glsl')
-let CircleFadeShader = require('../shader/CircleFadeShader.glsl')
-let CircleWaveShader = require('../shader/CircleWaveShader.glsl')
+let CircleFadeMaterial = require('../shader/CircleFadeMaterial.glsl')
+let CircleWaveMaterial = require('../shader/CircleWaveMaterial.glsl')
 let WallTrailMaterial = require('../shader/WallTrailMaterial.glsl')
+let LineScanMaterial = require('../shader/LineScanMaterial.glsl')
 
 Cesium.ShaderSource._czmBuiltinsAndUniforms.czm_cellular = czm_cellular
 Cesium.ShaderSource._czmBuiltinsAndUniforms.czm_snoise = czm_snoise
@@ -303,7 +304,7 @@ Cesium.Material._materialCache.addMaterial(Cesium.Material.CircleFadeType, {
       color: new Cesium.Color(1.0, 0.0, 0.0, 0.7),
       speed: 45
     },
-    source: CircleFadeShader
+    source: CircleFadeMaterial
   },
   translucent: function(material) {
     return true
@@ -322,7 +323,7 @@ Cesium.Material._materialCache.addMaterial(Cesium.Material.CircleWaveType, {
       count: 1,
       gradient: 0.1
     },
-    source: CircleWaveShader
+    source: CircleWaveMaterial
   },
   translucent: function(material) {
     return true
@@ -330,21 +331,34 @@ Cesium.Material._materialCache.addMaterial(Cesium.Material.CircleWaveType, {
 })
 
 // WallTrail
-Cesium.Material.WallTrailMaterialType = 'WallTrailMaterial'
-Cesium.Material._materialCache.addMaterial(
-  Cesium.Material.WallTrailMaterialType,
-  {
-    fabric: {
-      type: Cesium.Material.WallTrailMaterialType,
-      uniforms: {
-        color: new Cesium.Color(1.0, 0.0, 0.0, 0.7),
-        image: Cesium.Material.DefaultImageId,
-        speed: 10
-      },
-      source: WallTrailMaterial
+Cesium.Material.WallTrailType = 'WallTrail'
+Cesium.Material._materialCache.addMaterial(Cesium.Material.WallTrailType, {
+  fabric: {
+    type: Cesium.Material.WallTrailType,
+    uniforms: {
+      color: new Cesium.Color(1.0, 0.0, 0.0, 0.7),
+      image: Cesium.Material.DefaultImageId,
+      speed: 10
     },
-    translucent: function(material) {
-      return true
-    }
+    source: WallTrailMaterial
+  },
+  translucent: function(material) {
+    return true
   }
-)
+})
+
+// LineScan
+Cesium.Material.LineScanType = 'LineScan'
+Cesium.Material._materialCache.addMaterial(Cesium.Material.LineScanType, {
+  fabric: {
+    type: Cesium.Material.LineScanType,
+    uniforms: {
+      color: new Cesium.Color(1.0, 0.0, 0.0, 0.7),
+      speed: 10
+    },
+    source: LineScanMaterial
+  },
+  translucent: function(material) {
+    return true
+  }
+})

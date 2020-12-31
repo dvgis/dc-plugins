@@ -33,7 +33,7 @@ class WallTrailMaterialProperty {
   }
 
   getType(time) {
-    return Cesium.Material.WallTrailMaterialType
+    return Cesium.Material.WallTrailType
   }
 
   getValue(time, result) {
