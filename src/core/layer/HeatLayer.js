@@ -51,7 +51,7 @@ class HeatLayer extends Layer {
    * The hook for added
    */
   _addedHook() {
-    this._reDraw()
+    this._redraw()
     this._viewer.on(SceneEventType.CAMERA_MOVE_END, this._reset, this)
   }
 
@@ -103,6 +103,10 @@ class HeatLayer extends Layer {
     }
   }
 
+  /**
+   *
+   * @private
+   */
   _initCanvas() {
     let diffLng = Math.abs(this._mBounds.east - this._mBounds.west)
     let diffLat = Math.abs(this._mBounds.north - this._mBounds.south)
@@ -188,7 +192,7 @@ class HeatLayer extends Layer {
     this._heat && this._heat.configure(this._options)
   }
 
-  _reDraw() {
+  _redraw() {
     /** set bounds */
     if (!this._bounds) {
       return false
@@ -244,7 +248,7 @@ class HeatLayer extends Layer {
     }
     this._positions = positions
     this._bounds = Cesium.Math.bounds(this._positions)
-    this._reDraw()
+    this._redraw()
     return this
   }
 
@@ -255,7 +259,7 @@ class HeatLayer extends Layer {
   addPosition(position) {
     this._positions.push(position)
     this._bounds = Cesium.Math.bounds(this._positions)
-    this._reDraw()
+    this._redraw()
     return this
   }
 
