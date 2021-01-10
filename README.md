@@ -2,147 +2,47 @@
 
 <p>
 <img src="https://img.shields.io/badge/license-Apache%202-blue"/>
-<img src="https://img.shields.io/github/package-json/v/dvgis/dc-plugins?color=orange&logo=github" />
-<img src="https://img.shields.io/npm/dw/@dvgis/dc-plugins?logo=npm"/>
+<img src="https://img.shields.io/npm/v/@dvgis/dc-plugins?logo=npm&color=orange" />
+<img src="https://img.shields.io/npm/dm/@dvgis/dc-plugins?logo=npm"/>
 </p>
 
 [**🇨🇳 中文**](./README_zh.md) | [**🇬🇧English**](./README.md)
 
 > DC-SDK plug-in library, the plug-in library includes animation, effects, textures, heatmap, clusterLayer, and Mapv.
 
-```warning
-Tips：This SDK is JS+GIS framework package. Developers need to have some front-end technology and GIS related technology
-``` 
+## Home
 
-## [Home Site](http://dc.dvgis.cn)
-
+> http://dc.dvgis.cn
 
 ## Installation
 
 `CDN`
 
 ```html
-<!--Basic Package-->
-<script src="libs/dc-sdk/dc.base.min.js"></script>
-<!--Core Package-->
-<script src="libs/dc-sdk/dc.core.min.js"></script>
 <!--Plugins Package-->
 <script src="libs/dc-sdk/plugins/dc.plugins.min.js"></script>
-<!--Main Style Sheet -->
-<link href="libs/dc-sdk/dc.core.min.css" rel="stylesheet" type="text/css" />
 ```
 
 `NPM / YARN`
 
 ```shell
-   yarn add @dvgis/dc-sdk @dvgis/dc-plugins
-   npm install @dvgis/dc-sdk @dvgis/dc-plugins
+   yarn add @dvgis/dc-plugins
+   npm install  @dvgis/dc-plugins
 ```
 
 ```js
-import DC from  'dvgis/dc-sdk/dist/dc.base.min' //Basic Package
-import DcCore from 'dvgis/dc-sdk/dist/dc.core.min' //Core Package
 import DcPlugins from  'dvgis/dc-plugins/dist/dc.plugins.min' //Plugins Package
-import 'dvgis/dc-sdk/dist/dc.core.min.css' // Main Style Sheet
-```
-
-## Setting
-
-`Webpack`
-
-```js
- // webpack.config.js
-
-const path = require('path')
-const CopywebpackPlugin = require('copy-webpack-plugin')
-const dvgisDist = './node_modules/@dvgis'
-
-module.exports = {
-  // other settings
-  resolve: {
-    alias: {
-      dvgis: path.resolve(__dirname, dvgisDist)
-    }
-  },
-  plugins:[
-    new CopyWebpackPlugin([
-      {  
-        from: path.join(dvgisDist, 'dc-sdk/dist/resources'),
-        to: 'libs/dc-sdk/resources' 
-      }
-    ])
-  ]
-}
-```
-
-`Vue2.x`
-
-```js
-// vue.config.js
-
-const path = require('path')
-const CopywebpackPlugin = require('copy-webpack-plugin')
-const dvgisDist = './node_modules/@dvgis'
-
-module.exports = {
-  // other settings
-  chainWebpack: config => {
-    config.resolve.alias.set('dvgis', path.resolve(__dirname, dvgisDist))
-    config.plugin('copy').use(CopywebpackPlugin, [
-      [
-        {
-          from: path.join(dvgisDist, 'dc-sdk/dist/resources'),
-          to: 'libs/dc-sdk/resources'
-        }
-      ]
-    ])
-  }
-}
-```
-
-`Vue3.x`
-
-```js
-// vue.config.js
-
-const path = require('path')
-const CopywebpackPlugin = require('copy-webpack-plugin')
-const dvgisDist = './node_modules/@dvgis'
-
-module.exports = {
-  // other settings
-  chainWebpack: config => {
-    config.resolve.alias.set('dvgis', path.resolve(__dirname, dvgisDist))
-    config.plugin('copy').use(CopywebpackPlugin, [
-      {
-        patterns: [
-          {
-            from: path.join(dvgisDist, 'dc-sdk/dist/resources'),
-            to: path.join(__dirname, 'dist', 'libs/dc-sdk/resources'),
-          },
-        ],
-      }
-    ])
-  }
-}
 ```
 
 ## Start
 
 ```js
-DC.use(DcCore)
 DC.use(DcPlugins)
-DC.ready(() => {
-  let viewer = new DC.Viewer(divId) // divId is the Id attribute value of a div node. If it is not passed in, the 3D scene cannot be initialized
-})
 ```
 
 ## Documentation
 
-[DC Api](https://resource.dvgis.cn/dc-api)
-
-[Cesium Api](https://cesium.com/docs/cesiumjs-ref-doc/)
-
+[DC Plugins Api](https://resource.dvgis.cn/dc-api/dc-plugins/)
 
 ## Demo
 
