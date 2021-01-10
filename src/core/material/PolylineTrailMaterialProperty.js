@@ -5,23 +5,18 @@
 
 const { Cesium } = DC.Namespace
 
-const IMG = require('../images/line.png')
-
 const DEF_COLOR = Cesium.Color.fromBytes(0, 255, 255, 255)
 
 class PolylineTrailMaterialProperty {
   constructor(options) {
     options = options || {}
     this._definitionChanged = new Cesium.Event()
-    this._image = undefined
-    this._imageSubscription = undefined
     this._color = undefined
     this._colorSubscription = undefined
     this._speed = undefined
     this._speedSubscription = undefined
     this.color = options.color || DEF_COLOR
-    this.speed = options.speed || 45
-    this.image = IMG
+    this.speed = options.speed || 5
   }
 
   get isConstant() {
@@ -49,12 +44,9 @@ class PolylineTrailMaterialProperty {
     result.speed = Cesium.Property.getValueOrClonedDefault(
       this._speed,
       time,
-      45,
+      5,
       result.speed
     )
-
-    result.image = Cesium.Property.getValueOrUndefined(this._image, time)
-
     return result
   }
 
@@ -70,8 +62,7 @@ class PolylineTrailMaterialProperty {
 
 Object.defineProperties(PolylineTrailMaterialProperty.prototype, {
   color: Cesium.createPropertyDescriptor('color'),
-  speed: Cesium.createPropertyDescriptor('speed'),
-  image: Cesium.createPropertyDescriptor('image')
+  speed: Cesium.createPropertyDescriptor('speed')
 })
 
 export default PolylineTrailMaterialProperty

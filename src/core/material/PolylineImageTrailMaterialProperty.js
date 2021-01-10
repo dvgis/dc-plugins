@@ -7,7 +7,7 @@ const { Cesium } = DC.Namespace
 
 const DEF_REPEAT = new Cesium.Cartesian2(1, 1)
 
-const DEF_COLOR = Cesium.Color.fromBytes(0, 255, 255, 255)
+const DEF_COLOR = Cesium.Color.WHITE
 
 class PolylineImageTrailMaterialProperty {
   constructor(options) {
@@ -39,7 +39,7 @@ class PolylineImageTrailMaterialProperty {
   }
 
   getType(time) {
-    return Cesium.Material.PolylineTrailType
+    return Cesium.Material.PolylineImageTrailType
   }
 
   getValue(time, result) {
