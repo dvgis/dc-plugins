@@ -26,8 +26,8 @@
 `NPM / YARN`
 
 ```shell
-   yarn add  @dvgis/dc-plugins
-   npm install  @dvgis/dc-plugins
+yarn add  @dvgis/dc-plugins
+npm install  @dvgis/dc-plugins
 ```
 
 ```js
