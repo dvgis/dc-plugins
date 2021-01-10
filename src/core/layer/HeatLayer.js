@@ -64,11 +64,6 @@ class HeatLayer extends Layer {
 
   /**
    *
-   */
-  _initContainer() {}
-
-  /**
-   *
    * @param {*} position
    */
   _transformWGS84ToHeatmap(position) {
@@ -86,7 +81,8 @@ class HeatLayer extends Layer {
 
   /**
    *
-   * @param {*} bounds
+   * @returns {{east: *, south: *, north: *, west: *}}
+   * @private
    */
   _getMBounds() {
     let mWestSouth = Transform.transformWGS84ToMercator(
