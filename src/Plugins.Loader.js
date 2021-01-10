@@ -6,8 +6,9 @@
 import {
   AroundView,
   AroundPoint,
-  GlobeRotate,
   CircleScan,
+  Flying,
+  GlobeRotate,
   RadarScan
 } from './core/animation'
 import Effect from './core/effect/Effect'
@@ -30,8 +31,9 @@ import { RoamingViewMode, RoamingController, RoamingPath } from './core/roaming'
 const plugins = {
   AroundView,
   AroundPoint,
-  GlobeRotate,
   CircleScan,
+  Flying,
+  GlobeRotate,
   RadarScan,
   ClusterLayer,
   CzmlLayer,
