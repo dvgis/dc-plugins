@@ -1,19 +1,19 @@
 /**
  * @Author: Caven
- * @Date: 2021-01-09 20:23:53
+ * @Date: 2021-01-11 21:08:02
  */
 
 const { Cesium } = DC.Namespace
 
-class CircleScanMaterialProperty {
+class PolylineFlickerMaterialProperty {
   constructor(options) {
     options = options || {}
     this._definitionChanged = new Cesium.Event()
     this._color = undefined
     this._colorSubscription = undefined
+    this.color = options.color || Cesium.Color.fromBytes(0, 255, 255, 255)
     this._speed = undefined
     this._speedSubscription = undefined
-    this.color = options.color || Cesium.Color.fromBytes(0, 255, 255, 255)
     this.speed = options.speed || 1
   }
 
@@ -26,7 +26,7 @@ class CircleScanMaterialProperty {
   }
 
   getType(time) {
-    return Cesium.Material.CircleFadeType
+    return Cesium.Material.PolylineFlickerType
   }
 
   getValue(time, result) {
@@ -41,16 +41,16 @@ class CircleScanMaterialProperty {
   equals(other) {
     return (
       this === other ||
-      (other instanceof CircleScanMaterialProperty &&
+      (other instanceof PolylineFlickerMaterialProperty &&
         Cesium.Property.equals(this._color, other._color) &&
         Cesium.Property.equals(this._speed, other._speed))
     )
   }
 }
 
-Object.defineProperties(CircleScanMaterialProperty.prototype, {
+Object.defineProperties(PolylineFlickerMaterialProperty.prototype, {
   color: Cesium.createPropertyDescriptor('color'),
   speed: Cesium.createPropertyDescriptor('speed')
 })
 
-export default CircleScanMaterialProperty
+export default PolylineFlickerMaterialProperty

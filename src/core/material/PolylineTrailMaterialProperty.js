@@ -5,8 +5,6 @@
 
 const { Cesium } = DC.Namespace
 
-const DEF_COLOR = Cesium.Color.fromBytes(0, 255, 255, 255)
-
 class PolylineTrailMaterialProperty {
   constructor(options) {
     options = options || {}
@@ -15,8 +13,8 @@ class PolylineTrailMaterialProperty {
     this._colorSubscription = undefined
     this._speed = undefined
     this._speedSubscription = undefined
-    this.color = options.color || DEF_COLOR
-    this.speed = options.speed || 5
+    this.color = options.color || Cesium.Color.fromBytes(0, 255, 255, 255)
+    this.speed = options.speed || 1
   }
 
   get isConstant() {
@@ -35,18 +33,8 @@ class PolylineTrailMaterialProperty {
     if (!result) {
       result = {}
     }
-    result.color = Cesium.Property.getValueOrClonedDefault(
-      this._color,
-      time,
-      DEF_COLOR,
-      result.color
-    )
-    result.speed = Cesium.Property.getValueOrClonedDefault(
-      this._speed,
-      time,
-      5,
-      result.speed
-    )
+    result.color = Cesium.Property.getValueOrUndefined(this._color, time)
+    result.speed = this._speed
     return result
   }
 

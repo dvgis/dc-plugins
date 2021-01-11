@@ -11,7 +11,7 @@ class PolylineEmissionMaterialProperty {
     this._definitionChanged = new Cesium.Event()
     this._color = undefined
     this._colorSubscription = undefined
-    this.color = options.color || new Cesium.Color(1.0, 0.0, 0.0, 0.7)
+    this.color = options.color || Cesium.Color.fromBytes(0, 255, 255, 255)
   }
 
   get isConstant() {

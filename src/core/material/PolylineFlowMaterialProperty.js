@@ -5,18 +5,16 @@
 
 const { Cesium } = DC.Namespace
 
-const DEF_COLOR = Cesium.Color.fromBytes(0, 255, 255, 255)
-
 class PolylineFlowMaterialProperty {
   constructor(options) {
     options = options || {}
     this._definitionChanged = new Cesium.Event()
     this._color = undefined
     this._colorSubscription = undefined
-    this.color = options.color || DEF_COLOR
+    this.color = options.color || Cesium.Color.fromBytes(0, 255, 255, 255)
     this._speed = undefined
     this._speedSubscription = undefined
-    this.speed = options.speed || 45
+    this.speed = options.speed || 1
   }
 
   get isConstant() {
@@ -35,19 +33,8 @@ class PolylineFlowMaterialProperty {
     if (!result) {
       result = {}
     }
-    result.color = Cesium.Property.getValueOrClonedDefault(
-      this._color,
-      time,
-      DEF_COLOR,
-      result.color
-    )
-    result.speed = Cesium.Property.getValueOrClonedDefault(
-      this._speed,
-      time,
-      45,
-      result.speed
-    )
-
+    result.color = Cesium.Property.getValueOrUndefined(this._color, time)
+    result.speed = this._speed
     return result
   }
 

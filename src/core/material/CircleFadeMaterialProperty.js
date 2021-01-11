@@ -14,7 +14,7 @@ class CircleFadeMaterialProperty {
     this._speed = undefined
     this._speedSubscription = undefined
     this.color = options.color || Cesium.Color.fromBytes(0, 255, 255, 255)
-    this.speed = options.speed || 45
+    this.speed = options.speed || 1
   }
 
   get isConstant() {

@@ -11,19 +11,25 @@ import {
   GlobeRotate,
   RadarScan
 } from './core/animation'
+
 import Effect from './core/effect/Effect'
+
 import Weather from './core/weather/Weather'
+
 import { ClusterLayer, CzmlLayer, HeatLayer, KmlLayer } from './core/layer'
+
 import {
-  PolylineTrailMaterialProperty,
-  PolylineFlowMaterialProperty,
-  PolylineEmissionMaterialProperty,
-  PolylineImageTrailMaterialProperty,
-  WaterMaterialProperty,
-  RimLightingMaterialProperty,
   CircleFadeMaterialProperty,
+  CircleScanMaterialProperty,
   CircleWaveMaterialProperty,
-  WallTrailMaterialProperty
+  PolylineEmissionMaterialProperty,
+  PolylineFlickerMaterialProperty,
+  PolylineFlowMaterialProperty,
+  PolylineImageTrailMaterialProperty,
+  PolylineTrailMaterialProperty,
+  RimLightingMaterialProperty,
+  WallTrailMaterialProperty,
+  WaterMaterialProperty
 } from './core/material'
 
 import { RoamingViewMode, RoamingController, RoamingPath } from './core/roaming'
@@ -44,15 +50,17 @@ const plugins = {
   RoamingViewMode,
   RoamingController,
   RoamingPath,
-  PolylineTrailMaterialProperty,
-  PolylineFlowMaterialProperty,
-  PolylineEmissionMaterialProperty,
-  PolylineImageTrailMaterialProperty,
-  WaterMaterialProperty,
-  RimLightingMaterialProperty,
   CircleFadeMaterialProperty,
+  CircleScanMaterialProperty,
   CircleWaveMaterialProperty,
-  WallTrailMaterialProperty
+  PolylineEmissionMaterialProperty,
+  PolylineFlickerMaterialProperty,
+  PolylineFlowMaterialProperty,
+  PolylineImageTrailMaterialProperty,
+  PolylineTrailMaterialProperty,
+  RimLightingMaterialProperty,
+  WallTrailMaterialProperty,
+  WaterMaterialProperty
 }
 
 DC.mixin(plugins)

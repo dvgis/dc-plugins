@@ -29,12 +29,13 @@ const LineEmissionMaterial = require('../shader/PolylineEmissionMaterial.glsl')
 const LineFlowMaterial = require('../shader/PolylineFlowMaterial.glsl')
 const LineTrailMaterial = require('../shader/PolylineTrailMaterial.glsl')
 const LineImageTrailMaterial = require('../shader/PolylineImageTrailMaterial.glsl')
+const LineFlickerMaterial = require('../shader/PolylineFlickerMaterial.glsl')
 const CircleFadeMaterial = require('../shader/CircleFadeMaterial.glsl')
 const CircleWaveMaterial = require('../shader/CircleWaveMaterial.glsl')
-const WallTrailMaterial = require('../shader/WallTrailMaterial.glsl')
 const CircleScanMaterial = require('../shader/CircleScanMaterial.glsl')
 const EllipsoidElectricMaterial = require('../shader/EllipsoidElectricMaterial.glsl')
 const WallRippleMaterial = require('../shader/WallRippleMaterial.glsl')
+const WallTrailMaterial = require('../shader/WallTrailMaterial.glsl')
 
 Cesium.ShaderSource._czmBuiltinsAndUniforms.czm_cellular = czm_cellular
 Cesium.ShaderSource._czmBuiltinsAndUniforms.czm_snoise = czm_snoise
@@ -318,7 +319,7 @@ Cesium.Material._materialCache.addMaterial(Cesium.Material.PolylineFlowType, {
     type: Cesium.Material.PolylineFlowType,
     uniforms: {
       color: new Cesium.Color(1.0, 0.0, 0.0, 0.7),
-      speed: 45
+      speed: 1
     },
     source: LineFlowMaterial
   },
@@ -338,7 +339,7 @@ Cesium.Material._materialCache.addMaterial(Cesium.Material.PolylineTrailType, {
     uniforms: {
       color: new Cesium.Color(1.0, 0.0, 0.0, 0.7),
       image: Cesium.Material.DefaultImageId,
-      speed: 45,
+      speed: 1,
       repeat: new Cesium.Cartesian2(1, 1)
     },
     source: LineTrailMaterial
@@ -361,10 +362,32 @@ Cesium.Material._materialCache.addMaterial(
       uniforms: {
         color: new Cesium.Color(1.0, 0.0, 0.0, 0.7),
         image: Cesium.Material.DefaultImageId,
-        speed: 45,
+        speed: 1,
         repeat: new Cesium.Cartesian2(1, 1)
       },
       source: LineImageTrailMaterial
+    },
+    translucent: function(material) {
+      return true
+    }
+  }
+)
+
+/**
+ * PolylineFlicker
+ * @type {string}
+ */
+Cesium.Material.PolylineFlickerType = 'PolylineFlicker'
+Cesium.Material._materialCache.addMaterial(
+  Cesium.Material.PolylineFlickerType,
+  {
+    fabric: {
+      type: Cesium.Material.PolylineFlickerType,
+      uniforms: {
+        color: new Cesium.Color(1.0, 0.0, 0.0, 0.7),
+        speed: 1
+      },
+      source: LineFlickerMaterial
     },
     translucent: function(material) {
       return true
@@ -382,7 +405,7 @@ Cesium.Material._materialCache.addMaterial(Cesium.Material.CircleFadeType, {
     type: Cesium.Material.CircleFadeType,
     uniforms: {
       color: new Cesium.Color(1.0, 0.0, 0.0, 0.7),
-      speed: 5
+      speed: 1
     },
     source: CircleFadeMaterial
   },
@@ -401,31 +424,11 @@ Cesium.Material._materialCache.addMaterial(Cesium.Material.CircleWaveType, {
     type: Cesium.Material.CircleWaveType,
     uniforms: {
       color: new Cesium.Color(1.0, 0.0, 0.0, 0.7),
-      speed: 5,
+      speed: 1,
       count: 1,
       gradient: 0.1
     },
     source: CircleWaveMaterial
-  },
-  translucent: function(material) {
-    return true
-  }
-})
-
-/**
- * WallTrail
- * @type {string}
- */
-Cesium.Material.WallTrailType = 'WallTrail'
-Cesium.Material._materialCache.addMaterial(Cesium.Material.WallTrailType, {
-  fabric: {
-    type: Cesium.Material.WallTrailType,
-    uniforms: {
-      color: new Cesium.Color(1.0, 0.0, 0.0, 0.7),
-      image: Cesium.Material.DefaultImageId,
-      speed: 5
-    },
-    source: WallTrailMaterial
   },
   translucent: function(material) {
     return true
@@ -442,7 +445,7 @@ Cesium.Material._materialCache.addMaterial(Cesium.Material.CircleScanType, {
     type: Cesium.Material.CircleScanType,
     uniforms: {
       color: new Cesium.Color(1.0, 0.0, 0.0, 0.7),
-      speed: 5
+      speed: 1
     },
     source: CircleScanMaterial
   },
@@ -463,7 +466,7 @@ Cesium.Material._materialCache.addMaterial(
       type: Cesium.Material.EllipsoidElectricType,
       uniforms: {
         color: new Cesium.Color(1.0, 0.0, 0.0, 0.7),
-        speed: 5
+        speed: 1
       },
       source: EllipsoidElectricMaterial
     },
@@ -483,10 +486,30 @@ Cesium.Material._materialCache.addMaterial(Cesium.Material.WallRippleType, {
     type: Cesium.Material.WallRippleType,
     uniforms: {
       color: new Cesium.Color(1.0, 0.0, 0.0, 0.7),
-      speed: 5,
+      speed: 1,
       count: 5
     },
     source: WallRippleMaterial
+  },
+  translucent: function(material) {
+    return true
+  }
+})
+
+/**
+ * WallTrail
+ * @type {string}
+ */
+Cesium.Material.WallTrailType = 'WallTrail'
+Cesium.Material._materialCache.addMaterial(Cesium.Material.WallTrailType, {
+  fabric: {
+    type: Cesium.Material.WallTrailType,
+    uniforms: {
+      color: new Cesium.Color(1.0, 0.0, 0.0, 0.7),
+      image: Cesium.Material.DefaultImageId,
+      speed: 1
+    },
+    source: WallTrailMaterial
   },
   translucent: function(material) {
     return true

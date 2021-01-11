@@ -7,20 +7,18 @@ const { Cesium } = DC.Namespace
 
 const IMG = require('../images/fence.png')
 
-const DEF_COLOR = Cesium.Color.fromBytes(0, 255, 255, 255)
-
 class WallTrailMaterialProperty {
   constructor(options) {
     options = options || {}
     this._definitionChanged = new Cesium.Event()
-    this._image = undefined
-    this._imageSubscription = undefined
     this._color = undefined
     this._colorSubscription = undefined
+    this._image = undefined
+    this._imageSubscription = undefined
     this._speed = undefined
     this._speedSubscription = undefined
-    this.color = options.color || DEF_COLOR
-    this.speed = options.speed || 45
+    this.color = options.color || Cesium.Color.fromBytes(0, 255, 255, 255)
+    this.speed = options.speed || 1
     this.image = IMG
   }
 
@@ -40,19 +38,9 @@ class WallTrailMaterialProperty {
     if (!result) {
       result = {}
     }
-    result.color = Cesium.Property.getValueOrClonedDefault(
-      this._color,
-      time,
-      DEF_COLOR,
-      result.color
-    )
-    result.speed = Cesium.Property.getValueOrClonedDefault(
-      this._speed,
-      time,
-      45,
-      result.speed
-    )
+    result.color = Cesium.Property.getValueOrUndefined(this._color, time)
     result.image = Cesium.Property.getValueOrUndefined(this._image, time)
+    result.speed = this._speed
     return result
   }
 
