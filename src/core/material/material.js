@@ -319,7 +319,9 @@ Cesium.Material._materialCache.addMaterial(Cesium.Material.PolylineFlowType, {
     type: Cesium.Material.PolylineFlowType,
     uniforms: {
       color: new Cesium.Color(1.0, 0.0, 0.0, 0.7),
-      speed: 1
+      speed: 1,
+      percent: 0.03,
+      gradient: 0.1
     },
     source: LineFlowMaterial
   },
