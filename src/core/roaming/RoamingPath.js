@@ -189,7 +189,11 @@ class RoamingPath {
         let WGS84TickPosition = Transform.transformCartesianToWGS84(
           tickPosition
         )
-        WGS84TickPosition.alt = viewOption.alt || 5
+        // 当没有在 Controller 设置统一的高度时，采用每个坐标的高度。
+        // 这样能保证漫游路径哪怕是不完全在一个水平面高度都能实现
+        if (!isNaN(viewOption.alt)) {
+          WGS84TickPosition.alt = viewOption.alt
+        }
         camera.lookAt(
           Transform.transformWGS84ToCartesian(WGS84TickPosition),
           new Cesium.HeadingPitchRange(

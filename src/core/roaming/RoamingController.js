@@ -63,11 +63,7 @@ class RoamingController {
   play() {
     this._viewer.clock.shouldAnimate = true
     this._viewer.clock.currentTime = this._startTime || Cesium.JulianDate.now()
-    this._postUpdateRemoveCallback && this._postUpdateRemoveCallback()
-    this._postUpdateRemoveCallback = this._viewer.scene.postUpdate.addEventListener(
-      this._onPostUpdate,
-      this
-    )
+    this._addPostUpdateListener()
     return this
   }
 
@@ -78,6 +74,8 @@ class RoamingController {
     this._viewer.clock.shouldAnimate = false
     this._viewer.camera.lookAtTransform(Cesium.Matrix4.IDENTITY)
     this._viewer.delegate.trackedEntity = undefined
+    // 删除 postUpdate 监听
+    this._removePostUpdateListener()
     return this
   }
 
@@ -86,7 +84,21 @@ class RoamingController {
    */
   restore() {
     this._viewer.clock.shouldAnimate = true
+    // 继续时重新监听事件
+    this._addPostUpdateListener()
     return this
+  }
+
+  _addPostUpdateListener() {
+    this._postUpdateRemoveCallback && this._postUpdateRemoveCallback()
+    this._postUpdateRemoveCallback = this._viewer.scene.postUpdate.addEventListener(
+      this._onPostUpdate,
+      this
+    )
+  }
+
+  _removePostUpdateListener() {
+    this._viewer.scene.postUpdate.removeEventListener(this._onPostUpdate, this)
   }
 
   /**
