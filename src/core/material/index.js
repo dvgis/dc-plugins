@@ -11,6 +11,7 @@ export { default as PolylineEmissionMaterialProperty } from './PolylineEmissionM
 export { default as PolylineFlickerMaterialProperty } from './PolylineFlickerMaterialProperty'
 export { default as PolylineFlowMaterialProperty } from './PolylineFlowMaterialProperty'
 export { default as PolylineImageTrailMaterialProperty } from './PolylineImageTrailMaterialProperty'
+export { default as PolylineLightingMaterialProperty } from './PolylineLightingMaterialProperty'
 export { default as PolylineTrailMaterialProperty } from './PolylineTrailMaterialProperty'
 export { default as RimLightingMaterialProperty } from './RimLightingMaterialProperty'
 export { default as WallTrailMaterialProperty } from './WallTrailMaterialProperty'

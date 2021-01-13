@@ -29,6 +29,7 @@ const LineEmissionMaterial = require('../shader/PolylineEmissionMaterial.glsl')
 const LineFlowMaterial = require('../shader/PolylineFlowMaterial.glsl')
 const LineTrailMaterial = require('../shader/PolylineTrailMaterial.glsl')
 const LineImageTrailMaterial = require('../shader/PolylineImageTrailMaterial.glsl')
+const LineLightingMaterial = require('../shader/PolylineLightingMaterial.glsl')
 const LineFlickerMaterial = require('../shader/PolylineFlickerMaterial.glsl')
 const CircleFadeMaterial = require('../shader/CircleFadeMaterial.glsl')
 const CircleWaveMaterial = require('../shader/CircleWaveMaterial.glsl')
@@ -368,6 +369,28 @@ Cesium.Material._materialCache.addMaterial(
         repeat: new Cesium.Cartesian2(1, 1)
       },
       source: LineImageTrailMaterial
+    },
+    translucent: function(material) {
+      return true
+    }
+  }
+)
+
+/**
+ * PolylineLighting
+ * @type {string}
+ */
+Cesium.Material.PolylineLightingType = 'PolylineLighting'
+Cesium.Material._materialCache.addMaterial(
+  Cesium.Material.PolylineLightingType,
+  {
+    fabric: {
+      type: Cesium.Material.PolylineLightingType,
+      uniforms: {
+        color: new Cesium.Color(1.0, 0.0, 0.0, 0.7),
+        percent: 0.8
+      },
+      source: LineLightingMaterial
     },
     translucent: function(material) {
       return true
