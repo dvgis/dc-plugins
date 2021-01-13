@@ -15,6 +15,8 @@ class Flying extends Animation {
     this._positions = []
     this._durations = [3]
     this._currentIndex = 0
+
+    this._timer = undefined
   }
 
   set positions(positions) {
@@ -48,12 +50,17 @@ class Flying extends Animation {
       if (nextPosition) {
         self._currentIndex++
         if (self._currentIndex <= self._positions.length - 1) {
-          self._cameraFly()
+          self._timer = setTimeout(() => {
+            self._cameraFly()
+          }, (self._options.dwellTime || 1) * 1e3)
         }
       } else if (!nextPosition && self._options.loop) {
         self._currentIndex = 0
-        self._cameraFly()
+        self._timer = setTimeout(() => {
+          self._cameraFly()
+        }, (self._options.dwellTime || 1) * 1e3)
       }
+      self._options.callback && self._options.callback(self._currentIndex)
     }
     if (position) {
       camera.flyTo({
@@ -90,6 +97,7 @@ class Flying extends Animation {
    */
   pause() {
     this._viewer.camera.cancelFlight()
+    this._timer && clearTimeout(this._timer)
     return this
   }
 
