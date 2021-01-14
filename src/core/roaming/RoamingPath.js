@@ -189,7 +189,9 @@ class RoamingPath {
         let WGS84TickPosition = Transform.transformCartesianToWGS84(
           tickPosition
         )
-        WGS84TickPosition.alt = viewOption.alt || 5
+        if (!isNaN(viewOption.alt)) {
+          WGS84TickPosition.alt = viewOption.alt
+        }
         camera.lookAt(
           Transform.transformWGS84ToCartesian(WGS84TickPosition),
           new Cesium.HeadingPitchRange(

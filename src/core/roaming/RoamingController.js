@@ -78,6 +78,8 @@ class RoamingController {
     this._viewer.clock.shouldAnimate = false
     this._viewer.camera.lookAtTransform(Cesium.Matrix4.IDENTITY)
     this._viewer.delegate.trackedEntity = undefined
+    this._postUpdateRemoveCallback && this._postUpdateRemoveCallback()
+    this._postUpdateRemoveCallback = undefined
     return this
   }
 
@@ -86,6 +88,11 @@ class RoamingController {
    */
   restore() {
     this._viewer.clock.shouldAnimate = true
+    this._postUpdateRemoveCallback && this._postUpdateRemoveCallback()
+    this._postUpdateRemoveCallback = this._viewer.scene.postUpdate.addEventListener(
+      this._onPostUpdate,
+      this
+    )
     return this
   }
 
@@ -175,7 +182,10 @@ class RoamingController {
     }
     this._activePath = path
     if (this._activePath && this._activePath.roamingEvent) {
-      this._activePath.roamingEvent.fire(RoamingEventType.ACTIVE, path.id)
+      this._activePath.roamingEvent.fire(
+        RoamingEventType.ACTIVE,
+        this._activePath.id
+      )
     }
     return this
   }
@@ -193,6 +203,8 @@ class RoamingController {
       path.roamingEvent.fire(RoamingEventType.RELEASE, path.id)
     }
     this._activePath = undefined
+    this._viewer.camera.lookAtTransform(Cesium.Matrix4.IDENTITY)
+    this._viewer.delegate.trackedEntity = undefined
     return this
   }
 
@@ -203,6 +215,13 @@ class RoamingController {
   releaseCamera() {
     this._viewer.camera.lookAtTransform(Cesium.Matrix4.IDENTITY)
     this._viewer.delegate.trackedEntity = undefined
+    if (this._activePath && this._activePath.roamingEvent) {
+      this._activePath.roamingEvent.fire(
+        RoamingEventType.RELEASE,
+        this._activePath.id
+      )
+    }
+    this._activePath = undefined
     return this
   }
 }
