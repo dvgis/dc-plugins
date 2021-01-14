@@ -44,6 +44,18 @@ class RoamingController {
   }
 
   /**
+   *
+   * @private
+   */
+  _addPostUpdateListener() {
+    this._postUpdateRemoveCallback && this._postUpdateRemoveCallback()
+    this._postUpdateRemoveCallback = this._viewer.scene.postUpdate.addEventListener(
+      this._onPostUpdate,
+      this
+    )
+  }
+
+  /**
    * Sets time range
    * @param startTime
    * @returns {RoamingController}
@@ -63,11 +75,7 @@ class RoamingController {
   play() {
     this._viewer.clock.shouldAnimate = true
     this._viewer.clock.currentTime = this._startTime || Cesium.JulianDate.now()
-    this._postUpdateRemoveCallback && this._postUpdateRemoveCallback()
-    this._postUpdateRemoveCallback = this._viewer.scene.postUpdate.addEventListener(
-      this._onPostUpdate,
-      this
-    )
+    this._addPostUpdateListener()
     return this
   }
 
@@ -93,6 +101,7 @@ class RoamingController {
       this._onPostUpdate,
       this
     )
+    this._addPostUpdateListener()
     return this
   }
 
