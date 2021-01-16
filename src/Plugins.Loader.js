@@ -16,7 +16,7 @@ import Effect from './core/effect/Effect'
 
 import Weather from './core/weather/Weather'
 
-import { ClusterLayer, CzmlLayer, HeatLayer, KmlLayer } from './core/layer'
+import { ClusterLayer, HeatLayer } from './core/layer'
 
 import {
   CircleFadeMaterialProperty,
@@ -43,9 +43,7 @@ const plugins = {
   GlobeRotate,
   RadarScan,
   ClusterLayer,
-  CzmlLayer,
   HeatLayer,
-  KmlLayer,
   Weather,
   Effect,
   RoamingViewMode,
