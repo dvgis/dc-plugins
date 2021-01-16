@@ -54,6 +54,9 @@ class Cloud {
    * @private
    */
   _onRotate(scene, time) {
+    if (this._rotateAmount === 0) {
+      return
+    }
     this._heading += this._rotateAmount
     if (this._heading >= 360 || this._heading <= -360) {
       this._heading = 0
