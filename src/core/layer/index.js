@@ -4,6 +4,4 @@
  */
 
 export { default as ClusterLayer } from './ClusterLayer'
-export { default as CzmlLayer } from './CzmlLayer'
 export { default as HeatLayer } from './HeatLayer'
-export { default as KmlLayer } from './KmlLayer'
