@@ -108,20 +108,6 @@ class WindLayer extends Layer {
 
   /**
    *
-   * @returns {WindLayer}
-   * @private
-   */
-  _render() {
-    this._delegate.updateData(this._data)
-    if (this._delegate) {
-      this._delegate.prerender()
-      this._delegate.render()
-    }
-    return this
-  }
-
-  /**
-   *
    * @private
    */
   _addedHook() {
