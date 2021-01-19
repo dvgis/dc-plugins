@@ -35,6 +35,8 @@ import {
 
 import { RoamingViewMode, RoamingController, RoamingPath } from './core/roaming'
 
+import WindLayer from './core/wind/WindLayer'
+
 const plugins = {
   AroundView,
   AroundPoint,
@@ -60,7 +62,8 @@ const plugins = {
   PolylineTrailMaterialProperty,
   RimLightingMaterialProperty,
   WallTrailMaterialProperty,
-  WaterMaterialProperty
+  WaterMaterialProperty,
+  WindLayer
 }
 
 DC.mixin(plugins)
