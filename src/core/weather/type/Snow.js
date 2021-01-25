@@ -12,6 +12,7 @@ const SnowShader = require('../../shader/SnowShader.glsl')
 class Snow {
   constructor() {
     this._id = Util.uuid()
+    this._viewer = undefined
     this._delegate = undefined
     this._enable = false
     this._speed = 10.0
@@ -20,7 +21,12 @@ class Snow {
   }
 
   set enable(enable) {
-    this._enable = this._delegate.enabled = enable
+    this._enable = enable
+    if (enable && !this._delegate && this._viewer) {
+      this._createPostProcessStage()
+      this._viewer.scene.postProcessStages.add(this._delegate)
+    }
+    this._delegate && (this._delegate.enabled = enable)
     return this
   }
 
@@ -41,7 +47,7 @@ class Snow {
    *
    * @private
    */
-  _init() {
+  _createPostProcessStage() {
     this._delegate = new Cesium.PostProcessStage({
       name: this._id,
       fragmentShader: SnowShader,
@@ -49,7 +55,6 @@ class Snow {
         speed: this._speed
       }
     })
-    this._delegate.enabled = this._enable
   }
 
   /**
@@ -61,8 +66,7 @@ class Snow {
     if (!viewer) {
       return this
     }
-    this._init()
-    viewer.scene.postProcessStages.add(this._delegate)
+    this._viewer = viewer
     this._state = State.ADDED
     return this
   }

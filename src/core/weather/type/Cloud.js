@@ -71,7 +71,7 @@ class Cloud {
    *
    * @private
    */
-  _init() {
+  _createPrimitive() {
     this._delegate = new Cesium.Primitive({
       appearance: new Cesium.EllipsoidSurfaceAppearance({
         material: new Cesium.Material({
@@ -112,7 +112,7 @@ class Cloud {
       return this
     }
     this._viewer = viewer
-    this._init()
+    this._createPrimitive()
     this._viewer.scene.primitives.add(this._delegate)
     this._state = State.ADDED
     return this

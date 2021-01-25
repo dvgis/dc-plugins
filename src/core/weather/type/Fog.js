@@ -12,16 +12,23 @@ const FogShader = require('../../shader/FogShader.glsl')
 class Fog {
   constructor() {
     this._id = Util.uuid()
+    this._viewer = undefined
     this._delegate = undefined
     this._enable = false
     this._fogByDistance = { near: 10, nearValue: 0, far: 2000, farValue: 1.0 }
     this._fogColor = new Cesium.Color(0, 0, 0, 1)
+    this._createPostProcessStage()
     this.type = 'fog'
     this._state = State.INITIALIZED
   }
 
   set enable(enable) {
-    this._enable = this._delegate.enabled = enable
+    this._enable = enable
+    if (enable && !this._delegate && this._viewer) {
+      this._createPostProcessStage()
+      this._viewer.scene.postProcessStages.add(this._delegate)
+    }
+    this._delegate && (this._delegate.enabled = enable)
     return this
   }
 
@@ -57,7 +64,7 @@ class Fog {
    *
    * @private
    */
-  _init() {
+  _createPostProcessStage() {
     this._delegate = new Cesium.PostProcessStage({
       name: this._id,
       fragmentShader: FogShader,
@@ -71,7 +78,6 @@ class Fog {
         fogColor: this._fogColor
       }
     })
-    this._delegate.enabled = this._enable
   }
 
   /**
@@ -83,8 +89,6 @@ class Fog {
     if (!viewer) {
       return this
     }
-    this._init()
-    viewer.scene.postProcessStages.add(this._delegate)
     this._state = State.ADDED
     return this
   }

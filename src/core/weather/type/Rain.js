@@ -12,15 +12,22 @@ const RainShader = require('../../shader/RainShader.glsl')
 class Rain {
   constructor() {
     this._id = Util.uuid()
+    this._viewer = undefined
     this._delegate = undefined
     this._enable = false
     this._speed = 10.0
     this.type = 'rain'
+    this._createPostProcessStage()
     this._state = State.INITIALIZED
   }
 
   set enable(enable) {
-    this._enable = this._delegate.enabled = enable
+    this._enable = enable
+    if (enable && !this._delegate && this._viewer) {
+      this._createPostProcessStage()
+      this._viewer.scene.postProcessStages.add(this._delegate)
+    }
+    this._delegate && (this._delegate.enabled = enable)
     return this
   }
 
@@ -41,7 +48,7 @@ class Rain {
    *
    * @private
    */
-  _init() {
+  _createPostProcessStage() {
     this._delegate = new Cesium.PostProcessStage({
       name: this._id,
       fragmentShader: RainShader,
@@ -49,7 +56,6 @@ class Rain {
         speed: this._speed
       }
     })
-    this._delegate.enabled = this._enable
   }
 
   /**
@@ -61,8 +67,7 @@ class Rain {
     if (!viewer) {
       return this
     }
-    this._init()
-    viewer.scene.postProcessStages.add(this._delegate)
+    this._viewer = viewer
     this._state = State.ADDED
     return this
   }
