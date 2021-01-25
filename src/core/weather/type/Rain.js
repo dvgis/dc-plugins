@@ -17,7 +17,6 @@ class Rain {
     this._enable = false
     this._speed = 10.0
     this.type = 'rain'
-    this._createPostProcessStage()
     this._state = State.INITIALIZED
   }
 

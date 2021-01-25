@@ -17,7 +17,6 @@ class Fog {
     this._enable = false
     this._fogByDistance = { near: 10, nearValue: 0, far: 2000, farValue: 1.0 }
     this._fogColor = new Cesium.Color(0, 0, 0, 1)
-    this._createPostProcessStage()
     this.type = 'fog'
     this._state = State.INITIALIZED
   }
