@@ -16,7 +16,7 @@ class Fog {
     this._delegate = undefined
     this._enable = false
     this._fogByDistance = { near: 10, nearValue: 0, far: 2000, farValue: 1.0 }
-    this._fogColor = new Cesium.Color(0, 0, 0, 1)
+    this._color = new Cesium.Color(0, 0, 0, 1)
     this.type = 'fog'
     this._state = State.INITIALIZED
   }
@@ -50,13 +50,12 @@ class Fog {
     return this._fogByDistance
   }
 
-  set fogColor(fogColor) {
-    this._fogColor = this._delegate.uniforms.fogColor = fogColor
-    return this
+  set color(color) {
+    this._color = this._delegate.uniforms.fogColor = color
   }
 
-  get fogColor() {
-    return this._fogColor
+  get color() {
+    return this._color
   }
 
   /**
@@ -74,7 +73,7 @@ class Fog {
           this._fogByDistance?.far || 200,
           this._fogByDistance?.farValue || 1.0
         ),
-        fogColor: this._fogColor
+        fogColor: this._color
       }
     })
   }
