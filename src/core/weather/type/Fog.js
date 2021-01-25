@@ -89,6 +89,7 @@ class Fog {
     if (!viewer) {
       return this
     }
+    this._viewer = viewer
     this._state = State.ADDED
     return this
   }
