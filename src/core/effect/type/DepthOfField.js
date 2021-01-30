@@ -1,28 +1,36 @@
 /**
  * @Author: Caven
- * @Date: 2020-08-14 23:50:27
+ * @Date: 2020-08-14 23:51:47
  */
 
 const { State } = DC
 
-class Bloom {
+const { Cesium } = DC.Namespace
+
+class DepthOfField {
   constructor() {
     this._viewer = undefined
+    this._delegate = undefined
     this._enable = false
-    this._contrast = 128
-    this._brightness = -0.3
-    this._glowOnly = false
+    this._focalDistance = 87
     this._delta = 1
     this._sigma = 3.8
-    this._stepSize = 5
+    this._stepSize = 2.5
     this._selected = []
-    this.type = 'bloom'
+    this.type = 'depth_of_field'
     this._state = State.INITIALIZED
   }
 
   set enable(enable) {
     this._enable = enable
-    if (enable && this._viewer && !this._delegate) {
+    if (
+      enable &&
+      this._viewer &&
+      Cesium.PostProcessStageLibrary.isDepthOfFieldSupported(
+        this._viewer.scene
+      ) &&
+      !this._delegate
+    ) {
       this._createPostProcessStage()
     }
     this._delegate && (this._delegate.enabled = enable)
@@ -33,34 +41,14 @@ class Bloom {
     return this._enable
   }
 
-  set contrast(contrast) {
-    this._contrast = contrast
-    this._delegate && (this._delegate.uniforms.contrast = contrast)
+  set focalDistance(focalDistance) {
+    this._focalDistance = focalDistance
+    this._delegate && (this._delegate.uniforms.focalDistance = focalDistance)
     return this
   }
 
-  get contrast() {
-    return this._contrast
-  }
-
-  set brightness(brightness) {
-    this._brightness = brightness
-    this._delegate && (this._delegate.uniforms.brightness = brightness)
-    return this
-  }
-
-  get brightness() {
-    return this._brightness
-  }
-
-  set glowOnly(glowOnly) {
-    this._glowOnly = glowOnly
-    this._delegate && (this._delegate.uniforms.glowOnly = glowOnly)
-    return this
-  }
-
-  get glowOnly() {
-    return this._glowOnly
+  get focalDistance() {
+    return this._focalDistance
   }
 
   set delta(delta) {
@@ -108,19 +96,20 @@ class Bloom {
    * @private
    */
   _createPostProcessStage() {
-    this._delegate = this._viewer.scene.postProcessStages.bloom
-    this._delegate.uniforms.contrast = this._contrast
-    this._delegate.uniforms.brightness = this._brightness
-    this._delegate.uniforms.glowOnly = this._glowOnly
-    this._delegate.uniforms.delta = this._delta
-    this._delegate.uniforms.sigma = this._sigma
-    this._delegate.uniforms.stepSize = this._stepSize
+    this._delegate = Cesium.PostProcessStageLibrary.createDepthOfFieldStage()
+    if (this._delegate) {
+      this._delegate.uniforms.focalDistance = this._focalDistance
+      this._delegate.uniforms.delta = this._delta
+      this._delegate.uniforms.sigma = this._sigma
+      this._delegate.uniforms.stepSize = this._stepSize
+      this._viewer.scene.postProcessStages.add(this._delegate)
+    }
   }
 
   /**
    *
    * @param viewer
-   * @returns {Bloom}
+   * @returns {DepthOfField}
    */
   addTo(viewer) {
     if (!viewer) {
@@ -132,4 +121,4 @@ class Bloom {
   }
 }
 
-export default Bloom
+export default DepthOfField

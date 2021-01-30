@@ -1,17 +1,20 @@
 /**
  * @Author: Caven
- * @Date: 2020-08-14 23:10:14
+ * @Date: 2020-08-14 23:51:47
  */
 
 const { State } = DC
 
 const { Cesium } = DC.Namespace
 
-class NightVision {
+class BlackAndWhite {
   constructor() {
+    this._viewer = undefined
+    this._delegate = undefined
     this._enable = false
+    this._gradations = 1
     this._selected = []
-    this.type = 'night'
+    this.type = 'black_and_white'
     this._state = State.INITIALIZED
   }
 
@@ -26,6 +29,16 @@ class NightVision {
 
   get enable() {
     return this._enable
+  }
+
+  set gradations(gradations) {
+    this._gradations = gradations
+    this._delegate && (this._delegate.uniforms.gradations = gradations)
+    return this
+  }
+
+  get gradations() {
+    return this._gradations
   }
 
   set selected(selected) {
@@ -43,8 +56,9 @@ class NightVision {
    * @private
    */
   _createPostProcessStage() {
-    this._delegate = Cesium.PostProcessStageLibrary.createNightVisionStage()
+    this._delegate = Cesium.PostProcessStageLibrary.createBlackAndWhiteStage()
     if (this._delegate) {
+      this._delegate.uniforms.gradations = this._gradations
       this._viewer.scene.postProcessStages.add(this._delegate)
     }
   }
@@ -52,7 +66,7 @@ class NightVision {
   /**
    *
    * @param viewer
-   * @returns {NightVision}
+   * @returns {BlackAndWhite}
    */
   addTo(viewer) {
     if (!viewer) {
@@ -64,4 +78,4 @@ class NightVision {
   }
 }
 
-export default NightVision
+export default BlackAndWhite

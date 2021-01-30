@@ -100,6 +100,7 @@ class Cloud {
       id: this._id
     })
     this._delegate.show = this._enable
+    this._viewer.scene.primitives.add(this._delegate)
   }
 
   /**
@@ -113,7 +114,6 @@ class Cloud {
     }
     this._viewer = viewer
     this._createPrimitive()
-    this._viewer.scene.primitives.add(this._delegate)
     this._state = State.ADDED
     return this
   }

@@ -7,20 +7,28 @@ const { State } = DC
 
 const { Cesium } = DC.Namespace
 
-class Brightness {
+class Silhouette {
   constructor() {
     this._viewer = undefined
     this._delegate = undefined
     this._enable = false
-    this._intensity = 1
+    this._color = Cesium.Color.GREEN
+    this._length = 0.5
     this._selected = []
-    this.type = 'brightness'
+    this.type = 'silhouette'
     this._state = State.INITIALIZED
   }
 
   set enable(enable) {
     this._enable = enable
-    if (enable && this._viewer && !this._delegate) {
+    if (
+      enable &&
+      this._viewer &&
+      Cesium.PostProcessStageLibrary.isSilhouetteSupported(
+        this._viewer.scene
+      ) &&
+      !this._delegate
+    ) {
       this._createPostProcessStage()
     }
     this._delegate && (this._delegate.enabled = enable)
@@ -31,14 +39,24 @@ class Brightness {
     return this._enable
   }
 
-  set intensity(intensity) {
-    this._intensity = intensity
-    this._delegate && (this._delegate.uniforms.brightness = intensity)
+  set color(color) {
+    this._color = color
+    this._delegate && (this._delegate.uniforms.color = color)
     return this
   }
 
-  get intensity() {
-    return this._intensity
+  get color() {
+    return this._color
+  }
+
+  set length(length) {
+    this._length = length
+    this._delegate && (this._delegate.uniforms.length = length)
+    return this
+  }
+
+  get length() {
+    return this._length
   }
 
   set selected(selected) {
@@ -56,9 +74,10 @@ class Brightness {
    * @private
    */
   _createPostProcessStage() {
-    this._delegate = Cesium.PostProcessStageLibrary.createBrightnessStage()
+    this._delegate = Cesium.PostProcessStageLibrary.createSilhouetteStage()
     if (this._delegate) {
-      this._delegate.uniforms.brightness = this._intensity
+      this._delegate.uniforms.color = this._color
+      this._delegate.uniforms.length = this._length
       this._viewer.scene.postProcessStages.add(this._delegate)
     }
   }
@@ -66,7 +85,7 @@ class Brightness {
   /**
    *
    * @param viewer
-   * @returns {Brightness}
+   * @returns {Silhouette}
    */
   addTo(viewer) {
     if (!viewer) {
@@ -78,4 +97,4 @@ class Brightness {
   }
 }
 
-export default Brightness
+export default Silhouette

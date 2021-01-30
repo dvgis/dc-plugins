@@ -22,9 +22,8 @@ class Rain {
 
   set enable(enable) {
     this._enable = enable
-    if (enable && !this._delegate && this._viewer) {
+    if (enable && this._viewer && !this._delegate) {
       this._createPostProcessStage()
-      this._viewer.scene.postProcessStages.add(this._delegate)
     }
     this._delegate && (this._delegate.enabled = enable)
     return this
@@ -35,7 +34,8 @@ class Rain {
   }
 
   set speed(speed) {
-    this._speed = this._delegate.uniforms.speed = speed
+    this._speed = speed
+    this._delegate && (this._delegate.uniforms.speed = speed)
     return this
   }
 
@@ -55,6 +55,7 @@ class Rain {
         speed: this._speed
       }
     })
+    this._viewer.scene.postProcessStages.add(this._delegate)
   }
 
   /**

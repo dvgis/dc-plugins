@@ -23,9 +23,8 @@ class Fog {
 
   set enable(enable) {
     this._enable = enable
-    if (enable && !this._delegate && this._viewer) {
+    if (enable && this._viewer && !this._delegate) {
       this._createPostProcessStage()
-      this._viewer.scene.postProcessStages.add(this._delegate)
     }
     this._delegate && (this._delegate.enabled = enable)
     return this
@@ -37,12 +36,13 @@ class Fog {
 
   set fogByDistance(fogByDistance) {
     this._fogByDistance = fogByDistance
-    this._delegate.uniforms.fogByDistance = new Cesium.Cartesian4(
-      this._fogByDistance?.near || 10,
-      this._fogByDistance?.nearValue || 0.0,
-      this._fogByDistance?.far || 2000,
-      this._fogByDistance?.farValue || 1.0
-    )
+    this._delegate &&
+      (this._delegate.uniforms.fogByDistance = new Cesium.Cartesian4(
+        this._fogByDistance?.near || 10,
+        this._fogByDistance?.nearValue || 0.0,
+        this._fogByDistance?.far || 2000,
+        this._fogByDistance?.farValue || 1.0
+      ))
     return this
   }
 
@@ -51,7 +51,8 @@ class Fog {
   }
 
   set color(color) {
-    this._color = this._delegate.uniforms.fogColor = color
+    this._color = color
+    this._delegate && (this._delegate.uniforms.fogColor = color)
   }
 
   get color() {
@@ -76,6 +77,7 @@ class Fog {
         fogColor: this._color
       }
     })
+    this._viewer.scene.postProcessStages.add(this._delegate)
   }
 
   /**
