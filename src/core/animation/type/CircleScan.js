@@ -27,20 +27,21 @@ class CircleScan extends Animation {
    * @private
    */
   _mountContent() {
-    let cartesian3Center = Transform.transformWGS84ToCartesian(this._position)
+    let center = Transform.transformWGS84ToCartesian(this._position)
+    let up = Cesium.Ellipsoid.WGS84.geodeticSurfaceNormal(
+      center,
+      new Cesium.Cartesian3()
+    )
     let self = this
     this._delegate = new Cesium.PostProcessStage({
       name: Util.uuid(),
       fragmentShader: CircleScanShader,
       uniforms: {
         centerWC: function() {
-          return cartesian3Center
+          return center
         },
         normalWC: function() {
-          return Cesium.Ellipsoid.WGS84.geodeticSurfaceNormal(
-            cartesian3Center,
-            new Cesium.Cartesian3()
-          )
+          return up
         },
         radius: function() {
           return self._radius

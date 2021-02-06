@@ -16,7 +16,9 @@ import Effect from './core/effect/Effect'
 
 import Weather from './core/weather/Weather'
 
-import { ClusterLayer, HeatLayer } from './core/layer'
+import HeatLayer from './core/heat/HeatLayer'
+
+import ClusterLayer from './core/cluster/ClusterLayer'
 
 import {
   CircleFadeMaterialProperty,

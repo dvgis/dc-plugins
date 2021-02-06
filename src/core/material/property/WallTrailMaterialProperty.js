@@ -5,7 +5,7 @@
 
 const { Cesium } = DC.Namespace
 
-const IMG = require('../images/fence.png')
+const IMG = require('../../images/fence.png')
 
 class WallTrailMaterialProperty {
   constructor(options) {

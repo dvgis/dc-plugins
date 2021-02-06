@@ -4,15 +4,18 @@
  */
 
 export * from './material'
-export { default as CircleFadeMaterialProperty } from './CircleFadeMaterialProperty'
-export { default as CircleScanMaterialProperty } from './CircleScanMaterialProperty'
-export { default as CircleWaveMaterialProperty } from './CircleWaveMaterialProperty'
-export { default as PolylineEmissionMaterialProperty } from './PolylineEmissionMaterialProperty'
-export { default as PolylineFlickerMaterialProperty } from './PolylineFlickerMaterialProperty'
-export { default as PolylineFlowMaterialProperty } from './PolylineFlowMaterialProperty'
-export { default as PolylineImageTrailMaterialProperty } from './PolylineImageTrailMaterialProperty'
-export { default as PolylineLightingMaterialProperty } from './PolylineLightingMaterialProperty'
-export { default as PolylineTrailMaterialProperty } from './PolylineTrailMaterialProperty'
-export { default as RimLightingMaterialProperty } from './RimLightingMaterialProperty'
-export { default as WallTrailMaterialProperty } from './WallTrailMaterialProperty'
-export { default as WaterMaterialProperty } from './WaterMaterialProperty'
+/**
+ * property
+ */
+export { default as CircleFadeMaterialProperty } from './property/CircleFadeMaterialProperty'
+export { default as CircleScanMaterialProperty } from './property/CircleScanMaterialProperty'
+export { default as CircleWaveMaterialProperty } from './property/CircleWaveMaterialProperty'
+export { default as PolylineEmissionMaterialProperty } from './property/PolylineEmissionMaterialProperty'
+export { default as PolylineFlickerMaterialProperty } from './property/PolylineFlickerMaterialProperty'
+export { default as PolylineFlowMaterialProperty } from './property/PolylineFlowMaterialProperty'
+export { default as PolylineImageTrailMaterialProperty } from './property/PolylineImageTrailMaterialProperty'
+export { default as PolylineLightingMaterialProperty } from './property/PolylineLightingMaterialProperty'
+export { default as PolylineTrailMaterialProperty } from './property/PolylineTrailMaterialProperty'
+export { default as RimLightingMaterialProperty } from './property/RimLightingMaterialProperty'
+export { default as WallTrailMaterialProperty } from './property/WallTrailMaterialProperty'
+export { default as WaterMaterialProperty } from './property/WaterMaterialProperty'
