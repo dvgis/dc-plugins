@@ -3,18 +3,13 @@
  * @Date: 2020-03-06 17:56:39
  */
 
+import MaterialProperty from '../../MaterialProperty'
+
 const { Cesium } = DC.Namespace
 
-class CircleWaveMaterialProperty {
-  constructor(options) {
-    options = options || {}
-    this._definitionChanged = new Cesium.Event()
-    this._color = undefined
-    this._colorSubscription = undefined
-    this._speed = undefined
-    this._speedSubscription = undefined
-    this.color = options.color || Cesium.Color.fromBytes(0, 255, 255, 255)
-    this.speed = options.speed || 45
+class CircleWaveMaterialProperty extends MaterialProperty {
+  constructor(options = {}) {
+    super(options)
     this.count = Math.max(options.count || 3, 1)
     this.gradient = Cesium.Math.clamp(options.gradient || 0.1, 0, 1)
   }

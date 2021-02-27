@@ -3,30 +3,17 @@
  * @Date: 2021-01-09 20:23:53
  */
 
+import MaterialProperty from '../../MaterialProperty'
+
 const { Cesium } = DC.Namespace
 
-class CircleScanMaterialProperty {
-  constructor(options) {
-    options = options || {}
-    this._definitionChanged = new Cesium.Event()
-    this._color = undefined
-    this._colorSubscription = undefined
-    this._speed = undefined
-    this._speedSubscription = undefined
-    this.color = options.color || Cesium.Color.fromBytes(0, 255, 255, 255)
-    this.speed = options.speed || 1
-  }
-
-  get isConstant() {
-    return false
-  }
-
-  get definitionChanged() {
-    return this._definitionChanged
+class CircleScanMaterialProperty extends MaterialProperty {
+  constructor(options = {}) {
+    super(options)
   }
 
   getType(time) {
-    return Cesium.Material.CircleFadeType
+    return Cesium.Material.CircleScanType
   }
 
   getValue(time, result) {

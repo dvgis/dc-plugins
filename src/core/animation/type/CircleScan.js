@@ -5,7 +5,7 @@
 
 import Animation from '../Animation'
 
-const CircleScanShader = require('../../shader/CircleScanShader.glsl')
+const CircleScanShader = require('../../material/shader/circle/CircleScanShader.glsl')
 
 const { Transform, Parse, Util } = DC
 
