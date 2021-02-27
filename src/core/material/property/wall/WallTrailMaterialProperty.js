@@ -3,31 +3,18 @@
  * @Date: 2020-06-22 16:46:14
  */
 
+import MaterialProperty from '../../MaterialProperty'
+
 const { Cesium } = DC.Namespace
 
-const IMG = require('../../images/fence.png')
+const IMG = require('../../../images/fence.png')
 
-class WallTrailMaterialProperty {
-  constructor(options) {
-    options = options || {}
-    this._definitionChanged = new Cesium.Event()
-    this._color = undefined
-    this._colorSubscription = undefined
+class WallTrailMaterialProperty extends MaterialProperty {
+  constructor(options = {}) {
+    super(options)
     this._image = undefined
     this._imageSubscription = undefined
-    this._speed = undefined
-    this._speedSubscription = undefined
-    this.color = options.color || Cesium.Color.fromBytes(0, 255, 255, 255)
-    this.speed = options.speed || 1
     this.image = IMG
-  }
-
-  get isConstant() {
-    return false
-  }
-
-  get definitionChanged() {
-    return this._definitionChanged
   }
 
   getType(time) {

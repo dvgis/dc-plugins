@@ -7,7 +7,7 @@ const { State, Util } = DC
 
 const { Cesium } = DC.Namespace
 
-const RainShader = require('../../shader/RainShader.glsl')
+const RainShader = require('../../material/shader/weather/RainShader.glsl')
 
 class Rain {
   constructor() {
