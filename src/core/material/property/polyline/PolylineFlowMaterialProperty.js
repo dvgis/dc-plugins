@@ -3,32 +3,19 @@
  * @Date: 2020-02-24 13:53:52
  */
 
+import MaterialProperty from '../../MaterialProperty'
+
 const { Cesium } = DC.Namespace
 
-class PolylineFlowMaterialProperty {
-  constructor(options) {
-    options = options || {}
-    this._definitionChanged = new Cesium.Event()
-    this._color = undefined
-    this._colorSubscription = undefined
-    this._speed = undefined
-    this._speedSubscription = undefined
+class PolylineFlowMaterialProperty extends MaterialProperty {
+  constructor(options = {}) {
+    super(options)
     this._percent = undefined
     this._percentSubscription = undefined
     this._gradient = undefined
     this._gradientSubscription = undefined
-    this.color = options.color || Cesium.Color.fromBytes(0, 255, 255, 255)
-    this.speed = options.speed || 1
     this.percent = options.percent || 0.03
     this.gradient = options.gradient || 0.1
-  }
-
-  get isConstant() {
-    return false
-  }
-
-  get definitionChanged() {
-    return this._definitionChanged
   }
 
   getType(time) {

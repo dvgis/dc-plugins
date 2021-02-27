@@ -3,23 +3,13 @@
  * @Date: 2020-02-26 10:15:55
  */
 
+import MaterialProperty from '../../MaterialProperty'
+
 const { Cesium } = DC.Namespace
 
-class PolylineEmissionMaterialProperty {
-  constructor(options) {
-    options = options || {}
-    this._definitionChanged = new Cesium.Event()
-    this._color = undefined
-    this._colorSubscription = undefined
-    this.color = options.color || Cesium.Color.fromBytes(0, 255, 255, 255)
-  }
-
-  get isConstant() {
-    return false
-  }
-
-  get definitionChanged() {
-    return this._definitionChanged
+class PolylineEmissionMaterialProperty extends MaterialProperty {
+  constructor(options = {}) {
+    super(options)
   }
 
   getType(time) {

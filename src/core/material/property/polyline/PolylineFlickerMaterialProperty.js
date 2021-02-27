@@ -3,26 +3,13 @@
  * @Date: 2021-01-11 21:08:02
  */
 
+import MaterialProperty from '../../MaterialProperty'
+
 const { Cesium } = DC.Namespace
 
-class PolylineFlickerMaterialProperty {
-  constructor(options) {
-    options = options || {}
-    this._definitionChanged = new Cesium.Event()
-    this._color = undefined
-    this._colorSubscription = undefined
-    this.color = options.color || Cesium.Color.fromBytes(0, 255, 255, 255)
-    this._speed = undefined
-    this._speedSubscription = undefined
-    this.speed = options.speed || 1
-  }
-
-  get isConstant() {
-    return false
-  }
-
-  get definitionChanged() {
-    return this._definitionChanged
+class PolylineFlickerMaterialProperty extends MaterialProperty {
+  constructor(options = {}) {
+    super(options)
   }
 
   getType(time) {
