@@ -12,30 +12,36 @@ import {
   RadarScan
 } from './core/animation'
 
-import Effect from './core/effect/Effect'
+import ClusterLayer from './core/cluster/ClusterLayer'
 
-import Weather from './core/weather/Weather'
+import Effect from './core/effect/Effect'
 
 import HeatLayer from './core/heat/HeatLayer'
 
-import ClusterLayer from './core/cluster/ClusterLayer'
-
 import {
+  CircleBlurMaterialProperty,
+  CircleDiffuseMaterialProperty,
   CircleFadeMaterialProperty,
+  CirclePulseMaterialProperty,
   CircleScanMaterialProperty,
+  CircleSpiralMaterialProperty,
   CircleWaveMaterialProperty,
-  PolylineEmissionMaterialProperty,
   PolylineFlickerMaterialProperty,
   PolylineFlowMaterialProperty,
   PolylineImageTrailMaterialProperty,
   PolylineLightingMaterialProperty,
+  PolylineLightingTrailMaterialProperty,
   PolylineTrailMaterialProperty,
-  RimLightingMaterialProperty,
+  RadarSweepMaterialProperty,
+  RadarWaveMaterialProperty,
+  WallLineTrailMaterialProperty,
   WallTrailMaterialProperty,
   WaterMaterialProperty
 } from './core/material'
 
 import { RoamingViewMode, RoamingController, RoamingPath } from './core/roaming'
+
+import Weather from './core/weather/Weather'
 
 import WindLayer from './core/wind/WindLayer'
 
@@ -47,25 +53,31 @@ const plugins = {
   GlobeRotate,
   RadarScan,
   ClusterLayer,
-  HeatLayer,
-  Weather,
   Effect,
-  RoamingViewMode,
-  RoamingController,
-  RoamingPath,
+  HeatLayer,
+  CircleBlurMaterialProperty,
+  CircleDiffuseMaterialProperty,
   CircleFadeMaterialProperty,
+  CirclePulseMaterialProperty,
   CircleScanMaterialProperty,
+  CircleSpiralMaterialProperty,
   CircleWaveMaterialProperty,
-  PolylineEmissionMaterialProperty,
   PolylineFlickerMaterialProperty,
   PolylineFlowMaterialProperty,
   PolylineImageTrailMaterialProperty,
   PolylineLightingMaterialProperty,
+  PolylineLightingTrailMaterialProperty,
   PolylineTrailMaterialProperty,
-  RimLightingMaterialProperty,
+  RadarSweepMaterialProperty,
+  RadarWaveMaterialProperty,
+  WallLineTrailMaterialProperty,
   WallTrailMaterialProperty,
   WaterMaterialProperty,
-  WindLayer
+  WindLayer,
+  RoamingViewMode,
+  RoamingController,
+  Weather,
+  RoamingPath
 }
 
 DC.mixin(plugins)
