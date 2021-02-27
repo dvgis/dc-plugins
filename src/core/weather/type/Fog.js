@@ -7,7 +7,7 @@ const { State, Util } = DC
 
 const { Cesium } = DC.Namespace
 
-const FogShader = require('../../shader/FogShader.glsl')
+const FogShader = require('../../material/shader/weather/FogShader.glsl')
 
 class Fog {
   constructor() {
