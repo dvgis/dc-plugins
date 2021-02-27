@@ -37,7 +37,7 @@ class WindLayer extends Layer {
 
   set show(show) {
     this._show = show
-    this._delegate.style.visibility = show ? 'visible' : 'hidden'
+    this._canvas.style.visibility = show ? 'visible' : 'hidden'
   }
 
   get show() {
@@ -180,9 +180,10 @@ class WindLayer extends Layer {
   /**
    *
    * @param data
+   * @param options
    * @returns {WindLayer}
    */
-  setData(data) {
+  setData(data, options) {
     if (data && data.checkFields && data.checkFields()) {
       this._data = data
     } else if (Array.isArray(data)) {
@@ -190,6 +191,13 @@ class WindLayer extends Layer {
     }
     if (this._delegate) {
       this._delegate.setData(this._data)
+      if (options) {
+        this._options = {
+          ...this._options,
+          ...options
+        }
+        this._delegate.setOptions(this._options)
+      }
       this._delegate.prerender()
       this._delegate.render()
     }
