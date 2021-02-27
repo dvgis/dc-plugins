@@ -9,7 +9,7 @@ const { Transform, Parse, Util } = DC
 
 const { Cesium } = DC.Namespace
 
-const RadarScanShader = require('../../shader/RadarScanShader.glsl')
+const RadarScanShader = require('../../material/shader/radar/RadarScanShader.glsl')
 
 class RadarScan extends Animation {
   constructor(viewer, position, radius, options = {}) {
