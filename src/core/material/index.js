@@ -19,6 +19,7 @@ export { default as CircleFadeMaterialProperty } from './property/circle/CircleF
 export { default as CirclePulseMaterialProperty } from './property/circle/CirclePulseMaterialProperty'
 export { default as CircleScanMaterialProperty } from './property/circle/CircleScanMaterialProperty'
 export { default as CircleSpiralMaterialProperty } from './property/circle/CircleSpiralMaterialProperty'
+export { default as CircleVaryMaterialProperty } from './property/circle/CircleVaryMaterialProperty'
 export { default as CircleWaveMaterialProperty } from './property/circle/CircleWaveMaterialProperty'
 
 /**
@@ -35,6 +36,7 @@ export { default as PolylineTrailMaterialProperty } from './property/polyline/Po
 /**
  * radar material property
  */
+export { default as RadarLineMaterialProperty } from './property/radar/RadarLineMaterialProperty'
 export { default as RadarSweepMaterialProperty } from './property/radar/RadarSweepMaterialProperty'
 export { default as RadarWaveMaterialProperty } from './property/radar/RadarWaveMaterialProperty'
 
