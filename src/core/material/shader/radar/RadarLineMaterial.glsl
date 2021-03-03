@@ -1,9 +1,6 @@
 uniform vec4 color;
 uniform float speed;
 
-
-#define circle(w, p, r) smoothstep( w, 0., abs(length(p) - r ) )
-
 czm_material czm_getMaterial(czm_materialInput materialInput){
   czm_material material = czm_getDefaultMaterial(materialInput);
   vec2 st = materialInput.st * 2.0 - 1.0;
