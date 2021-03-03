@@ -11,6 +11,7 @@ const CircleFadeMaterial = require('../shader/circle/CircleFadeMaterial.glsl')
 const CirclePulseMaterial = require('../shader/circle/CirclePulseMaterial.glsl')
 const CircleScanMaterial = require('../shader/circle/CircleScanMaterial.glsl')
 const CircleSpiralMaterial = require('../shader/circle/CircleSpiralMaterial.glsl')
+const CircleVaryMaterial = require('../shader/circle/CircleVaryMaterial.glsl')
 const CircleWaveMaterial = require('../shader/circle/CircleWaveMaterial.glsl')
 
 /**
@@ -121,6 +122,25 @@ Cesium.Material._materialCache.addMaterial(Cesium.Material.CircleSpiralType, {
       speed: 3.0
     },
     source: CircleSpiralMaterial
+  },
+  translucent: function(material) {
+    return true
+  }
+})
+
+/**
+ * CircleVary
+ * @type {string}
+ */
+Cesium.Material.CircleVaryType = 'CircleVary'
+Cesium.Material._materialCache.addMaterial(Cesium.Material.CircleVaryType, {
+  fabric: {
+    type: Cesium.Material.CircleVaryType,
+    uniforms: {
+      color: new Cesium.Color(1.0, 0.0, 0.0, 0.7),
+      speed: 3.0
+    },
+    source: CircleVaryMaterial
   },
   translucent: function(material) {
     return true
