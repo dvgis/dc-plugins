@@ -5,8 +5,30 @@
 
 const { Cesium } = DC.Namespace
 
+const WallImageTrailMaterial = require('../shader/wall/WallImageTrailMaterial.glsl')
 const WallLineTrailMaterial = require('../shader/wall/WallLineTrailMaterial.glsl')
 const WallTrailMaterial = require('../shader/wall/WallTrailMaterial.glsl')
+
+/**
+ * WallImageTrail
+ * @type {string}
+ */
+Cesium.Material.WallImageTrailType = 'WallImageTrail'
+Cesium.Material._materialCache.addMaterial(Cesium.Material.WallImageTrailType, {
+  fabric: {
+    type: Cesium.Material.WallImageTrailType,
+    uniforms: {
+      image: Cesium.Material.DefaultImageId,
+      color: new Cesium.Color(1.0, 0.0, 0.0, 0.7),
+      speed: 3.0,
+      repeat: new Cesium.Cartesian2(1, 1)
+    },
+    source: WallImageTrailMaterial
+  },
+  translucent: function(material) {
+    return true
+  }
+})
 
 /**
  *  WallLineTrail
