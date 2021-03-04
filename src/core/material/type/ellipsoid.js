@@ -6,6 +6,7 @@
 const { Cesium } = DC.Namespace
 
 const EllipsoidElectricMaterial = require('../shader/ellipsoid/EllipsoidElectricMaterial.glsl')
+const EllipsoidTrailMaterial = require('../shader/ellipsoid/EllipsoidTrailMaterial.glsl')
 
 /**
  * EllipsoidElectric
@@ -28,3 +29,22 @@ Cesium.Material._materialCache.addMaterial(
     }
   }
 )
+
+/**
+ * EllipsoidTrail
+ * @type {string}
+ */
+Cesium.Material.EllipsoidTrailType = 'EllipsoidTrail'
+Cesium.Material._materialCache.addMaterial(Cesium.Material.EllipsoidTrailType, {
+  fabric: {
+    type: Cesium.Material.EllipsoidTrailType,
+    uniforms: {
+      color: new Cesium.Color(1.0, 0.0, 0.0, 0.7),
+      speed: 3.0
+    },
+    source: EllipsoidTrailMaterial
+  },
+  translucent: function(material) {
+    return true
+  }
+})
