@@ -23,6 +23,12 @@ export { default as CircleVaryMaterialProperty } from './property/circle/CircleV
 export { default as CircleWaveMaterialProperty } from './property/circle/CircleWaveMaterialProperty'
 
 /**
+ * ellipsoid material property
+ */
+export { default as EllipsoidElectricMaterialProperty } from './property/ellipsoid/EllipsoidElectricMaterialProperty'
+export { default as EllipsoidTrailMaterialProperty } from './property/ellipsoid/EllipsoidTrailMaterialProperty'
+
+/**
  * polyline material property
  */
 
@@ -43,6 +49,7 @@ export { default as RadarWaveMaterialProperty } from './property/radar/RadarWave
 /**
  * wall material property
  */
+export { default as WallImageTrailMaterialProperty } from './property/wall/WallImageTrailMaterialProperty'
 export { default as WallLineTrailMaterialProperty } from './property/wall/WallLineTrailMaterialProperty'
 export { default as WallTrailMaterialProperty } from './property/wall/WallTrailMaterialProperty'
 

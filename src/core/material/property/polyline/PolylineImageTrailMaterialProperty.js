@@ -41,6 +41,8 @@ class PolylineImageTrailMaterialProperty extends MaterialProperty {
       this === other ||
       (other instanceof PolylineImageTrailMaterialProperty &&
         Cesium.Property.equals(this._color, other._color) &&
+        Cesium.Property.equals(this._image, other._image) &&
+        Cesium.Property.equals(this._repeat, other._repeat) &&
         Cesium.Property.equals(this._speed, other._speed))
     )
   }

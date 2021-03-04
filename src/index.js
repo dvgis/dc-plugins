@@ -5,11 +5,11 @@
 
 const install = function(DC) {
   if (!DC || !DC.init) {
-    throw new Error('Plugins: Missing DC Base')
+    throw new Error('Plugins: Missing DC Base Package')
   }
 
   if (!DC.ready) {
-    throw new Error('Plugins: Missing DC Core')
+    throw new Error('Plugins: Missing DC Core Package')
   }
 
   DC.init(() => {
