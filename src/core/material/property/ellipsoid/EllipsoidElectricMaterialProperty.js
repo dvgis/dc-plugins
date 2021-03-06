@@ -7,7 +7,7 @@ import MaterialProperty from '../../MaterialProperty'
 
 const { Cesium } = DC.Namespace
 
-class EllipsoidTrailMaterialProperty extends MaterialProperty {
+class EllipsoidElectricMaterialProperty extends MaterialProperty {
   constructor(options = {}) {
     super(options)
   }
@@ -26,16 +26,16 @@ class EllipsoidTrailMaterialProperty extends MaterialProperty {
   equals(other) {
     return (
       this === other ||
-      (other instanceof EllipsoidTrailMaterialProperty &&
+      (other instanceof EllipsoidElectricMaterialProperty &&
         Cesium.Property.equals(this._color, other._color) &&
         Cesium.Property.equals(this._speed, other._speed))
     )
   }
 }
 
-Object.defineProperties(EllipsoidTrailMaterialProperty.prototype, {
+Object.defineProperties(EllipsoidElectricMaterialProperty.prototype, {
   color: Cesium.createPropertyDescriptor('color'),
   speed: Cesium.createPropertyDescriptor('speed')
 })
 
-export default EllipsoidTrailMaterialProperty
+export default EllipsoidElectricMaterialProperty
